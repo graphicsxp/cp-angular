@@ -1,0 +1,23 @@
+.label {
+  background-color: #999;
+}
+
+.label.status-urgent {
+  background-color: #f0ad4e;
+}
+
+.label.status-slow { /*slow*/
+  background-color: #aad313;
+}
+
+.label.status-very-urgent { /*very urgent*/
+  background-color: #ff1d25;
+}
+
+.label.status-scheduled {
+  background-color: #852E9B;
+}
+
+.label.status-normal {
+  background-color: #63a4e8;
+}
