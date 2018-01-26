@@ -44,7 +44,7 @@ export class MultiSelectFilterComponent extends BaseFilterCellComponent {
   public valueChange(value: any): void {
     this.applyFilter(
       value === null ? // value of the default item
-        this.removeFilter(this.valueField) : // remove the filter
+        this.removeFilter(this.entityField) : // remove the filter
         this.updateFilter({ // add a filter for the field with the value
           field: this.entityField,
           //  entity: this.entityField,

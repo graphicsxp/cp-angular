@@ -1,21 +1,22 @@
+import { environment } from './../environments/environment';
 import { NamingConvention } from 'breeze-client';
 import { EntityManager, EntityQuery } from 'breeze-client';
 import { Injectable } from '@angular/core';
 import { RegistrationHelper } from './model/registration-helper';
 
+/**
+ * Provides a breeze EntityManager at application level. 
+ * Configures the metadataStore. This is meant to be done once at application startup (see APP_INITIALIZER)
+ */
 @Injectable()
 export class EntityManagerService {
-    protected _em: EntityManager = new EntityManager('https://localhost/webapi/breeze/eai/');
+    public readonly em: EntityManager = new EntityManager(environment.webapiUrl);
 
     private _initialized: boolean;
 
     constructor() {
-        this._em.metadataStore.namingConvention = NamingConvention.camelCase.setAsDefault();
-        RegistrationHelper.register(this._em.metadataStore);
-     }
-
-     getEntityManager() : EntityManager{
-         return this._em;
+        this.em.metadataStore.namingConvention = NamingConvention.camelCase.setAsDefault();
+        RegistrationHelper.register(this.em.metadataStore);
      }
 
     initialize() {
@@ -26,13 +27,13 @@ export class EntityManagerService {
             this._initialized = true;
             let existingChanges = localStorage['changeCache'];
             if (existingChanges) {
-              this._em.importEntities(existingChanges);
+              this.em.importEntities(existingChanges);
               localStorage.removeItem('changeCache');
             }
             // this._em.fetchMetadata().then(_ => {
             //   resolve(true);
             // }, error => console.error(error));
-            this._em.executeQuery(EntityQuery.from('Lookups')).then(lookupsResponse => {
+            this.em.executeQuery(EntityQuery.from('Lookups')).then(lookupsResponse => {
               resolve(true);
             }, error => console.error(error));
           }

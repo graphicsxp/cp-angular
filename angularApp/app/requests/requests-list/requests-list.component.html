@@ -3,10 +3,10 @@
   [filterable]="true" [reorderable]="true" [resizable]="true" [selectable]="true" [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection">
 
   <ng-template kendoGridToolbarTemplate>
-    <button kendoGridPDFCommand>
+    <!-- <button kendoGridPDFCommand>
       <span class='k-icon k-i-file-pdf'></span>Export to PDF</button>
     <button type="button" kendoGridExcelCommand>
-      <span class="k-icon k-i-file-excel"></span>Export to Excel</button>
+      <span class="k-icon k-i-file-excel"></span>Export to Excel</button> -->     
   </ng-template>
   <kendo-grid-checkbox-column showSelectAll="true" width="5"></kendo-grid-checkbox-column>
   <kendo-grid-column title="Receipt date" field="receiptDate" width="190" filter="date" format="{0:dd/MM/yyyy HH:mm:ss}">
@@ -72,7 +72,7 @@
     </section>
   </ng-template>
 
-  <kendo-grid-pdf fileName="Requests.pdf" [allPages]="false" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+  <!-- <kendo-grid-pdf fileName="Requests.pdf" [allPages]="false" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
     <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
     <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
       <div class="page-template">
@@ -87,6 +87,6 @@
     </ng-template>
   </kendo-grid-pdf>
 
-  <kendo-grid-excel fileName="Requests.xlsx"></kendo-grid-excel>
+  <kendo-grid-excel fileName="Requests.xlsx"></kendo-grid-excel> -->
 
 </kendo-grid>

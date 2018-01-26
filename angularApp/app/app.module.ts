@@ -13,7 +13,6 @@ import { BreezeBridgeAngularModule } from 'breeze-bridge-angular';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { onAppInit } from './app.init';
-import { BaseRepositoryService } from './base-repository.service';
 import { EntityManagerService } from './entity-manager.service';
 
 @NgModule({
@@ -41,8 +40,5 @@ import { EntityManagerService } from './entity-manager.service';
 })
 
 export class AppModule {
-    constructor() {
-        NamingConvention.camelCase.setAsDefault();
-
-    }
+ 
 }

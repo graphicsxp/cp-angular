@@ -6,22 +6,18 @@ import { EntityQuery } from 'breeze-client';
 import { BaseRepositoryService } from '../shared/services/base-repository.service';
 
 @Injectable()
-export class RequestService extends BaseRepositoryService {
+export class TemplateService extends BaseRepositoryService {
 
   constructor(protected _entityManagerService: EntityManagerService) {
     super(_entityManagerService);
   }
 
   public query(state: any): void {
-    this.fetch('Requests', state, 'status, department, client, sourceMaterials.jobs.priority, sourceMaterials.jobs.service.unit,  sourceMaterials.jobs.jobStatus,  purpose, referenceSet.references, requestContacts.contact')
+    this.fetch('RequestTemplates', state, null)
       .subscribe(x => super.next(x));
   }
 
-  getStatuses(): Status[] {
-    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("Statuss")) as Status[];
-  }
-
-  getClients(): Client[] {
-    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("Clients")) as Client[];
+  public delete(dataItem: any): void{
+    console.log(dataItem);
   }
 }

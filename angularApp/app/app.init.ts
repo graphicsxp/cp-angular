@@ -5,3 +5,4 @@ import { NamingConvention } from "breeze-client";
 export function onAppInit(_entityManagerService: EntityManagerService) {
     return () => _entityManagerService.initialize();
 }
+ 

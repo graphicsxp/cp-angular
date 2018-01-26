@@ -1,26 +1,24 @@
+import { EntityManagerService } from './../../entity-manager.service';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { EntityManager, EntityQuery, Predicate, FilterQueryOp } from 'breeze-client';
-import { RegistrationHelper } from './model/registration-helper';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { HttpClient } from '@angular/common/http';
-import { EntityManagerService } from './entity-manager.service';
 
-
+/**
+ * The BaseRepositoryService implements basic CRUD operations. It should remain as generic as possible.
+ */
 export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResult> {
-
 
   constructor(protected _entityManagerService: EntityManagerService) {
     super(null);
   }
 
-
   public getById(entityName, resource, id, children, forceRefresh = false): Observable<any> {
     let promise = new Promise<any>((resolve, reject) => {
-      var entity = this._entityManagerService.getEntityManager().getEntityByKey(entityName, id);
+      var entity = this._entityManagerService.em.getEntityByKey(entityName, id);
 
       // if (entity && entity.isReadyForEdit && !forceRefresh) {
       if (entity && !forceRefresh) {
@@ -34,7 +32,7 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
           query = query.expand(children);
         }
 
-        return this._entityManagerService.getEntityManager().executeQuery(query).then(data => {
+        return this._entityManagerService.em.executeQuery(query).then(data => {
           resolve(data.results[0]);
         }, error => {
           reject(error);
@@ -45,21 +43,23 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
     return Observable.fromPromise(promise).map(entity => (<any>entity));
   }
 
-  protected fetch(tableName: string, state: any): Observable<GridDataResult> {
+  protected fetch(tableName: string, state: any, expand: string): Observable<GridDataResult> {
     let promise = new Promise<any>((resolve, reject) => {
-      let query = EntityQuery.from('Requests');
+      let query = EntityQuery.from(tableName);
       let orderBy = '';
       //query = query.orderBy('lastName desc, firstName');
 
       if (state.filter) {
-        var p: Predicate[] = new Array();
+        let p: Predicate[] = new Array();
 
         state.filter.filters.forEach((filter) => {
           if (filter.value instanceof Array) {
-            var multiselectPredicates: any[] = [];
+            let multiselectPredicates: any[] = [];
+
             filter.value.forEach((value) => {
-              multiselectPredicates.push(new Predicate(filter.field, filter.operator, value.code));
+              multiselectPredicates.push(new Predicate(filter.field, filter.operator, value));
             });
+
             p.push(Predicate.or(multiselectPredicates));
           } else {
             p.push(Predicate.and(new Predicate(filter.field, filter.operator, filter.value)));
@@ -69,19 +69,30 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
         query = query.where(Predicate.and(p));
       }
 
-      query = query.expand('status, department, client, sourceMaterials.jobs.priority, sourceMaterials.jobs.service.unit,  sourceMaterials.jobs.jobStatus,  purpose, referenceSet.references, requestContacts.contact');
-      //query = query.expand('Status, Department, Client, SourceMaterials.Jobs.Priority, SourceMaterials.Jobs.Service.Unit, SourceMaterials.Jobs.JobStatus,  Purpose, ReferenceSet.References, RequestContacts.Contact');
+      if (expand){
+        query = query.expand(expand);
+      }
 
       query = query.skip(state.skip).take(state.take).inlineCount();
 
-      this._entityManagerService.getEntityManager().executeQuery(query).then(queryResult => {
-        resolve({ requests: queryResult.results, totalRecords: queryResult.inlineCount })
+      this._entityManagerService.em.executeQuery(query).then(queryResult => {
+        resolve({ data: queryResult.results, totalRecords: queryResult.inlineCount })
       },
         error => reject(error));
     });
+
     return Observable.fromPromise(promise).map(response => (<GridDataResult>{
-      data: response['requests'],
+      data: response['data'],
       total: response['totalRecords']
     }));
   }
+
+  public save(){
+    let promise = new Promise((resolve, reject) => {
+      this._entityManagerService.em.saveChanges().then(() => resolve(),
+        error => reject(error));
+    });
+    return promise;
+  }
+
 }

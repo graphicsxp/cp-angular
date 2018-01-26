@@ -17,14 +17,7 @@ export class RequestsListComponent implements OnInit {
   private selectedRequest: Request;
   private statuses: any[];
   private clients: Client[];
-  private searchField: string = 'name';
-  private searchInput: string;
-  private currentPage: number = 1;
-  private pageCount: number;
-  private _totalRecords: number;
-  private _pageSize: number = 10;
   public mySelection: number[] = [];
-
 
   /* KENDO GRID */
   public view: Observable<GridDataResult>;
