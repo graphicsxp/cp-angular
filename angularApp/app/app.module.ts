@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogModule } from '@progress/kendo-angular-dialog';
 
 import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routes';
@@ -26,7 +27,8 @@ import { EntityManagerService } from './entity-manager.service';
         BreezeBridgeHttpClientModule,
         SharedModule,
         CoreModule.forRoot(),
-        HomeModule
+        HomeModule,
+        DialogModule
     ],
 
     declarations: [
