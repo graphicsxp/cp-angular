@@ -35,7 +35,7 @@ describe('HomeComponent', () => {
         const customConfiguration = TestBed.get(Configuration);
         const expectedResponse = [{ id: 1, name: 'NetCore' }];
 
-        const url = customConfiguration.Server + 'api/things/';
+        const url = 'api/things/';
 
         fixture.detectChanges();
 

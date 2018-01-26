@@ -9,7 +9,7 @@ import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import { NamingConvention } from 'breeze-client';
-import { BreezeBridgeAngularModule } from 'breeze-bridge-angular';
+import { BreezeBridgeHttpClientModule } from 'breeze-bridge2-angular';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { onAppInit } from './app.init';
@@ -23,7 +23,7 @@ import { EntityManagerService } from './entity-manager.service';
         FormsModule,
         HttpClientModule,
         HttpModule,
-        BreezeBridgeAngularModule,
+        BreezeBridgeHttpClientModule,
         SharedModule,
         CoreModule.forRoot(),
         HomeModule

@@ -1,4 +1,3 @@
-import { BreezeBridgeAngularModule } from 'breeze-bridge-angular';
 import { EntityBase } from './entity-base';
 import { Forecast } from './forecast';
 import { RequestType } from './request-type';

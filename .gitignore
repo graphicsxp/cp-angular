@@ -47,3 +47,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# log files
+*.log
+
+# vscode
+/.vscode
