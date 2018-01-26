@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { EntityManager, EntityQuery, Predicate, FilterQueryOp } from 'breeze-client';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { groupBy } from '@progress/kendo-data-query';
 
 /**
  * The BaseRepositoryService implements basic CRUD operations. It should remain as generic as possible.
@@ -69,14 +70,19 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
         query = query.where(Predicate.and(p));
       }
 
-      if (expand){
+      if (expand) {
         query = query.expand(expand);
       }
 
       query = query.skip(state.skip).take(state.take).inlineCount();
 
       this._entityManagerService.em.executeQuery(query).then(queryResult => {
-        resolve({ data: queryResult.results, totalRecords: queryResult.inlineCount })
+        if (state && state.group) {
+          state.group.map(group => group.aggregates = state.aggregates);
+        }
+        var gridData = groupBy(queryResult.results, state.group);
+
+        resolve({ data: gridData, totalRecords: queryResult.inlineCount })
       },
         error => reject(error));
     });
@@ -87,7 +93,7 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
     }));
   }
 
-  public save(){
+  public save() {
     let promise = new Promise((resolve, reject) => {
       this._entityManagerService.em.saveChanges().then(() => resolve(),
         error => reject(error));

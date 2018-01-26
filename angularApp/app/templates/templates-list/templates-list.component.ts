@@ -5,6 +5,7 @@ import { RequestTemplate } from './../../model/request-template';
 import { Component, OnInit } from '@angular/core';
 import { TemplateService } from '../templates.service';
 import { DialogService, DialogRef, DialogCloseResult } from '@progress/kendo-angular-dialog';
+import { DialogAction } from '@progress/kendo-angular-dialog';
 
 @Component({
   selector: 'app-templates-list',
@@ -30,10 +31,6 @@ export class TemplatesListComponent implements OnInit {
   };
 
   public pageChange(event: PageChangeEvent): void {
-    this.state.skip = <number>event.skip;
-    this.state.take = <number>event.take;
-    this._templateService.query(this.state);
-
     // Optionally, clear the selection when paging
     this.mySelection = [];
   }
@@ -53,21 +50,16 @@ export class TemplatesListComponent implements OnInit {
   delete(template: RequestTemplate) {
     const dialog: DialogRef = this.dialogService.open({
       title: "Please confirm",
-      content: "Are you sure?",
+      content: "Are you sure you want to delete this template ?",
       actions: [
-        { text: "No" },
-        { text: "Yes", primary: true }
-      ],
-      width: 450,
-      height: 200,
-      minWidth: 250
+        { text: "Yes", primary: true },
+        { text: "No" }
+      ]
     });
 
     dialog.result.subscribe((result) => {
-      if (result instanceof DialogCloseResult) {
-        console.log("close");
-      } else {
-        console.log("action", result);
+      let r:DialogAction= result as DialogAction
+      if (r.primary) {
         template.isDeleted = true;
         this._templateService.save().then(() => {
           this._templateService.query(this.state);

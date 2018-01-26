@@ -23,7 +23,7 @@ export class RequestsListComponent implements OnInit {
   public view: Observable<GridDataResult>;
   public state: State = {
     skip: 0,
-    take: 10,
+    take: 10
     // filter: {
     //   logic: 'and',
     //   filters: [{ field: 'ProductName', operator: 'contains', value: 'Chef' }]
@@ -31,9 +31,6 @@ export class RequestsListComponent implements OnInit {
   };
 
   public pageChange(event: PageChangeEvent): void {
-    this.state.skip = event.skip;
-    this._requestService.query(this.state);
-
     // Optionally, clear the selection when paging
     this.mySelection = [];
   }

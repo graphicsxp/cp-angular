@@ -1,12 +1,13 @@
 <kendo-grid [data]="view | async" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [sortable]="{mode: 'multiple'}"
   [pageable]="true" [scrollable]="'none'" (dataStateChange)="dataStateChange($event)" (pageChange)="pageChange($event)" [filter]="state.filter"
-  [filterable]="true" [reorderable]="true" [resizable]="true" [selectable]="true" [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection">
+  [filterable]="true" [reorderable]="true" [resizable]="true" [selectable]="true" [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection"
+  [group]="state.group" [groupable]="{ showFooter: true }">
 
   <ng-template kendoGridToolbarTemplate>
     <!-- <button kendoGridPDFCommand>
       <span class='k-icon k-i-file-pdf'></span>Export to PDF</button>
     <button type="button" kendoGridExcelCommand>
-      <span class="k-icon k-i-file-excel"></span>Export to Excel</button> -->     
+      <span class="k-icon k-i-file-excel"></span>Export to Excel</button> -->
   </ng-template>
   <kendo-grid-checkbox-column showSelectAll="true" width="5"></kendo-grid-checkbox-column>
   <kendo-grid-column title="Receipt date" field="receiptDate" width="190" filter="date" format="{0:dd/MM/yyyy HH:mm:ss}">
@@ -28,7 +29,7 @@
     </ng-template>
   </kendo-grid-column>
   <kendo-grid-column field="assignedTo" title="Marked by" width="130"></kendo-grid-column>
-  <kendo-grid-column field="status" title="Status" width="130">
+  <kendo-grid-column field="status.defaultLabel" title="Status" width="130">
     <ng-template kendoGridFilterCellTemplate>
       <app-multiselect-filter [filter]="state.filter" [data]="statuses" [(ngModel)]="value" textField="defaultLabel" valueField="code"
         entityField="status.code"></app-multiselect-filter>
@@ -44,7 +45,10 @@
   </kendo-grid-column>
   <kendo-grid-column width="130">
     <ng-template kendoGridCellTemplate let-request>
-      <a id="BtnGridEdit_{{request.requestIdentifier}}" class="btn grid-button grid-edit-row btn-primary" routerLink="detail/{{request.id}}" data-title="Edit" bs-tooltip><i class="fa fa-pencil"></i></a>
+      <a id="BtnGridEdit_{{request.requestIdentifier}}" class="btn grid-button grid-edit-row btn-primary" routerLink="detail/{{request.id}}"
+        data-title="Edit" bs-tooltip>
+        <i class="fa fa-pencil"></i>
+      </a>
     </ng-template>
   </kendo-grid-column>
 

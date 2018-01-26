@@ -1,5 +1,5 @@
 <kendo-grid [data]="view | async" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [sortable]="{mode: 'multiple'}"
-  [pageable]="{buttonCount: 5, info: true, pageSizes: true }" [scrollable]="'none'" (dataStateChange)="dataStateChange($event)" (pageChange)="pageChange($event)" [filter]="state.filter"
+  [pageable]="{buttonCount: 5, info: true, pageSizes: true }" [scrollable]="'none'" (pageChange)="pageChange($event)" [filter]="state.filter"
   [filterable]="true" [reorderable]="true" [resizable]="true" [selectable]="true" [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection" >
 
   <ng-template kendoGridToolbarTemplate>
