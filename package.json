@@ -38,7 +38,9 @@
         "@angular/platform-server": "5.2.1",
         "@angular/router": "5.2.1",
         "@angular/upgrade": "5.2.1",
+        "@progress/kendo-angular-buttons": "^3.0.1",
         "@progress/kendo-angular-dateinputs": "^1.4.3",
+        "@progress/kendo-angular-dialog": "^3.0.0",
         "@progress/kendo-angular-dropdowns": "^1.6.0",
         "@progress/kendo-angular-excel-export": "^1.0.5",
         "@progress/kendo-angular-grid": "^1.7.2",
@@ -106,4 +108,4 @@
             "watch-webpack-dev"
         ]
     }
-  }
+}

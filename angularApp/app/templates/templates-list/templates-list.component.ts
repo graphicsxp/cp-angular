@@ -73,7 +73,6 @@ export class TemplatesListComponent implements OnInit {
           this._templateService.query(this.state);
         });
       }
-
     });
   }
 
