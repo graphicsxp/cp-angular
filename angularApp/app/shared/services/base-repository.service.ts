@@ -1,3 +1,5 @@
+import { Purpose, Client, Status, Request, DeliveryMode, RequestTemplate } from './../../model/entity-model';
+
 import { EntityManagerService } from './../../entity-manager.service';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { Injectable } from '@angular/core';
@@ -13,8 +15,15 @@ import { groupBy } from '@progress/kendo-data-query';
  */
 export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResult> {
 
+  protected entityName: String = '';
+
   constructor(protected _entityManagerService: EntityManagerService) {
     super(null);
+  }
+
+  public create(args = null) {
+    args = args || {};
+    return this._entityManagerService.em.createEntity(<string>this.entityName, args);
   }
 
   public getById(entityName, resource, id, children, forceRefresh = false): Observable<any> {
@@ -99,6 +108,26 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
         error => reject(error));
     });
     return promise;
+  }
+
+  getStatuses(): Status[] {
+    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("Statuss")) as Status[];
+  }
+
+  getClients(): Client[] {
+    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("Clients")) as Client[];
+  }
+
+  getPurposes(): Purpose[] {
+    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("Purposes")) as Purpose[];
+  }
+
+  getDeliveryModes(): DeliveryMode[] {
+    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("DeliveryModes")) as DeliveryMode[];
+  }
+
+  getRequestTemplates(): RequestTemplate[] {
+    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("RequestTemplates")) as RequestTemplate[];
   }
 
 }

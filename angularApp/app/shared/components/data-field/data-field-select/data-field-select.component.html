@@ -1,0 +1,7 @@
+<div class="form-group" [ngClass]="{'has-error': getValidationErrors()}">
+  <label class="control-label  col-md-4" for="{{propName}}">{{propLabel}}:</label>
+  <select class="form-control" [disabled]="disabled" [(ngModel)]="dataProp">
+    <option *ngFor="let item of dataSource" [ngValue]="item">{{item.defaultLabel}}</option>
+  </select>
+  <span class="help-block" *ngIf="getValidationErrors()" [innerHTML]="getValidationErrors()"></span>
+</div>

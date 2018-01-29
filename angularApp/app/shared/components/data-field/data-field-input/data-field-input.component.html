@@ -1,0 +1,5 @@
+<div class="form-group" [ngClass]="{'has-error': getValidationErrors()}">
+  <label class="control-label" for="{{propName}}">{{propLabel}}:</label>
+  <input type="text" name="{{propName}}" class="form-control" [(ngModel)]="dataProp">
+  <span class="help-block" *ngIf="getValidationErrors()" [innerHTML]="getValidationErrors()"></span>
+</div>

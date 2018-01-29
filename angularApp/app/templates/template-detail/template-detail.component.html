@@ -1,3 +1,6 @@
-<p>
-  template-detail works!
-</p>
+<h1>Template Detail</h1>
+<div class="row">
+  <form (ngSubmit)="onSave()" class="form" #templateForm="ngForm">
+      name:  <span>{{template.templateName}}</span>
+  </form>
+</div>

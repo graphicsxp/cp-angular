@@ -1,2 +1,236 @@
 ﻿@import './styles/app.scss';
 @import "~@progress/kendo-theme-default/scss/all";
+
+
+.widget {
+    background-color: #ffffff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #c5c5c5;
+    padding: 20px;
+    margin-bottom: 15px;
+    min-height: 62px;
+}
+
+
+textarea,
+select,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input,
+.datepicker {
+    font-size: inherit !important;
+    color: #787878 !important;
+    border: 1px solid #c5c5c5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    min-height: 30px;
+}
+
+/*add / edit client | Add / Adit User | Add / Edit Request */
+.form-group select,
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="datetime"],
+.form-group input[type="datetime-local"],
+.form-group input[type="date"],
+.form-group input[type="month"],
+.form-group input[type="time"],
+.form-group input[type="week"],
+.form-group input[type="number"],
+.form-group input[type="email"],
+.form-group input[type="url"],
+.form-group input[type="search"],
+.form-group input[type="tel"],
+.form-group input[type="color"],
+.form-group .uneditable-input {
+    height: 30px !important;
+    background-image: none !important;
+}
+
+input[type="datetime"] {
+    width: 120px;
+}
+
+    input[type="datetime"]::-ms-clear {
+        width: 0;
+        height: 0;
+        /* display:none => strange effects with padding-right*/
+    }
+
+.form-group select {
+    padding: 0;
+}
+/**/
+
+.input-group {
+    width: 100%;
+}
+
+.input-group-addon {
+    min-width: 34px;
+}
+
+
+.form-group textarea,
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="datetime"],
+.form-group input[type="datetime-local"],
+.form-group input[type="date"],
+.form-group input[type="month"],
+.form-group input[type="time"],
+.form-group input[type="week"],
+.form-group input[type="number"],
+.form-group input[type="email"],
+.form-group input[type="url"],
+.form-group input[type="search"],
+.form-group input[type="tel"],
+.form-group input[type="color"],
+.form-group .uneditable-input {
+    line-height: 1.65em !important;
+    padding: 0.178em 0 !important;
+    text-indent: 4px !important;
+    width: 100%;
+}
+
+.form-group .table-condensed {
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+    .form-group .table-condensed a {
+        font-size: 10px;
+        padding: 0;
+    }
+
+/* reduce padding when fields display inline in the form */
+.form-group .controls-inline div[class^="col-md"] {
+    padding-right: 0;
+}
+
+    .form-group .controls-inline div[class^="col-md"] ~ div[class^="col-md"] {
+        padding: 0 0 0 2px;
+    }
+/* button following fields displaying inline in a form */
+.btn-controls-inline {
+    padding: 5px 0;
+    background: none;
+}
+
+.controls .control-text-mixed {
+    padding-top: 7px;
+    display: inline-block;
+}
+
+.form-actions {
+    display: block;
+    background-color: rgb(245, 245, 245);
+    border-top: 1px solid rgb(229, 229, 229);
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 19px 20px 20px;
+}
+
+.form-group .phone-number-countrycode,
+.form-group .phone-number-countrycodeplus {
+    padding: 0;
+    text-align: center;
+}
+
+.form-group .phone-number-countrycodeplus {
+    padding: 5px 0 0 6px;
+}
+
+.form-group .phone-number {
+    padding-left: 2px;
+}
+
+select.form-resource-input {
+    width: 300px;
+}
+
+select.disabled {
+    background-color: #EBEBE4;
+}
+
+.select2-container-multi {
+    padding: 0 !important;
+    height: auto !important;
+    width: auto !important;
+    min-width: 150px;
+}
+
+.form-group .select2-container-multi {
+    width: 100% !important;
+}
+
+    .select2-container-multi .select2-choices {
+        background: none;
+        background-image: none !important;
+        border: 0 !important;
+        background-color: transparent !important;
+    }
+
+        .select2-container-multi .select2-choices .select2-search-choice {
+            background-image: none !important;
+            border: 0 !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            background-color: #eee !important;
+            font-size: 12px !important;
+        }
+
+/**/
+
+/*validations in a form*/
+
+.has-error{
+	background-color: #d00018;
+	color:#fff !important;
+}
+
+.validation-summary-errors {
+    color: #d00018;
+}
+
+    .validation-summary-errors li {
+        list-style-type: none;
+    }
+
+.help-inline.control-warning {
+    color: #d00018;
+    clear: both;
+    font-size: 10px;
+    display: block;
+    padding-bottom: 0;
+}
+
+    .validation-summary-errors li:before,
+    .help-inline.control-warning:before {
+        content: "\f071 ";
+        font-family: FontAwesome;
+    }
+
+.help-inline.control-mandatory {
+    color: #ff6a00;
+    font-weight: bold;
+}
+
+.help-inline.mandatory i {
+    font-size: 10px;
+}

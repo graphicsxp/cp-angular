@@ -1,3 +1,5 @@
+import { TemplatesModule } from './../templates/templates.module';
+import { SharedModule } from './../shared/shared.module';
 import { RequestDetailResolver } from './request-detail/request-detail-resolver.service';
 import { RequestContactsConcat } from './request-contacts-concat.pipe';
 import { RequestsListComponent } from './requests-list/requests-list.component';
@@ -16,7 +18,9 @@ import { RequestJobsComponent } from './request-jobs/request-jobs.component';
     CommonModule,
     FormsModule,
     GridHelpersModule,
-    RequestsRoutes
+    RequestsRoutes,
+    SharedModule,
+    // TemplatesModule
   ],
   declarations: [
     RequestsListComponent,

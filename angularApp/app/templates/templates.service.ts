@@ -10,6 +10,8 @@ export class TemplateService extends BaseRepositoryService {
 
   constructor(protected _entityManagerService: EntityManagerService) {
     super(_entityManagerService);
+
+    this.entityName = 'RequestTemplate';
   }
 
   public query(state: any): void {

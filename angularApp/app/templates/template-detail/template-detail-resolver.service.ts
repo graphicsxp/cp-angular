@@ -11,12 +11,22 @@ export class RequestTemplateResolver implements Resolve<RequestTemplate> {
     constructor(private _templateService: TemplateService) { }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RequestTemplate> {
+
         let id = route.paramMap.get('id');
 
-        return this._templateService.getById('RequestTemplate',
-            'RequestTemplates',
-            id,
-            null,
-            true) as Observable<RequestTemplate>;
+        if (id !== 'new') {
+
+            return this._templateService.getById('RequestTemplate',
+                'RequestTemplates',
+                id,
+                null,
+                true) as Observable<RequestTemplate>;
+        } else {
+            let promise = new Promise<any>((resolve, reject) => {
+                resolve(this._templateService.create());
+            });
+
+            return Observable.fromPromise(promise);
+        }
     }
 }

@@ -1,4 +1,4 @@
-<kendo-grid [data]="view | async" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [sortable]="{mode: 'multiple'}" [pageable]="true" [scrollable]="'none'" (dataStateChange)="dataStateChange($event)" (pageChange)="pageChange($event)" [filter]="state.filter"
+<kendo-grid [data]="view | async" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [sortable]="{mode: 'multiple'}" [pageable]="false" [scrollable]="'none'" (dataStateChange)="dataStateChange($event)" (pageChange)="pageChange($event)" [filter]="state.filter"
     [filterable]="true" [reorderable]="true" [resizable]="true" [selectable]="true" [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection" [group]="state.group" [groupable]="{ showFooter: true }">
 
     <ng-template kendoGridToolbarTemplate>
@@ -6,6 +6,9 @@
       <span class='k-icon k-i-file-pdf'></span>Export to PDF</button>
     <button type="button" kendoGridExcelCommand>
       <span class="k-icon k-i-file-excel"></span>Export to Excel</button> -->
+      <select (change)="onPageSizeChange()" [(ngModel)]="state.take">
+          <option *ngFor="let p of pageSizes" [ngValue]="p">{{p}}</option>
+      </select>
     </ng-template>
     <kendo-grid-checkbox-column showSelectAll="true" width="5"></kendo-grid-checkbox-column>
     <kendo-grid-column title="Receipt date" field="receiptDate" width="190" filter="date" format="{0:dd/MM/yyyy HH:mm:ss}">

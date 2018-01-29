@@ -26,7 +26,6 @@ import { FormsModule } from '@angular/forms';
     DropDownListFilterComponent,
     MultiSelectFilterComponent,
     GridModule,
-    DropDownListModule,
     DropDownsModule,
     PDFModule,
     ExcelModule

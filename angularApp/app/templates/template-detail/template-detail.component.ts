@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { RequestTemplate } from './../../model/request-template';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TemplateService } from '../templates.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-template-detail',
@@ -7,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TemplateDetailComponent implements OnInit {
 
-  constructor() { }
+  public template: RequestTemplate;
+
+  constructor(private _route: ActivatedRoute, private _templateService: TemplateService) { }
+
+  @ViewChild('templateForm') currentForm: NgForm;
 
   ngOnInit() {
+    this._route.data.subscribe((data: { template: RequestTemplate }) => {
+      this.template = data.template;
+    })
   }
 
 }

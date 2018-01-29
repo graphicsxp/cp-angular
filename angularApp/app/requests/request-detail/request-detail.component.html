@@ -1,6 +1,133 @@
+<form (ngSubmit)="onSave()" class="form-horizontal" #requestForm="ngForm">
+    <fieldset [disabled]="request.status.code==='MTS' && !hasRightToSend()">
 
+        <h2>General information</h2>
 
+        <div class="row">
+            <div class="col-md-6 request-edition general-information">
+                <div class="widget">
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="requestTemplate">Template</label>
+                        <div class="controls col-md-7">
+                            <kendo-combobox #templateList [data]="filteredTemplateList" [textField]="'text'" [valueField]="'value'" [filterable]="true"
+                                (filterChange)="handleFilter($event)" [placeholder]="'Apply a template'"></kendo-combobox>
+                            <a id="btnNewTemplate" class="btn btn-primary btn-sm pull-right" target="_blank" routerLink="/templates/detail/new" data-title="Create a new template" bs-tooltip>New</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="client">Client</label>
+                        <div class="controls col-md-5">
+                            <div class="control-text-mixed">{{request.client.abbreviation}}</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="department">Department</label>
+                        <div class="controls col-md-7">
+                            <!-- <app-data-field-select [disabled]="!canSelectDepartment()" [propName]="'department'" [propLabel]="'Department'" [entity]="request" [dataSource]="request.client.departments"></app-data-field-select>; -->
+                            <select id="department" name="department" class="form-control" [disabled]="!canSelectDepartment()" [(ngModel)]="request.department">
+                                <option *ngFor="let department of request.client.departments" [ngValue]="department">{{department.defaultLabel}}</option>
+                            </select>
+                        </div>
+                        <div class="controls col-md-1">
+                            <app-validator [entity]="request" [propName]="'department'"></app-validator>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <!-- <label class="control-label col-md-4" for="contacts">Contact(s)</label>
+                    <div class="controls col-md-7">
+                        <multiselect disabled="vm.request.status.code==='MTS' && !hasRightToSend() && vm.improvementsAvalaible" id="contacts" name="contacts" class="form-control" model="vm.request.selectedContacts" tags="activeContacts" display-field="email" id-field="id"></multiselect>
+                    </div>
+                    <div class="controls col-md-1">
+                        <span data-ng-show="!vm.request.selectedContacts || vm.request.selectedContacts.length===0" class="text-error"><span class="control-mandatory help-inline "><i class="fa fa-asterisk"></i></span></span>
+                    </div> -->
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Telephone</label>
+                        <div class="controls col-md-7">
+                            <div class="row">
+                                <div class="col-lg-1 phone-number-countrycodeplus">
+                                    <div class="control-text-mixed">
+                                        <i class="fa fa-plus"></i>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 phone-number-countrycode">
+                                    <input id="phoneCountryCode" class="form-control" number name="phoneCountryCode" [(ngModel)]="request.phoneCountryCode" />
+                                </div>
+                                <div class="col-lg-8 phone-number">
+                                    <input id="phoneNumber" class="form-control" number name="phoneNumber" [(ngModel)]="request.phoneNumber" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="controls col-md-1">
+                            <app-validator [entity]="request" [propName]="'phoneCountryCode'"></app-validator>
+                            <app-validator [entity]="request" [propName]="'phoneNumber'"></app-validator>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <!-- <label class="control-label col-md-4" for="contacts">Deliver To</label>
+                    <div class="controls col-md-7">
+                        <multiselect disabled="vm.request.status.code==='MTS' && !hasRightToSend() && vm.improvementsAvalaible" id="recipients" name="recipients" class="form-control" model="vm.request.selectedRecipients" tags="activeContacts" display-field="email" id-field="id"></multiselect>
+                    </div>
+                    <div class="controls col-md-1">
+                        <span data-ng-show="!vm.request.selectedRecipients || vm.request.selectedRecipients.length===0" class="text-error"><span class="control-mandatory help-inline "><i class="fa fa-asterisk"></i></span></span>
+                    </div> -->
+                    </div>
 
+                </div>
+            </div>
+            <div class="col-md-6 form-block-edition request-edition general-information">
+                <div class="widget">
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="title">Title</label>
+                        <div class="controls col-md-7">
+                            <input id="title" class="form-control" type="text" name="title" [(ngModel)]="request.title" />
+                        </div>
+                        <div class="controls col-md-1">
+                            <app-validator [entity]="request" [propName]="'title'"></app-validator>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="reference">Client reference</label>
+                        <div class="controls col-md-7">
+                            <input id="reference" class="form-control" name="clientReference" type="text" [(ngModel)]="request.clientReference" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="purpose">Purpose</label>
+                        <div class="controls col-md-7">
+                            <select id="purpose" name="purpose" class="form-control" [(ngModel)]="request.purpose">
+                                <option *ngFor="let purpose of purposes" [ngValue]="purpose">{{purpose.defaultLabel}}</option>
+                            </select>
+                        </div>
+                        <div class="controls col-md-1">
+                            <app-validator [entity]="request" [propName]="'purpose'"></app-validator>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="delivery">Translations web uploaded</label>
+                        <div class="controls col-md-7">
+                            <select id="deliveryMode" name="deliveryMode" class="form-control" [(ngModel)]="request.deliveryMode">
+                                <option *ngFor="let deliveryMode of deliveryModes" [ngValue]="deliveryMode">{{deliveryMode.defaultLabel}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-7 col-md-offset-4 help-inline control-warning " *ngIf="request.deliveryMode.code !== 'No'">
+                            if you request this functionnality, we need access codes to your CMS
+                        </div>
+                        <div class="controls col-md-1">
+                            <app-validator [entity]="request" [propName]="'deliveryMode'"></app-validator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
 
-<a id="btnJobs" class="btn btn-primary" routerLink="jobs" data-title="define jobs" bs-tooltip>Next</a>
-
+    <div class="row">
+        <div class="clearfix form-actions">
+            <div class="pull-right">
+                <button class="btn btn-primary" type="submit">Save</button>
+                <a id="btnJobs" class="btn btn-primary" routerLink="jobs" data-title="define jobs" bs-tooltip>Next</a>
+            </div>
+        </div>
+    </div>
+</form>

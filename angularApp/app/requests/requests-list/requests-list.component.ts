@@ -21,9 +21,10 @@ export class RequestsListComponent implements OnInit {
 
   /* KENDO GRID */
   public view: Observable<GridDataResult>;
+  public pageSizes = [10, 20, 50, 100];
   public state: State = {
     skip: 0,
-    take: 10
+    take: 20
     // filter: {
     //   logic: 'and',
     //   filters: [{ field: 'ProductName', operator: 'contains', value: 'Chef' }]
@@ -38,6 +39,10 @@ export class RequestsListComponent implements OnInit {
   public dataStateChange(state: DataStateChangeEvent): void {
     this.state = state;
     this._requestService.query(state);
+  }
+
+  public onPageSizeChange() {
+    this._requestService.query(this.state);
   }
   /* KENDO GRID */
 

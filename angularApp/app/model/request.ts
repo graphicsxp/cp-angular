@@ -43,6 +43,7 @@ export class Request extends EntityBase {
               priority = job.priority;
               service = job.service.code;
             }
+            
             if ((!closestDeadline || job.deadline < closestDeadline) && job.jobStatus.code === 'INP') {
               closestDeadline = job.deadline;
             }
