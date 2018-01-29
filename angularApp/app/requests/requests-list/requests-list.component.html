@@ -29,7 +29,8 @@
     <kendo-grid-column field="assignedTo" title="Marked by" width="130"></kendo-grid-column>
     <kendo-grid-column field="status.defaultLabel" title="Status" width="130">
         <ng-template kendoGridFilterCellTemplate>
-            <app-multiselect-filter [filter]="state.filter" [data]="statuses" [(ngModel)]="value" textField="defaultLabel" valueField="code" entityField="status.code"></app-multiselect-filter>
+            <pre>{{temp | json}}</pre>
+            <app-multiselect-filter name="aaa" [filter]="state.filter" [data]="statuses" [(selectedValues)]="temp" textField="defaultLabel" valueField="code" entityField="status.code"></app-multiselect-filter>
         </ng-template>
         <ng-template kendoGridCellTemplate let-request>
             <span class="badge badge-warning">{{request.status.defaultLabel}}</span>

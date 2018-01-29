@@ -18,6 +18,7 @@ export class RequestsListComponent implements OnInit {
   private statuses: any[];
   private clients: Client[];
   public mySelection: number[] = [];
+  public temp: string[];
 
   /* KENDO GRID */
   public view: Observable<GridDataResult>;
@@ -50,5 +51,6 @@ export class RequestsListComponent implements OnInit {
   ngOnInit() {
     this.statuses = this._requestService.getStatuses().map(s => { return { code: s.code, defaultLabel: s.defaultLabel } });
     this.clients = this._requestService.getClients();
+    this.temp = ['EXPI', 'PEND'];
   }
 }
