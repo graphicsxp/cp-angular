@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CompositeFilterDescriptor } from '@progress/kendo-data-query';
 import { FilterService, BaseFilterCellComponent } from '@progress/kendo-angular-grid';
-
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-multiselect-filter',
@@ -9,33 +9,25 @@ import { FilterService, BaseFilterCellComponent } from '@progress/kendo-angular-
     <kendo-multiselect [data]="data"
     [textField]="textField"
     [valueField]="valueField"
+    [value]="selectedValue"
     [filterable]="true"
     (valueChange)="valueChange($event)"
-    [valuePrimitive]="true"
-    name="test"
-  >
+    [valuePrimitive]="true">
   </kendo-multiselect>
   `
 })
-export class MultiSelectFilterComponent extends BaseFilterCellComponent {
+export class MultiSelectFilterComponent extends BaseFilterCellComponent /*implements OnInit*/ {
 
-  // public get selectedValue(): any {
-  //   const filter = this.filterByField(this.valueField);
-  //   return filter ? filter.value : null;
-  // }
+  public get selectedValue(): any {
+    const filter = this.filterByField(this.entityField);
+    return filter ? filter.value : null;
+  }
 
   @Input() public filter: CompositeFilterDescriptor;
   @Input() public data: any[];
   @Input() public textField: string;
   @Input() public valueField: string;
   @Input() public entityField: string;
-
-  // public get defaultItem(): any {
-  //     return {
-  //         [this.textField]: 'Select item...',
-  //         [this.valueField]: null
-  //     };
-  // }
 
   constructor(filterService: FilterService) {
     super(filterService);
@@ -51,8 +43,6 @@ export class MultiSelectFilterComponent extends BaseFilterCellComponent {
           operator: 'eq',
           value: value
         })
-    ); // update the root filter
+    );
   }
-
-
 }

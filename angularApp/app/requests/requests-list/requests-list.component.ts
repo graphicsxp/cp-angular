@@ -18,17 +18,29 @@ export class RequestsListComponent implements OnInit {
   private statuses: any[];
   private clients: Client[];
   public mySelection: number[] = [];
+  public temp: string[];
+  public temp2: string;
 
   /* KENDO GRID */
   public view: Observable<GridDataResult>;
   public pageSizes = [10, 20, 50, 100];
   public state: State = {
     skip: 0,
+<<<<<<< HEAD
     take: 20
     // filter: {
     //   logic: 'and',
     //   filters: [{ field: 'ProductName', operator: 'contains', value: 'Chef' }]
     // }
+=======
+    take: 10,
+    filter: {
+      logic: 'and',
+      filters: [{ field: 'client.id', operator: 'equals', value: 'e839bbdd-3329-404c-9f84-a87400b1430a' },
+      { field: 'status.code', operator: 'contains', value: ['EXPI', 'PEND'] },
+      { field: 'requestIdentifier', operator: 'equals', value: '2018/000005' }]
+    }
+>>>>>>> dc5ab9b6974a71120aea4704f189d9959ba1e384
   };
 
   public pageChange(event: PageChangeEvent): void {

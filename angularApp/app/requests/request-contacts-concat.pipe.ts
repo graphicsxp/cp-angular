@@ -7,12 +7,14 @@ import { Request, Contact, RequestContact } from '../model/entity-model';
 
 export class RequestContactsConcat implements PipeTransform {
     transform(value: any, args: any[]): any {
-        let requestContacts = value as RequestContact[];
-        let result = "";
-        if (requestContacts){
-            let first: boolean = true;
-            requestContacts.forEach(rc =>{
-                if (!first) result += ", ";
+        const requestContacts = value as RequestContact[];
+        let result = '';
+        if (requestContacts) {
+            let first = true;
+            requestContacts.forEach(rc => {
+                if (!first) {
+                    result += ', ';
+                }
                 first = false;
                 result += rc.contact.firstName + ' ' + rc.contact.lastName;
             });

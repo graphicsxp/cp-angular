@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CompositeFilterDescriptor } from '@progress/kendo-data-query';
 import { FilterService, BaseFilterCellComponent } from '@progress/kendo-angular-grid';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
     selector: 'app-dropdown-filter',
@@ -20,7 +21,7 @@ import { FilterService, BaseFilterCellComponent } from '@progress/kendo-angular-
 export class DropDownListFilterComponent extends BaseFilterCellComponent {
 
     public get selectedValue(): any {
-        const filter = this.filterByField(this.valueField);
+        const filter = this.filterByField(this.entityField);
         return filter ? filter.value : null;
     }
 
@@ -47,7 +48,7 @@ export class DropDownListFilterComponent extends BaseFilterCellComponent {
                 this.removeFilter(this.entityField) : // remove the filter
                 this.updateFilter({ // add a filter for the field with the value
                     field: this.entityField,
-                  //  entity: this.entityField,
+                    //  entity: this.entityField,
                     operator: 'eq',
                     value: value
                 })
