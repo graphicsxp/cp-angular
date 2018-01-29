@@ -1,48 +1,33 @@
-import { Component, Input, Output, EventEmitter/*, forwardRef, HostBinding*/ } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CompositeFilterDescriptor } from '@progress/kendo-data-query';
 import { FilterService, BaseFilterCellComponent } from '@progress/kendo-angular-grid';
-//import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-multiselect-filter',
-  // providers: [{
-  //   provide: NG_VALUE_ACCESSOR,
-  //   useExisting: forwardRef(() => MultiSelectFilterComponent),
-  //   multi: true
-  // }],
   template: `
     <kendo-multiselect [data]="data"
     [textField]="textField"
     [valueField]="valueField"
+    [value]="selectedValue"
     [filterable]="true"
     (valueChange)="valueChange($event)"
-    [valuePrimitive]="true"
-    [(ngModel)]="selectedValues">
+    [valuePrimitive]="true">
   </kendo-multiselect>
   `
 })
-export class MultiSelectFilterComponent  extends BaseFilterCellComponent /*implements ControlValueAccessor*/ {
+export class MultiSelectFilterComponent extends BaseFilterCellComponent /*implements OnInit*/ {
 
-  // public get selectedValue(): any {
-  //   const filter = this.filterByField(this.valueField);
-  //   return filter ? filter.value : null;
-  // }
+  public get selectedValue(): any {
+    const filter = this.filterByField(this.entityField);
+    return filter ? filter.value : null;
+  }
 
   @Input() public filter: CompositeFilterDescriptor;
   @Input() public data: any[];
   @Input() public textField: string;
   @Input() public valueField: string;
   @Input() public entityField: string;
-  @Input() public selectedValues: string[];
-  @Output() selectedValuesChange = new EventEmitter();
-
-  // public get defaultItem(): any {
-  //     return {
-  //         [this.textField]: 'Select item...',
-  //         [this.valueField]: null
-  //     };
-  // }
 
   constructor(filterService: FilterService) {
     super(filterService);
@@ -58,37 +43,6 @@ export class MultiSelectFilterComponent  extends BaseFilterCellComponent /*imple
           operator: 'eq',
           value: value
         })
-    ); // update the root filter
-    this.selectedValuesChange.emit(this.selectedValues);
+    );
   }
-
-  // // Placeholders for the callbacks which are later providesd
-  // // by the Control Value Accessor
-  // private onTouchedCallback: () => void = () => {
-  // };
-  // private onChangeCallback: (_: any) => void = () => {
-  // };
-
-  // // From ControlValueAccessor interface
-  // registerOnChange(fn: any) {
-  //   this.onChangeCallback = fn;
-  // }
-
-  // // From ControlValueAccessor interface
-  // registerOnTouched(fn: any) {
-  //   this.onTouchedCallback = fn;
-  // }
-
-  // // Function to call when the rating changes.
-  // onChange = (value: any[]) => {
-  //   console.log('onchange:' + value);
-  // };
-
-  // // Allows Angular to update the model (rating).
-  // // Update the model and changes needed for the view here.
-  // writeValue(value: any[]): void {
-  //   console.log('writeValue:' + value);
-  //   this.selectedValues = value;
-  //   this.onChange(this.selectedValues)
-  // }
 }

@@ -19,16 +19,19 @@ export class RequestsListComponent implements OnInit {
   private clients: Client[];
   public mySelection: number[] = [];
   public temp: string[];
+  public temp2: string;
 
   /* KENDO GRID */
   public view: Observable<GridDataResult>;
   public state: State = {
     skip: 0,
-    take: 10
-    // filter: {
-    //   logic: 'and',
-    //   filters: [{ field: 'ProductName', operator: 'contains', value: 'Chef' }]
-    // }
+    take: 10,
+    filter: {
+      logic: 'and',
+      filters: [{ field: 'client.id', operator: 'equals', value: 'e839bbdd-3329-404c-9f84-a87400b1430a' },
+      { field: 'status.code', operator: 'contains', value: ['EXPI', 'PEND'] },
+      { field: 'requestIdentifier', operator: 'equals', value: '2018/000005' }]
+    }
   };
 
   public pageChange(event: PageChangeEvent): void {
@@ -51,6 +54,5 @@ export class RequestsListComponent implements OnInit {
   ngOnInit() {
     this.statuses = this._requestService.getStatuses().map(s => { return { code: s.code, defaultLabel: s.defaultLabel } });
     this.clients = this._requestService.getClients();
-    this.temp = ['EXPI', 'PEND'];
   }
 }
