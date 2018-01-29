@@ -1,33 +1,30 @@
-<kendo-grid [data]="view | async" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [sortable]="{mode: 'multiple'}"
-  [pageable]="{buttonCount: 5, info: true, pageSizes: true }" [scrollable]="'none'" (pageChange)="pageChange($event)" [filter]="state.filter"
-  [filterable]="true" [reorderable]="true" [resizable]="true" [selectable]="true" [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection" >
+<kendo-grid [data]="view | async" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [sortable]="{mode: 'multiple'}" [pageable]="{buttonCount: 5, info: true, pageSizes: true }" [scrollable]="'none'" (pageChange)="pageChange($event)" [filter]="state.filter"
+    [filterable]="true" [reorderable]="true" [resizable]="true" [selectable]="true" [kendoGridSelectBy]="'id'" [selectedKeys]="mySelection">
 
-  <ng-template kendoGridToolbarTemplate>
-    <!-- <select name="take" id="take"  [(ngModel)]="state.take" (change)="pageChange({take: state.take, skip: state.skip})">
+    <ng-template kendoGridToolbarTemplate>
+        <!-- <select name="take" id="take"  [(ngModel)]="state.take" (change)="pageChange({take: state.take, skip: state.skip})">
       <option value="10">10</option>
       <option value="50">50</option>
     </select> -->
-  </ng-template>
-  <kendo-grid-checkbox-column showSelectAll="true" width="5"></kendo-grid-checkbox-column>
-  <kendo-grid-column field="templateName" title="Template name" width="130"></kendo-grid-column>
-  <kendo-grid-column field="description" title="Template description" width="130"></kendo-grid-column>
-
-  <kendo-grid-column title="Created on (UTC)" field="creationDate" width="190" filter="date" format="{0:dd/MM/yyyy HH:mm:ss}"></kendo-grid-column>
-  <kendo-grid-column field="createdBy" title="Created by" width="130"></kendo-grid-column>
-  <kendo-grid-column title="Modification date(UTC)" field="updateDate" width="190" filter="date" format="{0:dd/MM/yyyy HH:mm:ss}"></kendo-grid-column>
-  <kendo-grid-column width="130">
-    <ng-template kendoGridCellTemplate let-template>
-      <a id="BtnGridEdit_{{template.id}}" class="btn grid-button grid-edit-row btn-primary" routerLink="detail/{{template.id}}"
-        data-title="Edit" bs-tooltip>
-        <i class="fa fa-pencil"></i>
-      </a>
-      <a id="BtnGridDelete_{{template.id}}" class="btn grid-button grid-delete-row btn-danger" (click)="delete(template)" data-title="Delete"
-        bs-tooltip>
-        <i class="fa fa-trash-o"></i>
-      </a>
     </ng-template>
-  </kendo-grid-column>
-  <!-- <kendo-grid-command-column title="" width="220">
+    <kendo-grid-checkbox-column showSelectAll="true" width="5"></kendo-grid-checkbox-column>
+    <kendo-grid-column field="templateName" title="Template name" width="130"></kendo-grid-column>
+    <kendo-grid-column field="description" title="Template description" width="130"></kendo-grid-column>
+
+    <kendo-grid-column title="Created on (UTC)" field="creationDate" width="190" filter="date" format="{0:dd/MM/yyyy HH:mm:ss}"></kendo-grid-column>
+    <kendo-grid-column field="createdBy" title="Created by" width="130"></kendo-grid-column>
+    <kendo-grid-column title="Modification date(UTC)" field="updateDate" width="190" filter="date" format="{0:dd/MM/yyyy HH:mm:ss}"></kendo-grid-column>
+    <kendo-grid-column width="130">
+        <ng-template kendoGridCellTemplate let-template>
+            <a id="BtnGridEdit_{{template.id}}" class="btn btn-sm grid-edit-row btn-primary" routerLink="detail/{{template.id}}" data-title="Edit" bs-tooltip>
+                <i class="fa fa-pencil"></i>
+            </a>
+            <a id="BtnGridDelete_{{template.id}}" class="btn btn-sm grid-delete-row btn-danger" (click)="delete(template)" data-title="Delete" bs-tooltip>
+                <i class="fa fa-trash-o"></i>
+            </a>
+        </ng-template>
+    </kendo-grid-column>
+    <!-- <kendo-grid-command-column title="" width="220">
     <ng-template kendoGridCellTemplate let-isNew="isNew">
       <button kendoGridEditCommand type="button" class="k-primary">Edit</button>
       <button kendoGridRemoveCommand type="button">Remove</button>
@@ -36,5 +33,3 @@
     </ng-template>
   </kendo-grid-command-column> -->
 </kendo-grid>
-
- 
