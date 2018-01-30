@@ -29,7 +29,7 @@ using ISession = NHibernate.ISession;
 using CdT.EAI.BL.Documents.Embedded;
 using CdT.UI.Common.Linq;
 using ClientPortal.Helpers;
-using ClientPortal.WebApi.FileManagement;
+using CdT.ClientPortal.WebApi.FileManagement;
 
 namespace ClientPortal.WebApi
 {

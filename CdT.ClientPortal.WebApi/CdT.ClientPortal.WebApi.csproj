@@ -10,8 +10,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClientPortal.WebApi</RootNamespace>
-    <AssemblyName>ClientPortal.WebApi</AssemblyName>
+    <RootNamespace>CdT.ClientPortal.WebApi</RootNamespace>
+    <AssemblyName>CdT.ClientPortal.WebApi</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
@@ -356,10 +356,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Connected Services\FileManagement\ClientPortal.WebApi.FileManagement.DeleteFileResponse.datasource">
+    <Content Include="Connected Services\FileManagement\CdT.ClientPortal.WebApi.FileManagement.DeleteFileResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Connected Services\FileManagement\ClientPortal.WebApi.FileManagement.StoreFileResponse.datasource">
+    <Content Include="Connected Services\FileManagement\CdT.ClientPortal.WebApi.FileManagement.StoreFileResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Connected Services\FileManagement\FileManagement.disco" />
@@ -369,7 +369,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Connected Services\FinancialService\ClientPortal.WebApi.FinancialService.PriceStructureDTO.datasource">
+    <Content Include="Connected Services\FinancialService\CdT.ClientPortal.WebApi.FinancialService.PriceStructureDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Connected Services\FinancialService\configuration91.svcinfo" />
@@ -474,7 +474,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59409</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/ClientPortal.WebApi</IISUrl>
+          <IISUrl>http://localhost/CdT.ClientPortal.WebApi</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

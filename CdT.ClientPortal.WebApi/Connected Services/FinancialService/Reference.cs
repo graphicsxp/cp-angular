@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClientPortal.WebApi.FinancialService {
+namespace CdT.ClientPortal.WebApi.FinancialService {
     using System.Runtime.Serialization;
     using System;
     
@@ -159,25 +159,25 @@ namespace ClientPortal.WebApi.FinancialService {
     public interface IFinancialService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFinancialService/GetPrice", ReplyAction="http://tempuri.org/IFinancialService/GetPriceResponse")]
-        ClientPortal.WebApi.FinancialService.PriceStructureDTO GetPrice(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal quantity, int organizationId, bool hasReduction, string deliveryMode);
+        CdT.ClientPortal.WebApi.FinancialService.PriceStructureDTO GetPrice(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal quantity, int organizationId, bool hasReduction, string deliveryMode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFinancialService/GetPrice", ReplyAction="http://tempuri.org/IFinancialService/GetPriceResponse")]
-        System.Threading.Tasks.Task<ClientPortal.WebApi.FinancialService.PriceStructureDTO> GetPriceAsync(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal quantity, int organizationId, bool hasReduction, string deliveryMode);
+        System.Threading.Tasks.Task<CdT.ClientPortal.WebApi.FinancialService.PriceStructureDTO> GetPriceAsync(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal quantity, int organizationId, bool hasReduction, string deliveryMode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFinancialService/GetPriceRecalculated", ReplyAction="http://tempuri.org/IFinancialService/GetPriceRecalculatedResponse")]
-        ClientPortal.WebApi.FinancialService.PriceStructureDTO GetPriceRecalculated(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal originalQuantity, decimal builtQuantity, int organizationId, bool hasReduction, string deliveryMode);
+        CdT.ClientPortal.WebApi.FinancialService.PriceStructureDTO GetPriceRecalculated(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal originalQuantity, decimal builtQuantity, int organizationId, bool hasReduction, string deliveryMode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFinancialService/GetPriceRecalculated", ReplyAction="http://tempuri.org/IFinancialService/GetPriceRecalculatedResponse")]
-        System.Threading.Tasks.Task<ClientPortal.WebApi.FinancialService.PriceStructureDTO> GetPriceRecalculatedAsync(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal originalQuantity, decimal builtQuantity, int organizationId, bool hasReduction, string deliveryMode);
+        System.Threading.Tasks.Task<CdT.ClientPortal.WebApi.FinancialService.PriceStructureDTO> GetPriceRecalculatedAsync(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal originalQuantity, decimal builtQuantity, int organizationId, bool hasReduction, string deliveryMode);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IFinancialServiceChannel : ClientPortal.WebApi.FinancialService.IFinancialService, System.ServiceModel.IClientChannel {
+    public interface IFinancialServiceChannel : CdT.ClientPortal.WebApi.FinancialService.IFinancialService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class FinancialServiceClient : System.ServiceModel.ClientBase<ClientPortal.WebApi.FinancialService.IFinancialService>, ClientPortal.WebApi.FinancialService.IFinancialService {
+    public partial class FinancialServiceClient : System.ServiceModel.ClientBase<CdT.ClientPortal.WebApi.FinancialService.IFinancialService>, CdT.ClientPortal.WebApi.FinancialService.IFinancialService {
         
         public FinancialServiceClient() {
         }
@@ -198,19 +198,19 @@ namespace ClientPortal.WebApi.FinancialService {
                 base(binding, remoteAddress) {
         }
         
-        public ClientPortal.WebApi.FinancialService.PriceStructureDTO GetPrice(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal quantity, int organizationId, bool hasReduction, string deliveryMode) {
+        public CdT.ClientPortal.WebApi.FinancialService.PriceStructureDTO GetPrice(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal quantity, int organizationId, bool hasReduction, string deliveryMode) {
             return base.Channel.GetPrice(serviceType, priority, referenceDate, sourceLanguage, targetLanguage, sourceFormat, isConfidential, quantity, organizationId, hasReduction, deliveryMode);
         }
         
-        public System.Threading.Tasks.Task<ClientPortal.WebApi.FinancialService.PriceStructureDTO> GetPriceAsync(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal quantity, int organizationId, bool hasReduction, string deliveryMode) {
+        public System.Threading.Tasks.Task<CdT.ClientPortal.WebApi.FinancialService.PriceStructureDTO> GetPriceAsync(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal quantity, int organizationId, bool hasReduction, string deliveryMode) {
             return base.Channel.GetPriceAsync(serviceType, priority, referenceDate, sourceLanguage, targetLanguage, sourceFormat, isConfidential, quantity, organizationId, hasReduction, deliveryMode);
         }
         
-        public ClientPortal.WebApi.FinancialService.PriceStructureDTO GetPriceRecalculated(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal originalQuantity, decimal builtQuantity, int organizationId, bool hasReduction, string deliveryMode) {
+        public CdT.ClientPortal.WebApi.FinancialService.PriceStructureDTO GetPriceRecalculated(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal originalQuantity, decimal builtQuantity, int organizationId, bool hasReduction, string deliveryMode) {
             return base.Channel.GetPriceRecalculated(serviceType, priority, referenceDate, sourceLanguage, targetLanguage, sourceFormat, isConfidential, originalQuantity, builtQuantity, organizationId, hasReduction, deliveryMode);
         }
         
-        public System.Threading.Tasks.Task<ClientPortal.WebApi.FinancialService.PriceStructureDTO> GetPriceRecalculatedAsync(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal originalQuantity, decimal builtQuantity, int organizationId, bool hasReduction, string deliveryMode) {
+        public System.Threading.Tasks.Task<CdT.ClientPortal.WebApi.FinancialService.PriceStructureDTO> GetPriceRecalculatedAsync(string serviceType, string priority, System.DateTime referenceDate, string sourceLanguage, string targetLanguage, string sourceFormat, bool isConfidential, decimal originalQuantity, decimal builtQuantity, int organizationId, bool hasReduction, string deliveryMode) {
             return base.Channel.GetPriceRecalculatedAsync(serviceType, priority, referenceDate, sourceLanguage, targetLanguage, sourceFormat, isConfidential, originalQuantity, builtQuantity, organizationId, hasReduction, deliveryMode);
         }
     }
