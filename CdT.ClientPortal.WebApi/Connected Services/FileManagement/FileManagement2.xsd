@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/FileManagementService/FileManagement.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService" />
+  <xs:element name="CloneFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService" minOccurs="0" name="fileRequest" nillable="true" type="q1:CloneFileRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CloneFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService" minOccurs="0" name="CloneFileResult" nillable="true" type="q2:StoreFileResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService" minOccurs="0" name="deletefileRequest" nillable="true" type="q3:DeleteFileRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService" minOccurs="0" name="DeleteFileResult" nillable="true" type="q4:DeleteFileResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StoreFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService" minOccurs="0" name="storeFileRequest" nillable="true" type="q5:StoreFileRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StoreFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService" minOccurs="0" name="StoreFileResult" nillable="true" type="q6:StoreFileResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

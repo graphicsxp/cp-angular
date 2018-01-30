@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/FileManagementService/FileManagement.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="CloneFileRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExternalStorageFileId" type="ser:guid" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CloneFileRequest" nillable="true" type="tns:CloneFileRequest" />
+  <xs:complexType name="StoreFileResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FileId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StoreFileResponse" nillable="true" type="tns:StoreFileResponse" />
+  <xs:complexType name="FileIOFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FaultType" type="tns:FileIOFault.FaultTypes" />
+      <xs:element minOccurs="0" name="InternalException" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InternalStackTrace" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FileIOFault" nillable="true" type="tns:FileIOFault" />
+  <xs:simpleType name="FileIOFault.FaultTypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FileNotFoundError" />
+      <xs:enumeration value="UnableToDeleteError" />
+      <xs:enumeration value="UnableToStoreError" />
+      <xs:enumeration value="OtherError" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FileIOFault.FaultTypes" nillable="true" type="tns:FileIOFault.FaultTypes" />
+  <xs:complexType name="DeleteFileRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FileId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DeleteFileRequest" nillable="true" type="tns:DeleteFileRequest" />
+  <xs:complexType name="DeleteFileResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="DeleteFileResponse" nillable="true" type="tns:DeleteFileResponse" />
+  <xs:complexType name="StoreFileRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Anonymize" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ExternalStorageFileId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="FileData" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StoreFileRequest" nillable="true" type="tns:StoreFileRequest" />
+</xs:schema>
