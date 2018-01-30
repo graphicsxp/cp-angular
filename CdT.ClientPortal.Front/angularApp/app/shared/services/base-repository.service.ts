@@ -81,7 +81,7 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
 
       if (state.sort) {
         state.sort.forEach(element => {
-          query = query.orderBy(element.field + ' ' + element.dir);
+          query = query.orderBy(element.field + ' ' + (element.dir || 'desc'));
         });
       }
 
