@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="3bbfd8cf-348b-4962-8765-d4e2bd905a7f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/FileManagementService/FileManagement.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="FileManagement.xsd" MetadataType="Schema" ID="abe1ee65-af01-48c0-8982-a2f4eaafb07a" SourceId="1" SourceUrl="http://localhost/FileManagementService/FileManagement.svc?xsd=xsd2" />
+    <MetadataFile FileName="FileManagement.disco" MetadataType="Disco" ID="ffad224c-f3d2-47d2-8afd-5dcf6c4c98a2" SourceId="1" SourceUrl="http://localhost/FileManagementService/FileManagement.svc?disco" />
+    <MetadataFile FileName="FileManagement.wsdl" MetadataType="Wsdl" ID="ac170c35-f5a2-4c27-af40-9aed9e1fd9ab" SourceId="1" SourceUrl="http://localhost/FileManagementService/FileManagement.svc?wsdl" />
+    <MetadataFile FileName="FileManagement1.xsd" MetadataType="Schema" ID="c35db2c8-2f3e-418c-a176-0200633b047b" SourceId="1" SourceUrl="http://localhost/FileManagementService/FileManagement.svc?xsd=xsd1" />
+    <MetadataFile FileName="FileManagement2.xsd" MetadataType="Schema" ID="77ab4b84-f8ac-4449-949f-88d6828df4ae" SourceId="1" SourceUrl="http://localhost/FileManagementService/FileManagement.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
