@@ -23,7 +23,7 @@ using ClientPortal.WebApi;
 using ClientPortal.WebApi.Model;
 using ClientPortal.Model;
 using CdT.UI.Common.SaveMap;
-using ClientPortal.WebApi.FileManagement;
+using CdT.ClientPortal.WebApi.FileManagement;
 
 namespace ClientPortal.Controllers
 {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClientPortal.WebApi.FileManagement {
+namespace CdT.ClientPortal.WebApi.FileManagement {
     using System.Runtime.Serialization;
     using System;
     
@@ -132,7 +132,7 @@ namespace ClientPortal.WebApi.FileManagement {
         private string ErrorMessageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ClientPortal.WebApi.FileManagement.FileIOFault.FaultTypes FaultTypeField;
+        private CdT.ClientPortal.WebApi.FileManagement.FileIOFault.FaultTypes FaultTypeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string InternalExceptionField;
@@ -164,7 +164,7 @@ namespace ClientPortal.WebApi.FileManagement {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ClientPortal.WebApi.FileManagement.FileIOFault.FaultTypes FaultType {
+        public CdT.ClientPortal.WebApi.FileManagement.FileIOFault.FaultTypes FaultType {
             get {
                 return this.FaultTypeField;
             }
@@ -401,34 +401,34 @@ namespace ClientPortal.WebApi.FileManagement {
     public interface IFileManagement {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileManagement/CloneFile", ReplyAction="http://tempuri.org/IFileManagement/CloneFileResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ClientPortal.WebApi.FileManagement.FileIOFault), Action="http://tempuri.org/IFileManagement/CloneFileFileIOFaultFault", Name="FileIOFault", Namespace="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService")]
-        ClientPortal.WebApi.FileManagement.StoreFileResponse CloneFile(ClientPortal.WebApi.FileManagement.CloneFileRequest fileRequest);
+        [System.ServiceModel.FaultContractAttribute(typeof(CdT.ClientPortal.WebApi.FileManagement.FileIOFault), Action="http://tempuri.org/IFileManagement/CloneFileFileIOFaultFault", Name="FileIOFault", Namespace="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService")]
+        CdT.ClientPortal.WebApi.FileManagement.StoreFileResponse CloneFile(CdT.ClientPortal.WebApi.FileManagement.CloneFileRequest fileRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileManagement/CloneFile", ReplyAction="http://tempuri.org/IFileManagement/CloneFileResponse")]
-        System.Threading.Tasks.Task<ClientPortal.WebApi.FileManagement.StoreFileResponse> CloneFileAsync(ClientPortal.WebApi.FileManagement.CloneFileRequest fileRequest);
+        System.Threading.Tasks.Task<CdT.ClientPortal.WebApi.FileManagement.StoreFileResponse> CloneFileAsync(CdT.ClientPortal.WebApi.FileManagement.CloneFileRequest fileRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileManagement/DeleteFile", ReplyAction="http://tempuri.org/IFileManagement/DeleteFileResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ClientPortal.WebApi.FileManagement.FileIOFault), Action="http://tempuri.org/IFileManagement/DeleteFileFileIOFaultFault", Name="FileIOFault", Namespace="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService")]
-        ClientPortal.WebApi.FileManagement.DeleteFileResponse DeleteFile(ClientPortal.WebApi.FileManagement.DeleteFileRequest deletefileRequest);
+        [System.ServiceModel.FaultContractAttribute(typeof(CdT.ClientPortal.WebApi.FileManagement.FileIOFault), Action="http://tempuri.org/IFileManagement/DeleteFileFileIOFaultFault", Name="FileIOFault", Namespace="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService")]
+        CdT.ClientPortal.WebApi.FileManagement.DeleteFileResponse DeleteFile(CdT.ClientPortal.WebApi.FileManagement.DeleteFileRequest deletefileRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileManagement/DeleteFile", ReplyAction="http://tempuri.org/IFileManagement/DeleteFileResponse")]
-        System.Threading.Tasks.Task<ClientPortal.WebApi.FileManagement.DeleteFileResponse> DeleteFileAsync(ClientPortal.WebApi.FileManagement.DeleteFileRequest deletefileRequest);
+        System.Threading.Tasks.Task<CdT.ClientPortal.WebApi.FileManagement.DeleteFileResponse> DeleteFileAsync(CdT.ClientPortal.WebApi.FileManagement.DeleteFileRequest deletefileRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileManagement/StoreFile", ReplyAction="http://tempuri.org/IFileManagement/StoreFileResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(ClientPortal.WebApi.FileManagement.FileIOFault), Action="http://tempuri.org/IFileManagement/StoreFileFileIOFaultFault", Name="FileIOFault", Namespace="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService")]
-        ClientPortal.WebApi.FileManagement.StoreFileResponse StoreFile(ClientPortal.WebApi.FileManagement.StoreFileRequest storeFileRequest);
+        [System.ServiceModel.FaultContractAttribute(typeof(CdT.ClientPortal.WebApi.FileManagement.FileIOFault), Action="http://tempuri.org/IFileManagement/StoreFileFileIOFaultFault", Name="FileIOFault", Namespace="http://schemas.datacontract.org/2004/07/CdT.Storage.FileManagementService")]
+        CdT.ClientPortal.WebApi.FileManagement.StoreFileResponse StoreFile(CdT.ClientPortal.WebApi.FileManagement.StoreFileRequest storeFileRequest);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFileManagement/StoreFile", ReplyAction="http://tempuri.org/IFileManagement/StoreFileResponse")]
-        System.Threading.Tasks.Task<ClientPortal.WebApi.FileManagement.StoreFileResponse> StoreFileAsync(ClientPortal.WebApi.FileManagement.StoreFileRequest storeFileRequest);
+        System.Threading.Tasks.Task<CdT.ClientPortal.WebApi.FileManagement.StoreFileResponse> StoreFileAsync(CdT.ClientPortal.WebApi.FileManagement.StoreFileRequest storeFileRequest);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IFileManagementChannel : ClientPortal.WebApi.FileManagement.IFileManagement, System.ServiceModel.IClientChannel {
+    public interface IFileManagementChannel : CdT.ClientPortal.WebApi.FileManagement.IFileManagement, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class FileManagementClient : System.ServiceModel.ClientBase<ClientPortal.WebApi.FileManagement.IFileManagement>, ClientPortal.WebApi.FileManagement.IFileManagement {
+    public partial class FileManagementClient : System.ServiceModel.ClientBase<CdT.ClientPortal.WebApi.FileManagement.IFileManagement>, CdT.ClientPortal.WebApi.FileManagement.IFileManagement {
         
         public FileManagementClient() {
         }
@@ -449,27 +449,27 @@ namespace ClientPortal.WebApi.FileManagement {
                 base(binding, remoteAddress) {
         }
         
-        public ClientPortal.WebApi.FileManagement.StoreFileResponse CloneFile(ClientPortal.WebApi.FileManagement.CloneFileRequest fileRequest) {
+        public CdT.ClientPortal.WebApi.FileManagement.StoreFileResponse CloneFile(CdT.ClientPortal.WebApi.FileManagement.CloneFileRequest fileRequest) {
             return base.Channel.CloneFile(fileRequest);
         }
         
-        public System.Threading.Tasks.Task<ClientPortal.WebApi.FileManagement.StoreFileResponse> CloneFileAsync(ClientPortal.WebApi.FileManagement.CloneFileRequest fileRequest) {
+        public System.Threading.Tasks.Task<CdT.ClientPortal.WebApi.FileManagement.StoreFileResponse> CloneFileAsync(CdT.ClientPortal.WebApi.FileManagement.CloneFileRequest fileRequest) {
             return base.Channel.CloneFileAsync(fileRequest);
         }
         
-        public ClientPortal.WebApi.FileManagement.DeleteFileResponse DeleteFile(ClientPortal.WebApi.FileManagement.DeleteFileRequest deletefileRequest) {
+        public CdT.ClientPortal.WebApi.FileManagement.DeleteFileResponse DeleteFile(CdT.ClientPortal.WebApi.FileManagement.DeleteFileRequest deletefileRequest) {
             return base.Channel.DeleteFile(deletefileRequest);
         }
         
-        public System.Threading.Tasks.Task<ClientPortal.WebApi.FileManagement.DeleteFileResponse> DeleteFileAsync(ClientPortal.WebApi.FileManagement.DeleteFileRequest deletefileRequest) {
+        public System.Threading.Tasks.Task<CdT.ClientPortal.WebApi.FileManagement.DeleteFileResponse> DeleteFileAsync(CdT.ClientPortal.WebApi.FileManagement.DeleteFileRequest deletefileRequest) {
             return base.Channel.DeleteFileAsync(deletefileRequest);
         }
         
-        public ClientPortal.WebApi.FileManagement.StoreFileResponse StoreFile(ClientPortal.WebApi.FileManagement.StoreFileRequest storeFileRequest) {
+        public CdT.ClientPortal.WebApi.FileManagement.StoreFileResponse StoreFile(CdT.ClientPortal.WebApi.FileManagement.StoreFileRequest storeFileRequest) {
             return base.Channel.StoreFile(storeFileRequest);
         }
         
-        public System.Threading.Tasks.Task<ClientPortal.WebApi.FileManagement.StoreFileResponse> StoreFileAsync(ClientPortal.WebApi.FileManagement.StoreFileRequest storeFileRequest) {
+        public System.Threading.Tasks.Task<CdT.ClientPortal.WebApi.FileManagement.StoreFileResponse> StoreFileAsync(CdT.ClientPortal.WebApi.FileManagement.StoreFileRequest storeFileRequest) {
             return base.Channel.StoreFileAsync(storeFileRequest);
         }
     }
