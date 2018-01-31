@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Cdt.ClientPortal.WebApi.Models
+namespace CdT.ClientPortal.WebApi.Model
 {
     public class MaterialDTO
     {

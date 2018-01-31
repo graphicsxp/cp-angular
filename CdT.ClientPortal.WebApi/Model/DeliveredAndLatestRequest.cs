@@ -1,6 +1,4 @@
-﻿using ClientPortal.Dto;
-
-namespace ClientPortal.Model
+﻿namespace CdT.ClientPortal.WebApi.Model
 {
     public class DeliveredAndLatestRequest
     {

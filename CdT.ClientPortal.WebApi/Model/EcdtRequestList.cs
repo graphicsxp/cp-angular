@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace ClientPortal.Dto
+namespace CdT.ClientPortal.WebApi.Model
 {
     [DataContract]
     public class EcdtRequestList

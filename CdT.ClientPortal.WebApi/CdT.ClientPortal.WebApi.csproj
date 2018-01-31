@@ -227,17 +227,9 @@
     <Reference Include="NServiceBus.Serilog.Tracing, Version=3.0.3.0, Culture=neutral, PublicKeyToken=ce8ec7717ba6fbb6, processorArchitecture=MSIL">
       <HintPath>..\packages\NServiceBus.Serilog.Tracing.3.0.3\lib\net452\NServiceBus.Serilog.Tracing.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.DataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\cdt\e-cdt\sprints\dev\SharedBinaries\ThirdParty\Oracle.DataAccess.dll</HintPath>
-    </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Oracle.Web, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\cdt\e-cdt\sprints\dev\SharedBinaries\ThirdParty\Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -403,9 +395,11 @@
     <Compile Include="Controllers\EAIController.cs" />
     <Compile Include="Controllers\ExternalController.cs" />
     <Compile Include="Controllers\FileManagementController.cs" />
+    <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="EAIContext.cs" />
     <Compile Include="Helpers\BreezeAfterSave.cs" />
+    <Compile Include="Helpers\NHibernateSessionFactory.cs" />
     <Compile Include="Model\CreateTemplateDto.cs" />
     <Compile Include="Model\DeliveredAndLatestRequest.cs" />
     <Compile Include="Model\EcdtRequestList.cs" />
@@ -414,6 +408,10 @@
     <Compile Include="Model\MaterialDTO.cs" />
     <Compile Include="Model\PriceRequestDTO.cs" />
     <Compile Include="Model\PriceResponseDTO.cs" />
+    <Compile Include="Model\SaveUserRoles.cs" />
+    <Compile Include="Model\UserEditDTO.cs" />
+    <Compile Include="Model\UserListDTO.cs" />
+    <Compile Include="Model\UserRolesDTO.cs" />
     <Compile Include="OwinStartup.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

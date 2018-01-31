@@ -11,8 +11,8 @@ namespace ClientPortal.Controllers
     using CdT.EAI.BL.Models;
     using CdT.EAI.BL.Interfaces;
     using System;
-    using ClientPortal.Model;
     using CdT.ClientPortal.WebApi.FinancialService;
+    using CdT.ClientPortal.WebApi.Model;
 
     public class ExternalController : BaseApiController
     {

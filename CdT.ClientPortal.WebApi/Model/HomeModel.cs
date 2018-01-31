@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ClientPortal.Models
+namespace CdT.ClientPortal.WebApi.Model
 {
     /// <summary>
     /// Model injected in the start page

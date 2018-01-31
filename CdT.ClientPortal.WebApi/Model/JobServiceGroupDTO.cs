@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ClientPortal.WebApi.Model
+namespace CdT.ClientPortal.WebApi.Model
 {
     public class JobServiceGroupDTO
     {

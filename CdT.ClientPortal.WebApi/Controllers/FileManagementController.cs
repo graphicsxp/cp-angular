@@ -10,8 +10,7 @@ using System.Web.Http;
 using CdT.EAI.Model.Business;
 using CdT.UI.Common;
 using NHibernate;
-using NHibernate.Linq;
-using Cdt.ClientPortal.WebApi.Models;
+using CdT.ClientPortal.WebApi.Model;
 using Serilog;
 
 namespace ClientPortal.Controllers

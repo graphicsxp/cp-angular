@@ -31,7 +31,7 @@ using CdT.UI.Common.Linq;
 using ClientPortal.Helpers;
 using CdT.ClientPortal.WebApi.FileManagement;
 
-namespace ClientPortal.WebApi
+namespace CdT.ClientPortal.WebApi
 {
     public class EAIContext : NHContext
     {

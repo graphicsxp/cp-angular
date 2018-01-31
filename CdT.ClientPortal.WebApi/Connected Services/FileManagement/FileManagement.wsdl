@@ -160,7 +160,7 @@
       <soap:address location="http://localhost/FileManagementService/FileManagement.svc" />
     </wsdl:port>
     <wsdl:port name="BasicHttpsBinding_IFileManagement" binding="tns:BasicHttpsBinding_IFileManagement">
-      <soap:address location="https://w7204.communication1.ntld/FileManagementService/FileManagement.svc" />
+      <soap:address location="https://w7265.communication1.ntld/FileManagementService/FileManagement.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

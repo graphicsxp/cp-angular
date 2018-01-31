@@ -4,7 +4,7 @@ using Autofac.Integration.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace ClientPortal.WebApi
+namespace CdT.ClientPortal.WebApi
 {
     public class WebApiApplication : System.Web.HttpApplication, IContainerProviderAccessor
     {
