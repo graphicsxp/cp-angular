@@ -27,6 +27,10 @@ export class RequestsListComponent implements OnInit {
   public state: State = {
     skip: 0,
     take: 10,
+    // sort: [{
+    //   dir: 'desc',
+    //   field: 'creationDate'
+    // }]
     // filter: {
     //   logic: 'and',
     //   filters: [{ field: 'client.id', operator: 'equals', value: 'e839bbdd-3329-404c-9f84-a87400b1430a' },

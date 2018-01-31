@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
+import { Form } from '@angular/forms';
 
 @Component({
   selector: 'app-validator',
