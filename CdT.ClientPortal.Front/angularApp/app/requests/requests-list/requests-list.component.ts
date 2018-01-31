@@ -27,16 +27,14 @@ export class RequestsListComponent implements OnInit {
   public state: State = {
     skip: 0,
     take: 10,
-    // sort: [{
-    //   dir: 'desc',
-    //   field: 'creationDate'
-    // }]
-    // filter: {
-    //   logic: 'and',
-    //   filters: [{ field: 'client.id', operator: 'equals', value: 'e839bbdd-3329-404c-9f84-a87400b1430a' },
-    //   { field: 'status.code', operator: 'contains', value: ['EXPI', 'PEND'] },
-    //   { field: 'requestIdentifier', operator: 'equals', value: '2018/000005' }]
-    // }
+    sort: [{
+      dir: 'desc',
+      field: 'requestIdentifier'
+    }],
+    filter: {
+      logic: 'and',
+      filters: [{ field: 'client.id', operator: 'equals', value: '86244550-e6bb-46e3-bb77-a5bb01102935' }]
+    }
   };
 
   public pageChange(event: PageChangeEvent): void {
@@ -44,6 +42,10 @@ export class RequestsListComponent implements OnInit {
     this.mySelection = [];
   }
 
+  /**
+   * 
+   * @param state 
+   */
   public dataStateChange(state: DataStateChangeEvent): void {
     this.state = state;
     this._requestService.query(state);

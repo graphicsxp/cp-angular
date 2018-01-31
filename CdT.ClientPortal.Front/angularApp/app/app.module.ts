@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { onAppInit } from './app.init';
 import { EntityManagerService } from './entity-manager.service';
+import { CanDeactivateGuard } from './shared/can-deactivate-guard';
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import { EntityManagerService } from './entity-manager.service';
     ],
     providers: [
         EntityManagerService,
+        CanDeactivateGuard,
         { provide: APP_INITIALIZER, useFactory: onAppInit, multi: true, deps: [EntityManagerService] }
     ],
     bootstrap: [AppComponent],

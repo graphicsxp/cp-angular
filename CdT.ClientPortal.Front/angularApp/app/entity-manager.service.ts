@@ -1,10 +1,11 @@
 import { environment } from './../environments/environment';
 import { NamingConvention, NavigationProperty, EntityState } from 'breeze-client';
 import { EntityManager, EntityQuery } from 'breeze-client';
-// from 'breeze-client-labs';
+import 'breeze-client-labs/breeze.getEntityGraph';
 import { Injectable } from '@angular/core';
 import { RegistrationHelper } from './model/registration-helper';
 import * as _ from 'lodash';
+import { EntityAction } from 'breeze-client';
 /**
  * Provides a breeze EntityManager at application level. 
  * Configures the metadataStore. This is meant to be done once at application startup (see APP_INITIALIZER)
@@ -135,39 +136,60 @@ export class EntityManagerService {
   }
 
   /**
+   * Triggers a change notification accross the entityManager for a given entity
+   * If the entity is in status Added, we call the breeze private method _notifyStateChange.
+   * Otherewise just call setModified().
+   * That should normally not be required, but as long as breeze doesn't support m-2-m associations
+   * we'll have to do that.
+   * @method triggerStatusNotification
+   * @entity{Object}: the entity of which we check the status
+   */
+  public triggerStatusNotification(entity) {
+    if (!entity) {
+      return;
+    }
+    if (entity.entityAspect.entityState.name === 'Added') {
+      this.em.hasChangesChanged.publish({ entityManager: this, hasChanges: true });
+      this.em.entityChanged.publish({ entityAction: EntityAction.EntityStateChange, entity: entity });
+    } else {
+      entity.entityAspect.setModified();
+    }
+  }
+
+  /**
         * returns a flag, which is true if the entity or one of its properties has validation errors
         * only direct properties right now
         * filter detached entities before checking errors
         */
-  // public hasErrors(entities, properties) {
-  //   if (entities) {
-  //     var filteredEntities;
-  //     //if it's an array, filter detached entities
-  //     if (Array.isArray(entities)) {
-  //       filteredEntities = _.filter(entities, function (entity) {
-  //         return entity.entityAspect.entityState !== EntityState.Detached;
-  //       });
-  //     }
-  //     else {
-  //       // if it's an entity, check if not detached and build a single item array with it
-  //       if (entities.entityAspect.entityState === EntityState.Detached) {
-  //         filteredEntities = [];
-  //       }
-  //       else {
-  //         filteredEntities = [entities];
-  //       }
-  //     }
-  //     // filter also deleted entities
-  //     var entitiesGraph = EntityManager.getEntityGraph(filteredEntities, properties).filter(function (entity) {
-  //       return entity.entityAspect.entityState !== EntityState.Deleted;
-  //     });
-  //     var hasError = _.some(entitiesGraph, function (entity) {
-  //       return entity.entityAspect.hasValidationErrors;
-  //     });
-  //     return hasError;
-  //   }
-  //   else {
-  //     return false;
-  //   }
-  // }
+  public hasErrors(entities, properties) {
+    if (entities) {
+      var filteredEntities;
+      //if it's an array, filter detached entities
+      if (Array.isArray(entities)) {
+        filteredEntities = _.filter(entities, function (entity) {
+          return entity.entityAspect.entityState !== EntityState.Detached;
+        });
+      }
+      else {
+        // if it's an entity, check if not detached and build a single item array with it
+        if (entities.entityAspect.entityState === EntityState.Detached) {
+          filteredEntities = [];
+        }
+        else {
+          filteredEntities = [entities];
+        }
+      }
+      // filter also deleted entities
+      var entitiesGraph = this.em.getEntityGraph(filteredEntities, properties).filter(function (entity) {
+        return entity.entityAspect.entityState !== EntityState.Deleted;
+      });
+      var hasError = _.some(entitiesGraph, function (entity) {
+        return entity.entityAspect.hasValidationErrors;
+      });
+      return hasError;
+    }
+    else {
+      return false;
+    }
+  }
 }

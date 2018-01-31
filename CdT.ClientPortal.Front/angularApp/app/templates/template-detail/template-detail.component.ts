@@ -23,4 +23,7 @@ export class TemplateDetailComponent implements OnInit {
     })
   }
 
+  onSave(){
+    
+  }
 }

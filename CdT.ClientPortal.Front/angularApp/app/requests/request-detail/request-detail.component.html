@@ -36,7 +36,8 @@
                     <div class="form-group">
                         <label class="control-label col-md-4" for="contacts">Contact(s)</label>
                         <div class="controls col-md-7">
-                            <kendo-multiselect name="requestContacts" [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [(ngModel)]="selectedContacts"></kendo-multiselect>
+                            <!-- <kendo-multiselect name="requestContacts" [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [(ngModel)]="selectedContacts"></kendo-multiselect> -->
+                            <app-multiselect [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [model]="selectedContacts" (modelChange)="onSelectedContactsChanged($event)"></app-multiselect>
                         </div>
                         <div class="controls col-md-1">
                             <span *ngIf="selectedContacts.length === 0" class="text-error">
@@ -71,7 +72,8 @@
                     <div class="form-group">
                         <label class="control-label col-md-4" for="deliverTo">Deliver to</label>
                         <div class="controls col-md-7">
-                            <kendo-multiselect name="deliverTo" [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [(ngModel)]="selectedRecipients"></kendo-multiselect>
+                            <!-- <kendo-multiselect name="deliverTo" [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [(ngModel)]="selectedRecipients"></kendo-multiselect> -->
+                            <app-multiselect [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [model]="selectedRecipients" (modelChange)="onSelectedRecipientsChanged($event)"></app-multiselect>
                         </div>
                         <div class="controls col-md-1">
                             <span *ngIf="selectedRecipients.length === 0" class="text-error">
@@ -131,10 +133,12 @@
     </fieldset>
 
     <div class="row">
-        <div class="clearfix form-actions">
-            <div class="pull-right">
-                <button class="btn btn-primary" type="submit" [disabled]="!canSave()">Save</button>
-                <a id="btnJobs" class="btn btn-primary" routerLink="jobs" data-title="define jobs" bs-tooltip>Next</a>
+        <div class="col-md-12">
+            <div class="clearfix form-actions pull-right">
+                <div class="pull-right">
+                    <button class="btn btn-primary" type="submit" [disabled]="!canSave()">Save</button>
+                    <a id="btnJobs" class="btn btn-primary" routerLink="jobs" data-title="define jobs" bs-tooltip>Next</a>
+                </div>
             </div>
         </div>
     </div>
