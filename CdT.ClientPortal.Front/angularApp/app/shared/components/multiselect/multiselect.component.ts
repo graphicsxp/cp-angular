@@ -1,5 +1,5 @@
 import { Contact } from './../../../model/contact';
-import { Component, OnInit, Input, DoCheck, IterableDiffers, IterableDiffer, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, DoCheck, IterableDiffers, IterableDiffer, Output, EventEmitter, OnChanges } from '@angular/core';
 
 /**
  * This component encapsulates the kendo multiselect and accepts an array of Any as datasource.
@@ -17,7 +17,7 @@ import { Component, OnInit, Input, DoCheck, IterableDiffers, IterableDiffer, Out
             </kendo-multiselect>
   `
 })
-export class MultiselectComponent implements OnInit, DoCheck {
+export class MultiselectComponent implements OnInit, DoCheck, OnChanges {
   private _differ: IterableDiffer<any>;
   private _initialized: boolean = false;
 
@@ -32,6 +32,10 @@ export class MultiselectComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this._differ = this._differs.find(this.model).create(null);
+  }
+
+  ngOnChanges(changes){
+
   }
 
   ngDoCheck() {
