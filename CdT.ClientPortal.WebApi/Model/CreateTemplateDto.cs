@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ClientPortal.Model
+namespace CdT.ClientPortal.WebApi.Model
 {
     public class CreateTemplateDto
     {

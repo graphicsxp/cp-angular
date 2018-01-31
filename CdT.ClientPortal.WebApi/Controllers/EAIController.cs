@@ -19,11 +19,10 @@ using System.ServiceModel;
 using System.Threading;
 using System.Web.Http;
 using CdT.EAI.Wcf;
-using ClientPortal.WebApi;
-using ClientPortal.WebApi.Model;
-using ClientPortal.Model;
 using CdT.UI.Common.SaveMap;
 using CdT.ClientPortal.WebApi.FileManagement;
+using CdT.ClientPortal.WebApi.Model;
+using CdT.ClientPortal.WebApi;
 
 namespace ClientPortal.Controllers
 {

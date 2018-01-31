@@ -1,4 +1,4 @@
-﻿namespace ClientPortal.Model
+﻿namespace CdT.ClientPortal.WebApi.Model
 {
     using CdT.ClientPortal.WebApi.FinancialService;
     using System;
