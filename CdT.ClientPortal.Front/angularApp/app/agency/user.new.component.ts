@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Rx';
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { AgencyService } from './agency.service';
 
 @Component({
   templateUrl: './user.new.component.html',
@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class UserNewComponent implements OnInit {
 
-  constructor(private http: HttpClient) {
+  constructor(private agencyService: AgencyService) {
 
   }
 
@@ -18,21 +18,20 @@ export class UserNewComponent implements OnInit {
   }
 
   public onSave(): void {
-    this.http.post('http://localhost/cdt.clientportal.webapi/api/UserManagement/SaveUser',
-      {
-        userName: 'nullela',
-        email: 'laurent.nullens@ext.cdt.europa.eu',
-        firstName: 'Laurent',
-        lastName: 'Nullens',
-        phoneNume: 304,
-        isApproved: true
-      }).subscribe(
+    this.agencyService.createUser({
+      userName: 'nullela',
+      email: 'laurent.nullens@ext.cdt.europa.eu',
+      firstName: 'Laurent',
+      lastName: 'Nullens',
+      phoneNume: 304,
+      isApproved: true
+    })/*.subscribe(
       res => {
         console.log(res);
       },
       err => {
         console.log('Error occured');
       }
-      );
+      )*/;
   }
 }

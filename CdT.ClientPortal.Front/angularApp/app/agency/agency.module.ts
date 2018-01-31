@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { GridHelpersModule } from '../grid-helpers/grid-helpers.module';
 import { AgencyRoutes } from './agency.routes';
 
+import { AgencyService } from './agency.service';
 import { UserNewComponent } from './user.new.component';
 
 @NgModule({
@@ -20,6 +21,6 @@ import { UserNewComponent } from './user.new.component';
   declarations: [
     UserNewComponent
   ],
-  providers: [],
+  providers: [AgencyService],
 })
 export class AgencyModule { }
