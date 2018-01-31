@@ -33,7 +33,7 @@ export class RequestsListComponent implements OnInit {
     }],
     filter: {
       logic: 'and',
-      filters: [{ field: 'client.id', operator: 'equals', value: '86244550-e6bb-46e3-bb77-a5bb01102935' }]
+      filters: [{ field: 'client.id', operator: 'equals', value: 'b442c0f6-784e-4763-96bc-a7a2008aa352' }]
     }
   };
 

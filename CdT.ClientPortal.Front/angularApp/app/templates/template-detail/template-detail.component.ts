@@ -5,7 +5,7 @@ import { TemplateService } from '../templates.service';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-template-detail',
+  selector: 'cdt-template-detail',
   templateUrl: './template-detail.component.html',
   styleUrls: ['./template-detail.component.scss']
 })

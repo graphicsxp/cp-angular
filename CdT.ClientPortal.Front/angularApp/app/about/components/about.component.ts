@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-about-component',
+    selector: 'cdt-about-component',
     templateUrl: './about.component.html'
 })
 

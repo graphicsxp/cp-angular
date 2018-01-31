@@ -8,9 +8,10 @@ import { NgForm } from '@angular/forms';
 import * as _ from 'lodash';
 import { Contact } from '../../model/contact';
 import { EntityState } from 'breeze-client';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 
 @Component({
-  selector: 'app-request-detail',
+  selector: 'cdt-request-detail',
   templateUrl: './request-detail.component.html',
   styleUrls: ['./request-detail.component.scss'],
 })
@@ -30,7 +31,12 @@ export class RequestDetailComponent implements OnInit {
   @ViewChild('requestForm') requestForm: NgForm;
   @ViewChild("templateList") templateList;
 
-  constructor(private _requestService: RequestService, private _entityManagerService: EntityManagerService, private _route: ActivatedRoute, private _router: Router) {
+  constructor(
+    private _requestService: RequestService,
+    private _entityManagerService: EntityManagerService,
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _toasterService: ToasterService) {
     //this.filteredTemplateList = this.templates.slice();
   }
 
@@ -81,10 +87,10 @@ export class RequestDetailComponent implements OnInit {
     this._entityManagerService.triggerStatusNotification(this.request);
   };
 
-/**
- * 
- * @param value 
- */
+  /**
+   * 
+   * @param value 
+   */
   handleFilter(value) {
     this.filteredTemplateList = this.templates.filter((s) => s.text.toLowerCase().indexOf(value.toLowerCase()) !== -1);
   }
@@ -100,7 +106,8 @@ export class RequestDetailComponent implements OnInit {
     this._entityManagerService.checkMany2ManyModifications('RequestDeliveryContact', this.request, this.selectedRecipients, this.request.requestDeliveryContacts, 'request', 'contact', false);
 
     this._requestService.save().then(() => {
-      this._router.navigate(['requests']);
+      //this._router.navigate(['requests']);
+      this._toasterService.pop('success', 'The request was saved successfully !');
     }, error => {
       if (!error.entityErrors && error.message) {
         //use toaster and intercept elsewhere

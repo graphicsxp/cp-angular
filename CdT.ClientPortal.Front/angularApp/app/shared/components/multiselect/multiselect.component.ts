@@ -8,7 +8,7 @@ import { Component, OnInit, Input, DoCheck, IterableDiffers, IterableDiffer, Out
  * to handle it. 
  */
 @Component({
-  selector: 'app-multiselect',
+  selector: 'cdt-multiselect',
   template: `<kendo-multiselect
             [data]="data" 
             [textField]="textField" 

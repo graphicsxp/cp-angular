@@ -1,7 +1,7 @@
 ﻿import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    selector: 'app-component',
+    selector: 'cdt-component',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     encapsulation: ViewEncapsulation.None

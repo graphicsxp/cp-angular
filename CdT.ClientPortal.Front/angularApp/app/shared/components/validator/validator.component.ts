@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { Form } from '@angular/forms';
 
 @Component({
-  selector: 'app-validator',
+  selector: 'cdt-validator',
   templateUrl: './validator.component.html',
   styleUrls: ['./validator.component.scss']
 })

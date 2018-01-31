@@ -1,0 +1,66 @@
+<td>
+  extension icon
+  <!-- <extension-icon extension="sourceMaterial.material.documentFormat.code"></extension-icon> -->
+   {{sourceMaterial.material.documentFormat.code}}
+</td>
+<td>
+  filename + downloader
+  <!-- <download ng-if="canSetPrivacy(sourceMaterial)" material="sourceMaterial.material" />
+  <a ng-if="!canSetPrivacy(sourceMaterial)" ng-click="denyDownload()">{{sourceMaterial.material.fileName}}</a>
+  <validator model="sourceMaterial.material" validate-property="fileName"></validator> -->
+</td>
+<td>{{sourceMaterial.uploadedBy}}</td>
+<td>
+  <input name="isPrivate" type="checkbox" class="ios-switch" [ngModel]="sourceMaterial.isPrivate" [disabled]="sourceMaterial.isScreenDeleted || !canSetPrivacy(sourceMaterial)"
+  />
+  <span class="switch"></span>
+  <i class="fa fa-info-circle fa-lg ng-scope" bs-tooltip="" data-title="A document marked as private and all related outcomes are accessible only by the person that has uploaded the document"></i>
+</td>
+<td class="text-nowrap">
+  <!-- <cancelable-select css-class="form-control" identifier="OutputFormat{{$index}}" order-by-field="'defaultLabel'" selected-value="sourceMaterial.deliverableDocumentFormat"
+    options="sourceMaterial.targetFormats" external-function="onOutputFormatChanged"></cancelable-select>
+  <validator model="sourceMaterial" validate-property="deliverableDocumentFormat"></validator> -->
+</td>
+<td class="text-nowrap">
+  <span *ngIf="!sourceMaterial.selectedSourceLanguages || sourceMaterial.selectedSourceLanguages.length===0" class="text-error">
+    <span class="control-mandatory help-inline ">
+      <i class="fa fa-asterisk"></i>
+    </span>
+  </span>
+  <!-- <a class="language-picker-call singleline-ellipsis" bs-tooltip data-title="{{sourceMaterial.selectedSourceLanguages | splitArrayToString:'defaultLabel'}}">{{sourceMaterial.selectedSourceLanguages | splitArrayToString:'abbreviation'}}</a> -->
+  <!-- <language-picker model="sourceMaterial.selectedSourceLanguages" icon="'icon'" id="LanguagePicker{{$index}}" ng-show="!(vm.request.status.code==='MTS' && !hasRightToSend() && vm.improvementsAvalaible)" -->
+  />
+</td>
+<td *ngIf="pricingPolicy2018Avalaible">
+  <!-- <select id="{{ 'Confidentiality-' + $index }}" name="confidentiality" ng-class="cssClass" ng-disabled="sourceMaterial.isScreenDeleted"
+    ng-change="confidentialityChanged(sourceMaterial)" ng-model="sourceMaterial.confidentiality" ng-options="f.defaultLabel for f in vm.confidentialities | orderBy: orderByField"></select>
+  <i ng-if="sourceMaterial.confidentiality.code=='SC'" class="fa fa-info-circle fa-lg ng-scope" style="color:red" aria-hidden="true"
+    bs-tooltip data-title="{{sourceMaterial.confidentiality.description}}"></i>
+  <validator model="sourceMaterial" validate-property="confidentiality"></validator> -->
+</td>
+<td *ngIf="!pricingPolicy2018Avalaible">
+  <input name="isConfidential" type="checkbox" class="ios-switch" [ngModel]="sourceMaterial.isConfidential" [disabled]="sourceMaterial.isScreenDeleted"
+    (click)="toggleConfidential(sourceMaterial)" />
+  <span class="switch"></span>
+</td>
+<td *ngIf="!pricingPolicy2018Avalaible">
+  <div *ngIf="sourceMaterial.isConfidential">
+    Outsourceable:
+    <input name="isExternalized" type="checkbox" class="ios-switch" [ngModel]="sourceMaterial.isExternalized" [disabled]="sourceMaterial.isScreenDeleted"
+    />
+    <span class="switch"></span>
+  </div>
+</td>
+<td>
+  <a id="{{ 'btnDelete-' + $index }}" class="btn grid-button grid-edit-row btn-danger" *ngIf="!sourceMaterial.isScreenDeleted"
+    (click)="toggleDelete(sourceMaterial)">
+    <i class="fa fa-trash-o"></i>
+  </a>
+  <a class="btn grid-button grid-edit-row btn-primary" *ngIf="sourceMaterial.isScreenDeleted" (click)="toggleDelete(sourceMaterial)">
+    <i class="fa fa-refresh"></i>
+  </a>
+  <!-- <a class="btn grid-button grid-edit-row btn-primary" id="SrcCopyDown" *ngIf="sourceMaterial.material.fileName === getFirstNotDeletedMaterial().material.fileName && vm.request.sourceMaterials.length > 1"
+    (click)="batchUpdate($index)">
+    <i class="fa fa-arrow-down"></i>
+  </a> -->
+</td>

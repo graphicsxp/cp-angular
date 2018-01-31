@@ -8,7 +8,7 @@ import { DialogService, DialogRef, DialogCloseResult } from '@progress/kendo-ang
 import { DialogAction } from '@progress/kendo-angular-dialog';
 
 @Component({
-  selector: 'app-templates-list',
+  selector: 'cdt-templates-list',
   templateUrl: './templates-list.component.html',
   styleUrls: ['./templates-list.component.scss']
 })

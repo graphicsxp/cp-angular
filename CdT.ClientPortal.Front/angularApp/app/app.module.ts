@@ -1,3 +1,4 @@
+import { ToasterModule } from 'angular2-toaster';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -29,7 +30,8 @@ import { CanDeactivateGuard } from './shared/can-deactivate-guard';
         SharedModule,
         CoreModule.forRoot(),
         HomeModule,
-        DialogModule
+        DialogModule,
+        ToasterModule
     ],
 
     declarations: [
