@@ -1,8 +1,12 @@
 <div class="widget grid-wrapper table-responsive" *ngIf="request.id">
-  <div id="dropZone" class="grid-toolbar" *ngIf="!(request.status.code==='MTS' && !hasRightToSend())">
+
+  <kendo-upload [saveUrl]="uploadSaveUrl"></kendo-upload>
+
+  <div id="dropZone" class="grid-toolbar">
     <!-- the condition for disabling the uploader is that the number of documents has reached 100 -->
-    <!-- <file-uploader max-length="80" maxfiles="99" array-list-uploaded="vm.uploadedFiles" file-type="source" accepted-formats="vm.sourceMaterialSupportedFormats"
-          is-disabled="vm.request.sourceMaterials.length >= 100" callback="callback" uploaded-files="getFileNames()" drop-zone="dropZone"></file-uploader> -->
+    <!-- <file-uploader max-length="80 " maxfiles="99 " array-list-uploaded="vm.uploadedFiles " file-type="source
+    " accepted-formats="vm.sourceMaterialSupportedFormats "
+          is-disabled="vm.request.sourceMaterials.length>= 100" callback="callback" uploaded-files="getFileNames()" drop-zone="dropZone"></file-uploader> -->
   </div>
   <div class="table-numdocs">
     <span ng-hide="request.id">N/A</span>
@@ -28,7 +32,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr cdt-source-materials-list-item *ngFor="let sourceMaterial of request.sourceMaterials" [sourceMaterial]="sourceMaterial" 
+        <tr cdt-source-materials-list-item *ngFor="let sourceMaterial of request.sourceMaterials" [sourceMaterial]="sourceMaterial"
           [ngClass]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[sourceMaterial.isScreenDeleted]">
       </tbody>
     </table>

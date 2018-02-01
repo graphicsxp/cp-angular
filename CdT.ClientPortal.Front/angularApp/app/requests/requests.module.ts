@@ -5,6 +5,7 @@ import { RequestContactsConcat } from './request-contacts-concat.pipe';
 import { RequestsListComponent } from './requests-list/requests-list.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { UploadModule } from '@progress/kendo-angular-upload';
 
 import { FormsModule } from '@angular/forms';
 import { GridHelpersModule } from '../grid-helpers/grid-helpers.module';
@@ -22,6 +23,7 @@ import { SourceMaterialsListItemComponent } from './source-materials-list-item/s
     GridHelpersModule,
     RequestsRoutes,
     SharedModule,
+    UploadModule
     // TemplatesModule
   ],
   declarations: [
