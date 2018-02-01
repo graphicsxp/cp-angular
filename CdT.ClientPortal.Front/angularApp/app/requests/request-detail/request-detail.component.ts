@@ -74,7 +74,7 @@ export class RequestDetailComponent implements OnInit {
    * @param event The event contains the new array of values
    */
   onSelectedContactsChanged(event) {
-    this.selectedContacts = event;
+    this.selectedContacts = Object.assign({}, event);
     this._entityManagerService.triggerStatusNotification(this.request);
   };
 

@@ -1,6 +1,10 @@
 import { Contact } from './../../../model/contact';
+<<<<<<< HEAD
 import { Component, OnInit, Input, DoCheck, IterableDiffers, IterableDiffer, Output, EventEmitter } from '@angular/core';
 import { OnChanges, SimpleChanges } from '@angular/core';
+=======
+import { Component, OnInit, Input, DoCheck, IterableDiffers, IterableDiffer, Output, EventEmitter, OnChanges } from '@angular/core';
+>>>>>>> 09644ff2b756c159b7d578fc08dff9c77b40537e
 
 /**
  * This component encapsulates the kendo multiselect and accepts an array of Any as datasource.
@@ -35,10 +39,16 @@ export class MultiselectComponent implements OnInit, /*OnChanges,*/ DoCheck {
     this._differ = this._differs.find(this.model).create(null);
   }
 
+<<<<<<< HEAD
   // ngOnChanges(changes: SimpleChanges) {
   //   console.log(changes);
   //   this.modelChange.emit(this.model);
   // }
+=======
+  ngOnChanges(changes){
+
+  }
+>>>>>>> 09644ff2b756c159b7d578fc08dff9c77b40537e
 
   ngDoCheck() {
     let changes = this._differ.diff(this.model);
