@@ -29,8 +29,8 @@ jsf.extend('faker', function() {
 });
 
 jsf.resolve(schema).then(data => {
-    data.metadata = JSON.parse(fs.readFileSync('./metadata.json', 'utf8'));
-    data.lookups = JSON.parse(fs.readFileSync('./lookups.json', 'utf8'));
+    data.metadata = JSON.parse(fs.readFileSync('./mocks/metadata.json', 'utf8'));
+    data.lookups = JSON.parse(fs.readFileSync('./mocks/lookups.json', 'utf8'));
     let json = JSON.stringify(data);
     let dir = './';
     if (!fs.existsSync(dir)) {
