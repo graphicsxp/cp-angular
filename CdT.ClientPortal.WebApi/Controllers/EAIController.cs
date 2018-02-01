@@ -19,11 +19,10 @@ using System.ServiceModel;
 using System.Threading;
 using System.Web.Http;
 using CdT.EAI.Wcf;
-using ClientPortal.WebApi;
-using ClientPortal.WebApi.Model;
-using ClientPortal.Model;
 using CdT.UI.Common.SaveMap;
 using CdT.ClientPortal.WebApi.FileManagement;
+using CdT.ClientPortal.WebApi.Model;
+using CdT.ClientPortal.WebApi;
 
 namespace ClientPortal.Controllers
 {
@@ -188,9 +187,9 @@ namespace ClientPortal.Controllers
         public object Lookups() // returns an object, not an IQueryable
         {
             // filtered by client
-            //var clients = this._context.Clients.Where(p => p.ClientPortalId == userProfile.Personal.OrganisationId).ToFuture();
-            //var departments = this._context.Departments.OrderBy(p => p.DisplayOrder).Where(p => p.Client.ClientPortalId == userProfile.Personal.OrganisationId).ToFuture();
-            //var contacts = this._context.Contacts.Where(p => p.Client.ClientPortalId == userProfile.Personal.OrganisationId).ToFuture();
+            var clients = this._context.Clients.ToFuture();
+            var departments = this._context.Departments.OrderBy(p => p.DisplayOrder).ToFuture();
+            var contacts = this._context.Contacts.ToFuture();
 
             // not filtered
             //exclude sdl format from supporte formats. can't operate at db leverl because it may be supported in another solutions Fp or Ecdt
@@ -225,9 +224,9 @@ namespace ClientPortal.Controllers
 
             return new
             {
-                //clients,
-                //departments,
-                //contacts,
+                clients,
+                departments,
+                contacts,
                 countries,
                 currencies,
                 purposes,

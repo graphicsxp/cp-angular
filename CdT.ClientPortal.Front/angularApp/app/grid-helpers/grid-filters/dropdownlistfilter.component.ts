@@ -4,7 +4,7 @@ import { FilterService, BaseFilterCellComponent } from '@progress/kendo-angular-
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
-    selector: 'app-dropdown-filter',
+    selector: 'cdt-dropdown-filter',
     template: `
     <kendo-dropdownlist
       [data]="data"

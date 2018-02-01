@@ -54,6 +54,7 @@
         "@progress/kendo-data-query": "^1.1.2",
         "@progress/kendo-drawing": "^1.4.1",
         "@progress/kendo-theme-default": "^2.47.2",
+        "angular2-toaster": "^4.0.2",
         "bootstrap": "4.0.0",
         "breeze-bridge2-angular": "^1.0.0-beta.0",
         "breeze-client": "^1.6.3",
@@ -64,6 +65,7 @@
         "lodash": "^4.17.4",
         "ngx-bootstrap": "^2.0.1",
         "popper.js": "^1.12.9",
+        "primeng": "^5.2.0",
         "rxjs": "5.5.6",
         "zone.js": "0.8.20"
     },

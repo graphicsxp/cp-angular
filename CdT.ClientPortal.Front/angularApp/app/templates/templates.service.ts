@@ -10,8 +10,11 @@ export class TemplateService extends BaseRepositoryService {
 
   constructor(protected _entityManagerService: EntityManagerService) {
     super(_entityManagerService);
-
     this.entityName = 'RequestTemplate';
+  }
+
+  public create() {
+    return super.create();
   }
 
   public query(state: any): void {
@@ -19,7 +22,7 @@ export class TemplateService extends BaseRepositoryService {
       .subscribe(x => super.next(x));
   }
 
-  public delete(dataItem: any): void{
+  public delete(dataItem: any): void {
     console.log(dataItem);
   }
 }

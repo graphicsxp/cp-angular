@@ -8,13 +8,15 @@ using Autofac;
 using CdT.EAI.BL.Interfaces;
 using CdT.EAI.Dal.NH;
 using NHibernate;
-using NServiceBus;
 using CdT.EAI.BL.Request;
-using CdT.EAI.BusService.Common;
 using AutofacSerilogIntegration;
 using System.Security.Principal;
+using NHibernate.AspNet.Identity;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
+using CdT.ClientPortal.WebApi.Helpers;
 
-namespace ClientPortal.WebApi.App_Start
+namespace CdT.ClientPortal.WebApi.App_Start
 {
     /// <summary>
     ///     Specifies the Unity configuration for the main container.
@@ -48,6 +50,9 @@ namespace ClientPortal.WebApi.App_Start
         /// </remarks>
         public static void RegisterTypes(ContainerBuilder container)
         {
+            // session used by asp.net identity
+            container.Register(x => NHibernateSessionFactory.SessionFactory.OpenSession()).Named<ISession>("usr_session").As<ISession>().InstancePerRequest();
+
             // default session
             container.Register(x =>
             {
@@ -57,23 +62,28 @@ namespace ClientPortal.WebApi.App_Start
                 return session;
             }).As<ISession>().InstancePerRequest();
 
+            // asp.net identity registration
+            container.RegisterType<RoleStore<ClientPortalRole>>()
+                .WithParameter((pi, ctx) => pi.ParameterType == typeof(ISession), (pi, ctx) => ctx.ResolveNamed<ISession>("usr_session"))
+                .As<IRoleStore<ClientPortalRole>>().InstancePerRequest();
+            container.RegisterType<UserStore<ClientPortalUser>>()
+                .WithParameter((pi, ctx) => pi.ParameterType == typeof(ISession), (pi, ctx) => ctx.ResolveNamed<ISession>("usr_session"))
+                .As<IUserStore<ClientPortalUser>>().InstancePerRequest();
+            container.Register(x => HttpContext.Current.GetOwinContext().Authentication).As<IAuthenticationManager>().InstancePerRequest();
+            container.RegisterType<ClientPortalUserManager>().AsSelf().InstancePerRequest();
+            container.RegisterType<ClientPortalRoleManager>().AsSelf().InstancePerRequest();
+            container.RegisterType<ClientPortalSignInManager>().AsSelf().InstancePerRequest();
 
+            // bl
             container.RegisterType<RequestBL>().As<IRequestBL>().InstancePerRequest();
+            container.RegisterType<EAIContext>().AsSelf().InstancePerRequest();
+
+            // breeze context
             container.RegisterType<EAIContext>().AsSelf().InstancePerRequest();
 
             container.Register(u => HttpContext.Current.User).As<IPrincipal>().InstancePerRequest();
 
             container.RegisterLogger();
-            /*
-            // NServicebus registration
-            var endpointConfiguration = new EndpointConfiguration("clientportalweb2");
-            endpointConfiguration.SendOnly();
-            endpointConfiguration.ConfigureForEcdt();
-            endpointConfiguration.Conventions().DefiningCommandsAs(t => t.Namespace != null && t.Namespace.StartsWith("CdT.EAI.Commands"));
-            endpointConfiguration.AssemblyScanner().CustomExcludeAssemblies();
-            IEndpointInstance endpointInstance = Endpoint.Start(endpointConfiguration).GetAwaiter().GetResult();
-            container.RegisterInstance<IMessageSession>(endpointInstance).OnRelease(p => endpointInstance.Stop().GetAwaiter().GetResult());*/
-
         }
     }
 }

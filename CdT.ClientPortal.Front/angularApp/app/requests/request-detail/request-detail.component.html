@@ -9,8 +9,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4" for="requestTemplate">Template</label>
                         <div class="controls col-md-7">
-                            <kendo-combobox #templateList [data]="filteredTemplateList" [textField]="'text'" [valueField]="'value'" [filterable]="true"
-                                (filterChange)="handleFilter($event)" [placeholder]="'Apply a template'"></kendo-combobox>
+                            <p-dropdown #templateList [options]="filteredTemplateList" (onChange)="handleFilter($event)" [filter]="true"  optionLabel="text" dataKey="value" placeholder="Apply a template"></p-dropdown>
                             <a id="btnNewTemplate" class="btn btn-primary btn-sm pull-right" target="_blank" routerLink="/templates/detail/new" data-title="Create a new template"
                                 bs-tooltip>New</a>
                         </div>
@@ -24,19 +23,18 @@
                     <div class="form-group">
                         <label class="control-label col-md-4" for="department">Department</label>
                         <div class="controls col-md-7">
-                            <!-- <app-data-field-select [disabled]="!canSelectDepartment()" [propName]="'department'" [propLabel]="'Department'" [entity]="request" [dataSource]="request.client.departments"></app-data-field-select>; -->
                             <select id="department" name="department" class="form-control" [disabled]="!canSelectDepartment()" [(ngModel)]="request.department">
                                 <option *ngFor="let department of request.client.departments" [ngValue]="department">{{department.defaultLabel}}</option>
                             </select>
                         </div>
                         <div class="controls col-md-1">
-                            <app-validator [entity]="request" [propName]="'department'"></app-validator>
+                            <cdt-validator [entity]="request" [propName]="'department'"></cdt-validator>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-4" for="contacts">Contact(s)</label>
                         <div class="controls col-md-7">
-                            <kendo-multiselect name="requestContacts" [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [(ngModel)]="selectedContacts"></kendo-multiselect>
+                            <cdt-multiselect [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [model]="selectedContacts" (modelChange)="onSelectedContactsChanged($event)"></cdt-multiselect>
                         </div>
                         <div class="controls col-md-1">
                             <span *ngIf="selectedContacts.length === 0" class="text-error">
@@ -64,14 +62,14 @@
                             </div>
                         </div>
                         <div class="controls col-md-1">
-                            <app-validator [entity]="request" [propName]="'phoneCountryCode'"></app-validator>
-                            <app-validator [entity]="request" [propName]="'phoneNumber'"></app-validator>
+                            <cdt-validator [entity]="request" [propName]="'phoneCountryCode'"></cdt-validator>
+                            <cdt-validator [entity]="request" [propName]="'phoneNumber'"></cdt-validator>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-4" for="deliverTo">Deliver to</label>
                         <div class="controls col-md-7">
-                            <kendo-multiselect name="deliverTo" [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [(ngModel)]="selectedRecipients"></kendo-multiselect>
+                            <cdt-multiselect [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [model]="selectedRecipients" (modelChange)="onSelectedRecipientsChanged($event)"></cdt-multiselect>
                         </div>
                         <div class="controls col-md-1">
                             <span *ngIf="selectedRecipients.length === 0" class="text-error">
@@ -91,7 +89,7 @@
                             <input id="title" class="form-control" type="text" name="title" [(ngModel)]="request.title" />
                         </div>
                         <div class="controls col-md-1">
-                            <app-validator [entity]="request" [propName]="'title'"></app-validator>
+                            <cdt-validator [entity]="request" [propName]="'title'"></cdt-validator>
                         </div>
                     </div>
                     <div class="form-group">
@@ -108,7 +106,7 @@
                             </select>
                         </div>
                         <div class="controls col-md-1">
-                            <app-validator [entity]="request" [propName]="'purpose'"></app-validator>
+                            <cdt-validator [entity]="request" [propName]="'purpose'"></cdt-validator>
                         </div>
                     </div>
                     <div class="form-group">
@@ -122,19 +120,30 @@
                             if you request this functionnality, we need access codes to your CMS
                         </div>
                         <div class="controls col-md-1">
-                            <app-validator [entity]="request" [propName]="'deliveryMode'"></app-validator>
+                            <cdt-validator [entity]="request" [propName]="'deliveryMode'"></cdt-validator>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <h2>
+            Source document(s)</h2>
+        <div class="row">
+            <div class="col-md-12 request-edition ">
+                <!-- <cdt-source-materials-list [request]="request"></cdt-source-materials-list> -->
+            </div>
+        </div>
+
     </fieldset>
 
     <div class="row">
-        <div class="clearfix form-actions">
-            <div class="pull-right">
-                <button class="btn btn-primary" type="submit" [disabled]="!canSave()">Save</button>
-                <a id="btnJobs" class="btn btn-primary" routerLink="jobs" data-title="define jobs" bs-tooltip>Next</a>
+        <div class="col-md-12">
+            <div class="clearfix form-actions pull-right">
+                <div class="pull-right">
+                    <button class="btn btn-primary" type="submit" [disabled]="!canSave()">Save</button>
+                    <a id="btnJobs" class="btn btn-primary" routerLink="jobs" data-title="define jobs" bs-tooltip>Next</a>
+                </div>
             </div>
         </div>
     </div>

@@ -12,6 +12,8 @@ import { RequestsRoutes } from './requests.routes';
 import { RequestService } from './requests.service';
 import { RequestDetailComponent } from './request-detail/request-detail.component';
 import { RequestJobsComponent } from './request-jobs/request-jobs.component';
+import { SourceMaterialsListComponent } from './source-materials-list/source-materials-list.component';
+import { SourceMaterialsListItemComponent } from './source-materials-list-item/source-materials-list-item.component';
 
 @NgModule({
   imports: [
@@ -26,7 +28,9 @@ import { RequestJobsComponent } from './request-jobs/request-jobs.component';
     RequestsListComponent,
     RequestContactsConcat,
     RequestDetailComponent,
-    RequestJobsComponent
+    RequestJobsComponent,
+    SourceMaterialsListComponent,
+    SourceMaterialsListItemComponent
   ],
   providers: [RequestService, /*InitGuard,*/ RequestDetailResolver],
 })

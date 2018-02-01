@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-navigation',
+    selector: 'cdt-navigation',
     templateUrl: 'navigation.component.html'
 })
 

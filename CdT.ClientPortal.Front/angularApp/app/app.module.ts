@@ -1,3 +1,4 @@
+import { ToasterModule } from 'angular2-toaster';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,6 +16,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { onAppInit } from './app.init';
 import { EntityManagerService } from './entity-manager.service';
+import { CanDeactivateGuard } from './shared/can-deactivate-guard';
+import { CustomValidatorService } from './shared/services/custom-validator.service';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
     imports: [
@@ -28,7 +33,10 @@ import { EntityManagerService } from './entity-manager.service';
         SharedModule,
         CoreModule.forRoot(),
         HomeModule,
-        DialogModule
+        DialogModule,
+        ToasterModule,
+        MultiSelectModule,
+        DropdownModule
     ],
 
     declarations: [
@@ -36,11 +44,13 @@ import { EntityManagerService } from './entity-manager.service';
     ],
     providers: [
         EntityManagerService,
+        CustomValidatorService,
+        CanDeactivateGuard,
         { provide: APP_INITIALIZER, useFactory: onAppInit, multi: true, deps: [EntityManagerService] }
     ],
     bootstrap: [AppComponent],
 })
 
 export class AppModule {
- 
+
 }

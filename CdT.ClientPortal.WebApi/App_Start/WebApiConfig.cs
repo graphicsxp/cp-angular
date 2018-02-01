@@ -10,7 +10,7 @@ using System.Web.Http.Routing;
 //using CdT.UI.Common.Formatting;
 using Elmah.Contrib.WebApi;
 
-namespace ClientPortal.WebApi
+namespace CdT.ClientPortal.WebApi
 {
     public static class WebApiConfig
     {

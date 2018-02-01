@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RequestDetailComponent } from './request-detail/request-detail.component';
 import { RequestJobsComponent } from './request-jobs/request-jobs.component';
 import { RequestDetailResolver } from './request-detail/request-detail-resolver.service';
+import { CanDeactivateGuard } from '../shared/can-deactivate-guard';
 
 
 const routes: Routes = [
@@ -11,7 +12,7 @@ const routes: Routes = [
         path: '', children: [
             { path: '', component: RequestsListComponent },
             { path: 'requests', component: RequestsListComponent },
-            { path: 'detail/:id', component: RequestDetailComponent, resolve: { request: RequestDetailResolver } },
+            { path: 'detail/:id', component: RequestDetailComponent, resolve: { request: RequestDetailResolver }, canDeactivate: [CanDeactivateGuard] },
             { path: 'detail/:id/jobs', component: RequestJobsComponent }
         ]
     }

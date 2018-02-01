@@ -4,7 +4,7 @@ import { ThingService } from './../../core/services/thing-data.service';
 import { Thing } from './../../models/thing';
 
 @Component({
-    selector: 'app-home-component',
+    selector: 'cdt-home-component',
     templateUrl: './home.component.html'
 })
 

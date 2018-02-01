@@ -1,3 +1,4 @@
+import { LookupNames } from './../../model/lookups';
 import { Purpose, Client, Status, Request, DeliveryMode, RequestTemplate } from './../../model/entity-model';
 
 import { EntityManagerService } from './../../entity-manager.service';
@@ -9,6 +10,7 @@ import 'rxjs/add/operator/catch';
 import { EntityManager, EntityQuery, Predicate, FilterQueryOp } from 'breeze-client';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { groupBy } from '@progress/kendo-data-query';
+import { RequestType } from '../../model/request-type';
 
 /**
  * The BaseRepositoryService implements basic CRUD operations. It should remain as generic as possible.
@@ -21,7 +23,7 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
     super(null);
   }
 
-  public create(args = null) {
+  protected create(args = null) {
     args = args || {};
     return this._entityManagerService.em.createEntity(<string>this.entityName, args);
   }
@@ -116,24 +118,7 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
     return promise;
   }
 
-  getStatuses(): Status[] {
-    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("Statuss")) as Status[];
+  getLookup(name:LookupNames): any[] {
+    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from(name));
   }
-
-  getClients(): Client[] {
-    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("Clients")) as Client[];
-  }
-
-  getPurposes(): Purpose[] {
-    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("Purposes")) as Purpose[];
-  }
-
-  getDeliveryModes(): DeliveryMode[] {
-    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("DeliveryModes")) as DeliveryMode[];
-  }
-
-  getRequestTemplates(): RequestTemplate[] {
-    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from("RequestTemplates")) as RequestTemplate[];
-  }
-
 }

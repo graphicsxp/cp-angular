@@ -1,6 +1,11 @@
 ﻿@import './styles/app.scss';
 @import "~@progress/kendo-theme-default/scss/all";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.min.css";
+@import '~angular2-toaster/toaster.css';
 
+@import '~primeng/resources/themes/omega/theme.css';
+@import '~primeng/resources/primeng.min.css';
 
 .widget {
     background-color: #ffffff;
@@ -12,7 +17,6 @@
     margin-bottom: 15px;
     min-height: 62px;
 }
-
 
 textarea,
 select,
@@ -41,7 +45,9 @@ input[type="color"],
     min-height: 30px;
 }
 
+
 /*add / edit client | Add / Adit User | Add / Edit Request */
+
 .form-group select,
 .form-group input[type="text"],
 .form-group input[type="password"],
@@ -66,15 +72,17 @@ input[type="datetime"] {
     width: 120px;
 }
 
-    input[type="datetime"]::-ms-clear {
-        width: 0;
-        height: 0;
-        /* display:none => strange effects with padding-right*/
-    }
+input[type="datetime"]::-ms-clear {
+    width: 0;
+    height: 0;
+    /* display:none => strange effects with padding-right*/
+}
 
 .form-group select {
     padding: 0;
 }
+
+
 /**/
 
 .input-group {
@@ -84,7 +92,6 @@ input[type="datetime"] {
 .input-group-addon {
     min-width: 34px;
 }
-
 
 .form-group textarea,
 .form-group input[type="text"],
@@ -113,20 +120,25 @@ input[type="datetime"] {
     margin-top: 5px;
 }
 
-    .form-group .table-condensed a {
-        font-size: 10px;
-        padding: 0;
-    }
+.form-group .table-condensed a {
+    font-size: 10px;
+    padding: 0;
+}
+
 
 /* reduce padding when fields display inline in the form */
+
 .form-group .controls-inline div[class^="col-md"] {
     padding-right: 0;
 }
 
-    .form-group .controls-inline div[class^="col-md"] ~ div[class^="col-md"] {
-        padding: 0 0 0 2px;
-    }
+.form-group .controls-inline div[class^="col-md"]~div[class^="col-md"] {
+    padding: 0 0 0 2px;
+}
+
+
 /* button following fields displaying inline in a form */
+
 .btn-controls-inline {
     padding: 5px 0;
     background: none;
@@ -179,38 +191,40 @@ select.disabled {
     width: 100% !important;
 }
 
-    .select2-container-multi .select2-choices {
-        background: none;
-        background-image: none !important;
-        border: 0 !important;
-        background-color: transparent !important;
-    }
+.select2-container-multi .select2-choices {
+    background: none;
+    background-image: none !important;
+    border: 0 !important;
+    background-color: transparent !important;
+}
 
-        .select2-container-multi .select2-choices .select2-search-choice {
-            background-image: none !important;
-            border: 0 !important;
-            -webkit-box-shadow: none !important;
-            box-shadow: none !important;
-            background-color: #eee !important;
-            font-size: 12px !important;
-        }
+.select2-container-multi .select2-choices .select2-search-choice {
+    background-image: none !important;
+    border: 0 !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    background-color: #eee !important;
+    font-size: 12px !important;
+}
+
 
 /**/
 
+
 /*validations in a form*/
 
-.has-error{
-	background-color: #d00018;
-	color:#fff !important;
+.has-error {
+    background-color: #d00018;
+    color: #fff !important;
 }
 
 .validation-summary-errors {
     color: #d00018;
 }
 
-    .validation-summary-errors li {
-        list-style-type: none;
-    }
+.validation-summary-errors li {
+    list-style-type: none;
+}
 
 .help-inline.control-warning {
     color: #d00018;
@@ -220,11 +234,11 @@ select.disabled {
     padding-bottom: 0;
 }
 
-    .validation-summary-errors li:before,
-    .help-inline.control-warning:before {
-        content: "\f071 ";
-        font-family: FontAwesome;
-    }
+.validation-summary-errors li:before,
+.help-inline.control-warning:before {
+    content: "\f071 ";
+    font-family: FontAwesome;
+}
 
 .help-inline.control-mandatory {
     color: #ff6a00;

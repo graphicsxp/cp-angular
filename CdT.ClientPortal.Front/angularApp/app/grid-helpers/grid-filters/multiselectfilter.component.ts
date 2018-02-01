@@ -4,7 +4,7 @@ import { FilterService, BaseFilterCellComponent } from '@progress/kendo-angular-
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
-  selector: 'app-multiselect-filter',
+  selector: 'cdt-multiselect-filter',
   template: `
     <kendo-multiselect [data]="data"
     [textField]="textField"

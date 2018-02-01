@@ -1,3 +1,4 @@
+import { Priority } from './priority';
 import { EntityBase } from './entity-base';
 import { Forecast } from './forecast';
 import { RequestType } from './request-type';
@@ -24,26 +25,43 @@ import * as _ from 'lodash';
 export class Request extends EntityBase {
 
   /// <code> Place custom code between <code> tags
+  isScreenDeleted: boolean;
+  priority: Priority;
+  closestDeadline: Date;
+
   constructor() {
     super();
   }
 
-  static requestPostInitializer(request) {
+  static requestPostInitializer(request: Request) {
     if (request.id === DataType.Guid.defaultValue) {
-
+      request.quotationOnly = false;
+      request.isScreenDeleted = false;
+      request.phoneCountryCode = '';
+      request.phoneNumber = '';
+      request.fromApplication = 'ClientPortal';
+      request.isSecondAssessmentNeeded = false;
+      request.forceSecondAssessment = false;
+      request.shouldMergePostProcessing = false;
+      request.areCommentsPublished = false;
+      request.isCFCFlowLaunched = false;
+      request.areCommentsPublished = false;
+      request.blockAutomation = false;
+      request.quotationOnly = false;
+      request.lTSConfirmedVolume = false;
     } else {
-      let priority = { displayOrder: 0, defaultLabel: '' };
+      let priority: Priority = null;
       let service = '';
-      let closestDeadline = null;
+      let closestDeadline: Date = null;
 
       request.sourceMaterials.forEach(function (sourceMaterial) {
         if (sourceMaterial.jobs) {
           sourceMaterial.jobs.forEach(function (job) {
-            if (job.priority && job.priority.displayOrder > priority.displayOrder) {
+            if (job.priority && job.priority.displayOrder > (priority && priority.displayOrder || 0)) {
               priority = job.priority;
               service = job.service.code;
             }
-            
+
             if ((!closestDeadline || job.deadline < closestDeadline) && job.jobStatus.code === 'INP') {
               closestDeadline = job.deadline;
             }

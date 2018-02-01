@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-custom-footer',
+    selector: 'cdt-custom-footer',
     templateUrl: './customfooter.component.html'
 })
 
