@@ -3,6 +3,10 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.min.css";
 @import '~angular2-toaster/toaster.css';
+
+@import '~primeng/resources/themes/omega/theme.css';
+@import '~primeng/resources/primeng.min.css';
+
 .widget {
     background-color: #ffffff;
     -webkit-border-radius: 4px;

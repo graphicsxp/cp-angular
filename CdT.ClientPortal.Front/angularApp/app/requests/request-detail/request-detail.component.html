@@ -9,8 +9,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4" for="requestTemplate">Template</label>
                         <div class="controls col-md-7">
-                            <kendo-combobox #templateList [data]="filteredTemplateList" [textField]="'text'" [valueField]="'value'" [filterable]="true"
-                                (filterChange)="handleFilter($event)" [placeholder]="'Apply a template'"></kendo-combobox>
+                            <p-dropdown #templateList [options]="filteredTemplateList" (onChange)="handleFilter($event)" [filter]="true"  optionLabel="text" dataKey="value" placeholder="Apply a template"></p-dropdown>
                             <a id="btnNewTemplate" class="btn btn-primary btn-sm pull-right" target="_blank" routerLink="/templates/detail/new" data-title="Create a new template"
                                 bs-tooltip>New</a>
                         </div>
@@ -24,7 +23,6 @@
                     <div class="form-group">
                         <label class="control-label col-md-4" for="department">Department</label>
                         <div class="controls col-md-7">
-                            <!-- <cdt-data-field-select [disabled]="!canSelectDepartment()" [propName]="'department'" [propLabel]="'Department'" [entity]="request" [dataSource]="request.client.departments"></cdt-data-field-select>; -->
                             <select id="department" name="department" class="form-control" [disabled]="!canSelectDepartment()" [(ngModel)]="request.department">
                                 <option *ngFor="let department of request.client.departments" [ngValue]="department">{{department.defaultLabel}}</option>
                             </select>
@@ -36,7 +34,6 @@
                     <div class="form-group">
                         <label class="control-label col-md-4" for="contacts">Contact(s)</label>
                         <div class="controls col-md-7">
-                            <!-- <kendo-multiselect name="requestContacts" [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [(ngModel)]="selectedContacts"></kendo-multiselect> -->
                             <cdt-multiselect [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [model]="selectedContacts" (modelChange)="onSelectedContactsChanged($event)"></cdt-multiselect>
                         </div>
                         <div class="controls col-md-1">
@@ -72,7 +69,6 @@
                     <div class="form-group">
                         <label class="control-label col-md-4" for="deliverTo">Deliver to</label>
                         <div class="controls col-md-7">
-                            <!-- <kendo-multiselect name="deliverTo" [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [(ngModel)]="selectedRecipients"></kendo-multiselect> -->
                             <cdt-multiselect [data]="activeContacts" [textField]="'email'" [valueField]="'id'" [model]="selectedRecipients" (modelChange)="onSelectedRecipientsChanged($event)"></cdt-multiselect>
                         </div>
                         <div class="controls col-md-1">

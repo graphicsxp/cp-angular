@@ -1,3 +1,5 @@
+import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { GridHelpersModule } from './../grid-helpers/grid-helpers.module';
 import { CanDeactivateGuard } from './can-deactivate-guard';
 import { CommonModule } from '@angular/common';
@@ -10,14 +12,15 @@ import { FormsModule } from '@angular/forms';
 import { DataFieldInputComponent } from './components/data-field/data-field-input/data-field-input.component';
 import { DataFieldSelectComponent } from './components/data-field/data-field-select/data-field-select.component';
 import { ValidatorComponent } from './components/validator/validator.component';
-import { MultiselectComponent } from './components/multiselect/multiselect.component';
+import { MultiSelectComponent } from './components/multiselect/multiselect.component';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         FormsModule,
-        GridHelpersModule
+        GridHelpersModule,
+        MultiSelectModule
     ],
 
     declarations: [
@@ -26,8 +29,7 @@ import { MultiselectComponent } from './components/multiselect/multiselect.compo
         DataFieldInputComponent,
         DataFieldSelectComponent,
         ValidatorComponent,
-        MultiselectComponent,
-        MultiselectComponent
+        MultiSelectComponent
     ],
 
     exports: [
@@ -36,7 +38,10 @@ import { MultiselectComponent } from './components/multiselect/multiselect.compo
         DataFieldInputComponent,
         DataFieldSelectComponent,
         ValidatorComponent,
-        MultiselectComponent
+        MultiSelectComponent,
+        MultiSelectModule,
+        DropdownModule
+        
     ]    
 })
 

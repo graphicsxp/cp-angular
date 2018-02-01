@@ -74,7 +74,7 @@ export class RequestDetailComponent implements OnInit {
    * @param event The event contains the new array of values
    */
   onSelectedContactsChanged(event) {
-    this.selectedContacts = Object.assign({}, event);
+    this.selectedContacts = event;
     this._entityManagerService.triggerStatusNotification(this.request);
   };
 
@@ -94,7 +94,7 @@ export class RequestDetailComponent implements OnInit {
    * @param value 
    */
   handleFilter(value) {
-    this.filteredTemplateList = this.templates.filter((s) => s.text.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    this.filteredTemplateList = this.templates.filter((s) => s.text.toLowerCase().indexOf(value.value.text.toLowerCase()) !== -1);
   }
 
   canSelectDepartment(): Boolean {

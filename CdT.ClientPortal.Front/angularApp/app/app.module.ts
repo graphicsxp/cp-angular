@@ -18,6 +18,8 @@ import { onAppInit } from './app.init';
 import { EntityManagerService } from './entity-manager.service';
 import { CanDeactivateGuard } from './shared/can-deactivate-guard';
 import { CustomValidatorService } from './shared/services/custom-validator.service';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
     imports: [
@@ -32,7 +34,9 @@ import { CustomValidatorService } from './shared/services/custom-validator.servi
         CoreModule.forRoot(),
         HomeModule,
         DialogModule,
-        ToasterModule
+        ToasterModule,
+        MultiSelectModule,
+        DropdownModule
     ],
 
     declarations: [
@@ -48,5 +52,5 @@ import { CustomValidatorService } from './shared/services/custom-validator.servi
 })
 
 export class AppModule {
- 
+
 }
