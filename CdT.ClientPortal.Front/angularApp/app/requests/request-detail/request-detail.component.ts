@@ -9,6 +9,8 @@ import * as _ from 'lodash';
 import { Contact } from '../../model/contact';
 import { EntityState } from 'breeze-client';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { LookupNames } from '../../model/lookups';
+import { NavigationExtras } from '@angular/router/src/router';
 
 @Component({
   selector: 'cdt-request-detail',
@@ -44,9 +46,9 @@ export class RequestDetailComponent implements OnInit {
     this._route.data.subscribe((data: { request: Request }) => {
       this.request = data.request;
     })
-    this.purposes = this._requestService.getPurposes();
-    this.deliveryModes = this._requestService.getDeliveryModes();
-    this.templates = this._requestService.getRequestTemplates().map(t => { return { text: t.templateName, value: t.id } });
+    this.purposes = this._requestService.getLookup(LookupNames.Purpose);
+    this.deliveryModes = this._requestService.getLookup(LookupNames.DeliveryMode);
+    this.templates = this._requestService.getLookup(LookupNames.RequestTemplate).map(t => { return { text: t.templateName, value: t.id } });
     this.filteredTemplateList = this.templates.slice();
     this.activeContacts = _.filter(this.request.client.contacts, { 'isActive': true });
     this.selectedContacts = [];
@@ -106,8 +108,12 @@ export class RequestDetailComponent implements OnInit {
     this._entityManagerService.checkMany2ManyModifications('RequestDeliveryContact', this.request, this.selectedRecipients, this.request.requestDeliveryContacts, 'request', 'contact', false);
 
     this._requestService.save().then(() => {
-      //this._router.navigate(['requests']);
       this._toasterService.pop('success', 'The request was saved successfully !');
+      if (this._route.snapshot.params['id'] === 'new') {
+        let ne: NavigationExtras = { skipLocationChange: true };
+        this._router.navigateByUrl(`requests/detail/${this.request.id}`, ne );
+      }
+
     }, error => {
       if (!error.entityErrors && error.message) {
         //use toaster and intercept elsewhere

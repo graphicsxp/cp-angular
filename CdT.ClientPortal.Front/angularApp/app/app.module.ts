@@ -17,6 +17,7 @@ import { HttpModule } from '@angular/http';
 import { onAppInit } from './app.init';
 import { EntityManagerService } from './entity-manager.service';
 import { CanDeactivateGuard } from './shared/can-deactivate-guard';
+import { CustomValidatorService } from './shared/services/custom-validator.service';
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import { CanDeactivateGuard } from './shared/can-deactivate-guard';
     ],
     providers: [
         EntityManagerService,
+        CustomValidatorService,
         CanDeactivateGuard,
         { provide: APP_INITIALIZER, useFactory: onAppInit, multi: true, deps: [EntityManagerService] }
     ],

@@ -6,6 +6,7 @@ import { Request } from './../../model/entity-model';
 import { GridDataResult, DataStateChangeEvent, PageChangeEvent } from '@progress/kendo-angular-grid';
 import { State } from '@progress/kendo-data-query';
 import { Client } from '../../model/client';
+import { LookupNames } from '../../model/lookups';
 
 @Component({
   selector: 'cdt-requests-list',
@@ -21,6 +22,16 @@ export class RequestsListComponent implements OnInit {
   public temp: string[];
   public temp2: string;
 
+  constructor(private _requestService: RequestService) {
+    this.view = _requestService;
+    this._requestService.query(this.state);
+  }
+
+  ngOnInit() {
+    this.statuses = this._requestService.getLookup(LookupNames.Status).map(s => { return { code: s.code, defaultLabel: s.defaultLabel } });
+    this.clients = this._requestService.getLookup(LookupNames.Client);
+  }
+
   /* KENDO GRID */
   public view: Observable<GridDataResult>;
   public pageSizes = [10, 20, 50, 100];
@@ -33,7 +44,10 @@ export class RequestsListComponent implements OnInit {
     }],
     filter: {
       logic: 'and',
-      filters: [{ field: 'client.id', operator: 'equals', value: 'b442c0f6-784e-4763-96bc-a7a2008aa352' }]
+      filters: [
+        { field: 'client.id', operator: 'equals', value: 'b442c0f6-784e-4763-96bc-a7a2008aa352' },
+        { field: 'status.code', operator: 'equals', value: ['DRAF'] }
+      ]
     }
   };
 
@@ -41,11 +55,7 @@ export class RequestsListComponent implements OnInit {
     // Optionally, clear the selection when paging
     this.mySelection = [];
   }
-
-  /**
-   * 
-   * @param state 
-   */
+ 
   public dataStateChange(state: DataStateChangeEvent): void {
     this.state = state;
     this._requestService.query(state);
@@ -55,15 +65,4 @@ export class RequestsListComponent implements OnInit {
     this._requestService.query(this.state);
   }
   /* KENDO GRID */
-
-
-  constructor(private _requestService: RequestService) {
-    this.view = _requestService;
-    this._requestService.query(this.state);
-  }
-
-  ngOnInit() {
-    this.statuses = this._requestService.getStatuses().map(s => { return { code: s.code, defaultLabel: s.defaultLabel } });
-    this.clients = this._requestService.getClients();
-  }
 }
