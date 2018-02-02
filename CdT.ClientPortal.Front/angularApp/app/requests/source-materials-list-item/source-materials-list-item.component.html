@@ -1,7 +1,7 @@
 <td>
   extension icon
   <!-- <extension-icon extension="sourceMaterial.material.documentFormat.code"></extension-icon> -->
-   {{sourceMaterial.material.documentFormat?.code}}
+   {{asPhysicalFile(sourceMaterial.material).documentFormat?.code}}
 </td>
 <td>
   filename + downloader
@@ -31,19 +31,19 @@
   <!-- <language-picker model="sourceMaterial.selectedSourceLanguages" icon="'icon'" id="LanguagePicker{{$index}}" ng-show="!(vm.request.status.code==='MTS' && !hasRightToSend() && vm.improvementsAvalaible)" -->
   />
 </td>
-<td *ngIf="pricingPolicy2018Avalaible">
+<td *ngIf="globalService.pricingPolicy2018Avalaible">
   <!-- <select id="{{ 'Confidentiality-' + $index }}" name="confidentiality" ng-class="cssClass" ng-disabled="sourceMaterial.isScreenDeleted"
     ng-change="confidentialityChanged(sourceMaterial)" ng-model="sourceMaterial.confidentiality" ng-options="f.defaultLabel for f in vm.confidentialities | orderBy: orderByField"></select>
   <i ng-if="sourceMaterial.confidentiality.code=='SC'" class="fa fa-info-circle fa-lg ng-scope" style="color:red" aria-hidden="true"
     bs-tooltip data-title="{{sourceMaterial.confidentiality.description}}"></i>
   <validator model="sourceMaterial" validate-property="confidentiality"></validator> -->
 </td>
-<td *ngIf="!pricingPolicy2018Avalaible">
+<td *ngIf="!globalService.pricingPolicy2018Avalaible">
   <input name="isConfidential" type="checkbox" class="ios-switch" [ngModel]="sourceMaterial.isConfidential" [disabled]="sourceMaterial.isScreenDeleted"
     (click)="toggleConfidential(sourceMaterial)" />
   <span class="switch"></span>
 </td>
-<td *ngIf="!pricingPolicy2018Avalaible">
+<td *ngIf="!globalService.pricingPolicy2018Avalaible">
   <div *ngIf="sourceMaterial.isConfidential">
     Outsourceable:
     <input name="isExternalized" type="checkbox" class="ios-switch" [ngModel]="sourceMaterial.isExternalized" [disabled]="sourceMaterial.isScreenDeleted"

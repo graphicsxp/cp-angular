@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    webapiUrl: 'test',
+    backendUrl: 'https://test/CdT.ClientPortal.WebApi',
     breezeEndpoint: '/breeze/eai',
     webApiEndpoint: '/api'   ,
     uploadEndpoint: '/filemanagement/upload'

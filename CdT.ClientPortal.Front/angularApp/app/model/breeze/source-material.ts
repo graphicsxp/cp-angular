@@ -22,6 +22,7 @@ export class SourceMaterial extends EntityBase {
     /// <code> Place custom code between <code> tags
     selectedSourceLanguages: Array<Language>;
     targetFormats: Array<DocumentFormatTarget>;
+    isScreenDeleted: boolean;
 
     constructor(private _entityManagerService: EntityManagerService) {
         super();

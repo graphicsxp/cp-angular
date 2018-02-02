@@ -135,4 +135,8 @@ export class RequestDetailComponent implements OnInit {
     //}).value();
     return many2ManyHasErrors || this._entityManagerService.hasErrors(this.request, /*'sourceMaterials'*/ null);
   }
+
+  public hasRightToSend():boolean{
+    return true;
+  }
 }
