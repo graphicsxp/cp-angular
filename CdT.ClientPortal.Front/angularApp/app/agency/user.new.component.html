@@ -1,7 +1,28 @@
 <form (ngSubmit)="onSave()" class="form-horizontal" #requestForm="ngForm">
-    <input type="text" name="username" />
-    <input type="text" name="firstname" />
-    <input type="text" name="lastname" />
-    <input type="email" name="email" />
-    <input type="submit" name="saveUser" />
+    <h2>Create user</h2>
+    <div class="form-group">
+        <label for="userName">User name:</label>
+        <input type="text" [(ngModel)]="user.userName" class="form-control" id="userName" name="userName" placeholder="user name">
+    </div>
+    <div class="form-group">
+        <label for="firstName">First name:</label>
+        <input type="text" [(ngModel)]="user.firstName" class="form-control" id="firstName" name="firstName" placeholder="first name">
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last name</label>
+        <input type="text" [(ngModel)]="user.lastName" class="form-control" id="lastName" name="lastName" placeholder="last name">
+    </div>
+    <div class="form-group">
+        <label for="phoneNumber">Phone:</label>
+        <input type="tel" [(ngModel)]="user.phone" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="+352123456789">
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" [(ngModel)]="user.email" class="form-control" id="email" name="email" placeholder="name@example.com">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" [(ngModel)]="user.password" class="form-control" id="password" name="password" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>

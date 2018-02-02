@@ -16,7 +16,7 @@ import { CustomValidatorService } from './shared/services/custom-validator.servi
  */
 @Injectable()
 export class EntityManagerService {
-  public readonly em: EntityManager = new EntityManager('http://localhost:3002/');
+  public readonly em: EntityManager = new EntityManager(environment.webapiUrl);
 
   private _initialized: boolean;
   private _hasChanges: boolean;

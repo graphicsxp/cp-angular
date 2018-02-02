@@ -3,28 +3,30 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { ClientPortalUser } from './clientPortalUser.model';
+
 @Injectable()
 export class AgencyService {
 
   constructor(private http: HttpClient) {
   }
 
-  public createUser(newUser: any): void {
-    this.http.post('http://localhost/cdt.clientportal.webapi/api/UserManagement/SaveUser',
+  public createUser(newUser: ClientPortalUser): Observable<any> {
+    return this.http.post('http://localhost/cdt.clientportal.webapi/api/UserManagement/SaveUser',
       {
-        userName: 'nullela',
-        email: 'laurent.nullens@ext.cdt.europa.eu',
-        firstName: 'Laurent',
-        lastName: 'Nullens',
-        phoneNume: 304,
+        userName: newUser.userName,
+        email: newUser.email,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        phoneNumber: newUser.phoneNumber,
         isApproved: true
-      }).subscribe(
+      })/*.subscribe(
       res => {
         console.log(res);
       },
       err => {
         console.log('Error occured');
       }
-      );
+      )*/;
   }
 }

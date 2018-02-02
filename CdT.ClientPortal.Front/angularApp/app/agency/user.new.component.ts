@@ -1,6 +1,9 @@
 import { Observable } from 'rxjs/Rx';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { AgencyService } from './agency.service';
+import { ToasterService } from 'angular2-toaster';
+
+import { ClientPortalUser } from './clientPortalUser.model';
 
 @Component({
   templateUrl: './user.new.component.html',
@@ -9,29 +12,26 @@ import { AgencyService } from './agency.service';
 
 export class UserNewComponent implements OnInit {
 
-  constructor(private agencyService: AgencyService) {
+  public user: ClientPortalUser;
 
+  constructor(private agencyService: AgencyService, private toasterService: ToasterService) {
+    this.user = new ClientPortalUser();
   }
 
   ngOnInit() {
-    console.log('test agency');
   }
 
   public onSave(): void {
-    this.agencyService.createUser({
-      userName: 'nullela',
-      email: 'laurent.nullens@ext.cdt.europa.eu',
-      firstName: 'Laurent',
-      lastName: 'Nullens',
-      phoneNume: 304,
-      isApproved: true
-    })/*.subscribe(
+    this.agencyService.createUser(this.user)
+      .subscribe(
       res => {
+        this.toasterService.pop('success', 'Creating user', `User ${res.UserName} successfully created`);
         console.log(res);
       },
       err => {
-        console.log('Error occured');
+        this.toasterService.pop('error', 'creating user', err.error);
+        console.log('Error occurred');
       }
-      )*/;
+      );
   }
 }

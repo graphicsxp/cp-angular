@@ -5,7 +5,7 @@ const routes: Routes = [
     {
         //        path: '', canActivateChild: [InitGuard], children: [
         path: '', children: [
-            { path: '', component: UserNewComponent },
+            //{ path: '', component: UserNewComponent },
             { path: 'new', component: UserNewComponent },
         ]
     }
