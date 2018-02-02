@@ -360,12 +360,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Connected Services\FileManagement\CdT.ClientPortal.WebApi.FileManagement.DeleteFileResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Connected Services\FileManagement\CdT.ClientPortal.WebApi.FileManagement.StoreFileResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <None Include="Connected Services\FileManagement\FileManagement.disco" />
     <None Include="Connected Services\FileManagement\configuration91.svcinfo" />
     <None Include="Connected Services\FileManagement\configuration.svcinfo" />

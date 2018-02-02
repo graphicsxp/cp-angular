@@ -27,7 +27,7 @@ using CdT.ClientPortal.WebApi;
 namespace ClientPortal.Controllers
 {
     [BreezeNHController(MaxExpansionDepth = 7, MaxAnyAllExpressionDepth = 7)]
-    [Authorize]
+    //[Authorize]
     public class EAIController : BaseApiController
     {
         private readonly IMessageSession _messageSession;
