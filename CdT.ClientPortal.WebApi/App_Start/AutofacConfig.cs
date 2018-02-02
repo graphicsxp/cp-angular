@@ -15,6 +15,9 @@ using NHibernate.AspNet.Identity;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using CdT.ClientPortal.WebApi.Helpers;
+using CdT.ClientPortal.WebApi.Providers;
+using Microsoft.Owin.Security.OAuth;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace CdT.ClientPortal.WebApi.App_Start
 {
@@ -70,9 +73,16 @@ namespace CdT.ClientPortal.WebApi.App_Start
                 .WithParameter((pi, ctx) => pi.ParameterType == typeof(ISession), (pi, ctx) => ctx.ResolveNamed<ISession>("usr_session"))
                 .As<IUserStore<ClientPortalUser>>().InstancePerRequest();
             container.Register(x => HttpContext.Current.GetOwinContext().Authentication).As<IAuthenticationManager>().InstancePerRequest();
+            container.Register(c => new IdentityFactoryOptions<ClientPortalUserManager>()
+            {
+                DataProtectionProvider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider("CdT.ClientPortal.WebApi")
+            });
             container.RegisterType<ClientPortalUserManager>().AsSelf().InstancePerRequest();
             container.RegisterType<ClientPortalRoleManager>().AsSelf().InstancePerRequest();
-            container.RegisterType<ClientPortalSignInManager>().AsSelf().InstancePerRequest();
+            //container.RegisterType<ClientPortalSignInManager>().AsSelf().InstancePerRequest();
+
+            // oauth
+            container.Register(c => new ApplicationOAuthProvider("CdT.ClientPortal.WebApi")).AsImplementedInterfaces().SingleInstance();
 
             // bl
             container.RegisterType<RequestBL>().As<IRequestBL>().InstancePerRequest();
@@ -81,8 +91,10 @@ namespace CdT.ClientPortal.WebApi.App_Start
             // breeze context
             container.RegisterType<EAIContext>().AsSelf().InstancePerRequest();
 
+            // security
             container.Register(u => HttpContext.Current.User).As<IPrincipal>().InstancePerRequest();
 
+            // logging
             container.RegisterLogger();
         }
     }

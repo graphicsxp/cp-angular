@@ -9,6 +9,7 @@ using System.Web.Http.OData.Extensions;
 using System.Web.Http.Routing;
 //using CdT.UI.Common.Formatting;
 using Elmah.Contrib.WebApi;
+using Microsoft.Owin.Security.OAuth;
 
 namespace CdT.ClientPortal.WebApi
 {
@@ -21,15 +22,26 @@ namespace CdT.ClientPortal.WebApi
                 throw new ArgumentNullException(nameof(config));
             }
 
-            // cors handling
-            var cors = new EnableCorsAttribute("*", "*", "*") { SupportsCredentials = true };
-            config.EnableCors(cors);
+            // Web API configuration and services
+            // Configure Web API to use only bearer token authentication.
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+
+            // breeze route
+            config.Routes.MapHttpRoute(name: "BreezeApi", routeTemplate: "breeze/{controller}/{action}");
 
             //webapi with actions handling
             config.Routes.MapHttpRoute("DefaultApiWithId", "Api/{controller}/{id}", new { id = RouteParameter.Optional }, new { id = @"\d+" });
             config.Routes.MapHttpRoute("DefaultApiWithAction", "Api/{controller}/{action}");
             config.Routes.MapHttpRoute("DefaultApiGet", "Api/{controller}", new { action = "Get" }, new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) });
             config.Routes.MapHttpRoute("DefaultApiPost", "Api/{controller}", new { action = "Post" }, new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) });
+
+            // cors handling
+            var cors = new EnableCorsAttribute("*", "*", "*") { SupportsCredentials = true };
+            config.EnableCors(cors);
 
             // Uncomment the following line of code to enable query support for actions with an IQueryable or IQueryable<T> return type.
             // To avoid processing unexpected or malicious queries, use the validation settings on QueryableAttribute to validate incoming queries.
@@ -42,6 +54,7 @@ namespace CdT.ClientPortal.WebApi
             // disable xml to return json only
             var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
+
             // add csv media formatter
             //config.Formatters.Add(new CsvMediaTypeFormatter(new QueryStringMapping("format", "csv", "text/csv")));
 

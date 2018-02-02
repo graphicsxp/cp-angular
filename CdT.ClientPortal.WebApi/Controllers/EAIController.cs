@@ -26,9 +26,8 @@ using CdT.ClientPortal.WebApi;
 
 namespace ClientPortal.Controllers
 {
-    //[CamelCaseControllerConfig]
     [BreezeNHController(MaxExpansionDepth = 7, MaxAnyAllExpressionDepth = 7)]
-    //[Authorize]
+    [Authorize]
     public class EAIController : BaseApiController
     {
         private readonly IMessageSession _messageSession;
@@ -243,7 +242,7 @@ namespace ClientPortal.Controllers
                 sourceMaterialDocumentFormats,
                 documentFormatExtensions,
                 sourceMaterialDocumentFormatExtensionsWS,
-                materialClassifications, 
+                materialClassifications,
                 unitConversions,
                 unitTypes,
                 units,
@@ -388,9 +387,9 @@ namespace ClientPortal.Controllers
             var contact = this._context.Session.Query<Contact>().Where(x => x.UserName == this.User.Identity.Name);
             if (!roles.Contains("draft_all") && !roles.Contains("sender_all"))
             {
-               /* query = query.Where(p => p.Department.ClientPortalId == this.userProfile.Personal.DepartmentId 
-                                         p.RequestContacts.Any(q => contact.Contains(q.Contact))
-                                         || p.RequestDeliveryContacts.Any(r => contact.Contains(r.Contact)));*/
+                /* query = query.Where(p => p.Department.ClientPortalId == this.userProfile.Personal.DepartmentId 
+                                          p.RequestContacts.Any(q => contact.Contains(q.Contact))
+                                          || p.RequestDeliveryContacts.Any(r => contact.Contains(r.Contact)));*/
             }
 
             return query;

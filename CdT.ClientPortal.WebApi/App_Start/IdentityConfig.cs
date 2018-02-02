@@ -22,19 +22,19 @@ namespace CdT.ClientPortal.WebApi
         }
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "ok")]
-    public class ClientPortalSignInManager : SignInManager<ClientPortalUser, string>
-    {
-        public ClientPortalSignInManager(ClientPortalUserManager userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
-        {
-        }
+    //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "ok")]
+    //public class ClientPortalSignInManager : SignInManager<ClientPortalUser, string>
+    //{
+    //    public ClientPortalSignInManager(ClientPortalUserManager userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
+    //    {
+    //    }
 
-        public override Task<ClaimsIdentity> CreateUserIdentityAsync(ClientPortalUser user)
-        {
-            return user.GenerateUserIdentityAsync((ClientPortalUserManager)this.UserManager);
-            // custom claims can be added here
-        }
-    }
+    //    public override Task<ClaimsIdentity> CreateUserIdentityAsync(ClientPortalUser user)
+    //    {
+    //        return user.GenerateUserIdentityAsync((ClientPortalUserManager)this.UserManager);
+    //        // custom claims can be added here
+    //    }
+    //}
 
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ClientPortalUserManager : UserManager<ClientPortalUser>
@@ -156,10 +156,10 @@ namespace CdT.ClientPortal.WebApi
         /// </summary>
         /// <param name="manager"></param>
         /// <returns> identity of the user </returns>
-        public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ClientPortalUser> manager)
+        public virtual async Task<ClaimsIdentity> GenerateUserIdentityAsync(ClientPortalUserManager manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
 
             // Add custom user claims here
 
