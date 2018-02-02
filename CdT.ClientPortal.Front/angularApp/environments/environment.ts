@@ -5,6 +5,7 @@
 
 export const environment = {
     production: false,
-    webapiUrl: 'https://localhost/CdT.ClientPortal.WebApi/breeze/eai/'
+    webapiUrl: 'http://localhost:3002/'
+    //webapiUrl: 'https://localhost/CdT.ClientPortal.WebApi/breeze/eai/'
   };
   

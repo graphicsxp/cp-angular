@@ -16,13 +16,16 @@ import { CustomValidatorService } from './shared/services/custom-validator.servi
  */
 @Injectable()
 export class EntityManagerService {
-  public readonly em: EntityManager = new EntityManager(environment.webapiUrl);
+  public readonly em: EntityManager = new EntityManager('http://localhost:3002/');
 
   private _initialized: boolean;
   private _hasChanges: boolean;
 
   constructor(private _customValidatorService: CustomValidatorService) {
     this.em.metadataStore.namingConvention = NamingConvention.camelCase.setAsDefault();
+
+    //this.em.metadataStore.importMetadata('../../mocks/metadata.json');
+
     RegistrationHelper.register(this.em.metadataStore);
     this.em.hasChangesChanged.subscribe((args) => {
       this._hasChanges = args.hasChanges;
