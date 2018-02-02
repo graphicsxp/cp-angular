@@ -3,10 +3,10 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { ClientPortalUser } from './clientPortalUser.model';
+import { ClientPortalUser } from './model/clientPortalUser.model';
 
 @Injectable()
-export class AgencyService {
+export class UserService {
 
   constructor(private http: HttpClient) {
   }
@@ -28,5 +28,8 @@ export class AgencyService {
         console.log('Error occured');
       }
       )*/;
+  }
+  public getAllUsers(): Observable<any> {
+    return this.http.get('http://localhost/cdt.clientportal.webapi/api/UserManagement/GetAllUsers')
   }
 }

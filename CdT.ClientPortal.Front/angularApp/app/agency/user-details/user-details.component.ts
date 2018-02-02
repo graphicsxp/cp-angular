@@ -1,20 +1,20 @@
 import { Observable } from 'rxjs/Rx';
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { AgencyService } from './agency.service';
 import { ToasterService } from 'angular2-toaster';
 
-import { ClientPortalUser } from './clientPortalUser.model';
+import { UserService } from '../users.service';
+import { ClientPortalUser } from '../model/clientPortalUser.model';
 
 @Component({
-  templateUrl: './user.new.component.html',
-  styleUrls: ['./user.new.component.scss']
+  templateUrl: './user-details.component.html',
+  styleUrls: ['./user-details.component.scss']
 })
 
-export class UserNewComponent implements OnInit {
+export class UserDetailsComponent implements OnInit {
 
   public user: ClientPortalUser;
 
-  constructor(private agencyService: AgencyService, private toasterService: ToasterService) {
+  constructor(private userService: UserService, private toasterService: ToasterService) {
     this.user = new ClientPortalUser();
   }
 
@@ -22,7 +22,7 @@ export class UserNewComponent implements OnInit {
   }
 
   public onSave(): void {
-    this.agencyService.createUser(this.user)
+    this.userService.createUser(this.user)
       .subscribe(
       res => {
         this.toasterService.pop('success', 'Creating user', `User ${res.UserName} successfully created`);

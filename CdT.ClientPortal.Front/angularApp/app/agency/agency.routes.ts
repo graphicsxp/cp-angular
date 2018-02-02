@@ -1,12 +1,17 @@
 import { RouterModule, Routes } from '@angular/router';
-import { UserNewComponent } from './user.new.component';
+import { UsersListComponent } from './users-list/users-list.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 const routes: Routes = [
     {
         //        path: '', canActivateChild: [InitGuard], children: [
         path: '', children: [
-            //{ path: '', component: UserNewComponent },
-            { path: 'new', component: UserNewComponent },
+            { path: 'users', component: UsersListComponent },
+            { path: 'detail/:id', component: UserDetailsComponent },
+
+            // { path: 'requests', component: RequestsListComponent },
+            // { path: 'detail/:id', component: RequestDetailComponent, resolve: { request: RequestDetailResolver }, canDeactivate: [CanDeactivateGuard] },
+            // { path: 'detail/:id/jobs', component: RequestJobsComponent }
         ]
     }
 ];
