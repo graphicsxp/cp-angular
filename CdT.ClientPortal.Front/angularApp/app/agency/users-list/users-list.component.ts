@@ -30,6 +30,18 @@ export class UsersListComponent implements OnInit {
     );
   }
 
+  unlockUser(user: ClientPortalUserList) {
+    this.userService.unlockUser(user.UserName).subscribe(
+      res => {
+        this.toasterService.pop('success', 'Get users', `User ${user.UserName} unlocked`);
+      },
+      err => {
+        this.toasterService.pop('error', 'Get users', err.error);
+      }
+    );
+  }
+
+
   ngOnInit() {
 
   }
