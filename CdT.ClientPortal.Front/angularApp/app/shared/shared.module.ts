@@ -15,6 +15,7 @@ import { ValidatorComponent } from './components/validator/validator.component';
 import { MultiSelectComponent } from './components/multiselect/multiselect.component';
 import { UploaderComponent } from './components/uploader/uploader.component';
 import { UploadModule } from '@progress/kendo-angular-upload';
+import { PhysicalFileService } from './services/physicalFile.service';
 
 @NgModule({
     imports: [
@@ -36,6 +37,9 @@ import { UploadModule } from '@progress/kendo-angular-upload';
         UploaderComponent
     ],
 
+    providers: [
+        PhysicalFileService
+    ],
     exports: [
         NavigationComponent,
         CustomFooterComponent,

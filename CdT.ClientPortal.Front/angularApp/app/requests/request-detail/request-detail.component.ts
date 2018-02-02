@@ -1,12 +1,12 @@
 import { EntityManagerService } from './../../entity-manager.service';
 import { Observable } from 'rxjs/Observable';
-import { Purpose, Department, DeliveryMode, Request } from './../../model/entity-model';
+import { Purpose, Department, DeliveryMode, Request } from './../../model/breeze/entity-model';
 import { RequestService } from './../services/request.service';
 import { ViewChild, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import * as _ from 'lodash';
-import { Contact } from '../../model/contact';
+import { Contact } from '../../model/breeze/contact';
 import { EntityState } from 'breeze-client';
 import { ToasterService } from 'angular2-toaster';
 import { LookupNames } from '../../model/lookups';

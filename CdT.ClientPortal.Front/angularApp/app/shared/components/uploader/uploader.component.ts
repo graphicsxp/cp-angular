@@ -1,13 +1,15 @@
+import { UploadedFile } from './../../../model/uploadedFile';
 import { environment } from './../../../../environments/environment';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FileRestrictions, FileInfo, FileState, SelectEvent, UploadEvent } from '@progress/kendo-angular-upload';
 import * as _ from 'lodash';
+import { SuccessEvent } from '@progress/kendo-angular-upload/dist/es/upload-events';
 
 @Component({
   selector: 'cdt-uploader',
   template: `<kendo-upload
               [saveUrl]="uploadSaveUrl"
-              (upload)="onUpload($event)"
+              (success)="onSuccess($event)"
               (select)="onSelect($event)"
               [(ngModel)]="myFiles"
               [batch]="true"
@@ -31,8 +33,7 @@ export class UploaderComponent implements OnInit {
 
   public myRestrictions: FileRestrictions;
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit() {
     this.myRestrictions = {
@@ -41,9 +42,12 @@ export class UploaderComponent implements OnInit {
     };
   }
 
-  public onUpload(event: UploadEvent) {
-    //this.uploadedFiles.push(event.files;
-    this.uploadedFilesChange.emit(event.files);
+  public onSuccess(event: SuccessEvent) {
+    let files: Array<UploadedFile> = new Array<UploadedFile>();
+    event.response.body.forEach(element => {
+      files.push(new UploadedFile(element.Path, element.Name, element.Size));
+    });
+    this.uploadedFilesChange.emit(files);
   }
 
   public onSelect(event: SelectEvent) {

@@ -1,4 +1,4 @@
-import { RequestTemplate } from './../../model/request-template';
+import { RequestTemplate } from './../../model/breeze/request-template';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TemplateService } from '../templates.service';

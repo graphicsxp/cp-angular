@@ -3,7 +3,7 @@ import { NamingConvention, NavigationProperty, EntityState } from 'breeze-client
 import { EntityManager, EntityQuery, config } from 'breeze-client';
 import 'breeze-client-labs/breeze.getEntityGraph';
 import { Injectable } from '@angular/core';
-import { RegistrationHelper } from './model/registration-helper';
+import { RegistrationHelper } from './model/breeze/registration-helper';
 import * as _ from 'lodash';
 import { EntityAction } from 'breeze-client';
 import { IStructuralType } from 'breeze-client';

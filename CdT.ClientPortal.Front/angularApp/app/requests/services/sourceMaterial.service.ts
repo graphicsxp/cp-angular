@@ -1,5 +1,5 @@
-import { SourceMaterial } from './../../model/source-material';
-import { Material } from './../../model/material';
+import { SourceMaterial } from './../../model/breeze/source-material';
+import { Material } from './../../model/breeze/material';
 import { Injectable } from "@angular/core";
 import { BaseRepositoryService } from "../../shared/services/base-repository.service";
 import { EntityManagerService } from "../../entity-manager.service";
@@ -13,6 +13,6 @@ export class SourceMaterialService extends BaseRepositoryService {
     }
 
     public create(material:Material): SourceMaterial {
-        return  super.create({material: material}) as SourceMaterial;
+        return  super.createEntity({material: material}) as SourceMaterial;
     }
 }

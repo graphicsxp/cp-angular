@@ -1,11 +1,11 @@
 import { RequestService } from './../services/request.service';
-import { Status } from './../../model/status';
+import { Status } from './../../model/breeze/status';
 import { Observable } from 'rxjs/Rx';
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { Request } from './../../model/entity-model';
+import { Request } from './../../model/breeze/entity-model';
 import { GridDataResult, DataStateChangeEvent, PageChangeEvent } from '@progress/kendo-angular-grid';
 import { State } from '@progress/kendo-data-query';
-import { Client } from '../../model/client';
+import { Client } from '../../model/breeze/client';
 import { LookupNames } from '../../model/lookups';
 
 @Component({

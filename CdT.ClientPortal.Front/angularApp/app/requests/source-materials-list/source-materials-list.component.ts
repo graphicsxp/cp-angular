@@ -1,9 +1,12 @@
-import { SourceMaterial } from './../../model/source-material';
+import { LookupNames } from './../../model/lookups';
+import { PhysicalFileService } from './../../shared/services/physicalFile.service';
+import { SourceMaterial } from './../../model/breeze/source-material';
 import { RequestService } from './../services/request.service';
-import { Request } from './../../model/request';
+import { Request } from './../../model/breeze/request';
 import { Component, OnInit, Input } from '@angular/core';
-import { LookupNames } from '../../model/lookups';
 import * as _ from 'lodash';
+import { SourceMaterialService } from '../services/sourceMaterial.service';
+import { UploadedFile } from '../../model/uploadedFile';
 
 @Component({
   selector: 'cdt-source-materials-list',
@@ -16,15 +19,17 @@ export class SourceMaterialsListComponent implements OnInit {
 
   public allowedExtensions: string[];
 
-  constructor(private _requestService: RequestService) { }
+  constructor(private _requestService: RequestService, private _sourceMaterialService: SourceMaterialService, private _physicalFileService: PhysicalFileService) { }
 
   ngOnInit() {
     this.allowedExtensions = this._requestService.getLookup(LookupNames.sourceMaterialDocumentFormatExtensions).map(ext => { return ext.code });
   }
 
-  onUploadedFilesChange(event:any[]){
-    //let sourceMaterial:SourceMaterial = _request.sourceMaterial.create(dataService.physicalFile.create(file, _.find(dataService.lookups.materialClassifications, { code: 'SOUR' })));
-
+  onUploadedFilesChange(uploadedFiles: UploadedFile[]) {
+    uploadedFiles.forEach (file => {
+      let sourceMaterial: SourceMaterial = this._sourceMaterialService.create(
+        this._physicalFileService.create(file, _.find(this._requestService.getLookup(LookupNames.materialClassifications), { code: 'SOUR' })));
+    });
   }
 
   /**

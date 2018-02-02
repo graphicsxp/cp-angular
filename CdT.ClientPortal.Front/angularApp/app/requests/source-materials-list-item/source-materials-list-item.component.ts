@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
-import { SourceMaterial } from '../../model/source-material';
+import { SourceMaterial } from '../../model/breeze/source-material';
 
 @Component({
   selector: '[cdt-source-materials-list-item]',

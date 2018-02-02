@@ -1,4 +1,4 @@
-import { Request } from './../../model/entity-model';
+import { Request } from './../../model/breeze/entity-model';
 import { RequestService } from './../services/request.service';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router/src/interfaces';
