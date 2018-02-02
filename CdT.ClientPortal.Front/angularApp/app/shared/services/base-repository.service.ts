@@ -18,12 +18,19 @@ import { RequestType } from '../../model/breeze/request-type';
  */
 export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResult> {
 
+  /**
+   * the entityName is set in repository services inherited from the the base service
+   */
   protected entityName: String = '';
 
   constructor(protected _entityManagerService: EntityManagerService) {
     super(null);
   }
 
+  /**
+   * Creates a new breeze Entity
+   * @param config if we need to set children properties of the created entity
+   */
   protected createEntity(config?: {}): Entity {
     config = config || {};
     return this._entityManagerService.em.createEntity(<string>this.entityName, config);
@@ -119,6 +126,11 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
     return promise;
   }
 
+  /**
+   * Added here for convenience as it avoids injecting entityManagerService in components. Most of the 
+   * time we can access this directly from the dedicated repository service of the component.
+   * @param name the name of the lookup we want to retrieve
+   */
   getLookup(name: string): any[] {
     return this._entityManagerService.getLookup(name);
   }

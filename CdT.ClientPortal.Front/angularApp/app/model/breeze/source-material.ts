@@ -9,13 +9,18 @@ import { SourceMaterialLanguage } from './source-material-language';
 import { Request } from './request';
 
 /// <code-import> Place custom imports between <code-import> tags
-
+import { Language } from './language';
 /// </code-import>
 
 export class SourceMaterial extends EntityBase {
-
-    /// <code> Place custom code between <code> tags
     
+    /// <code> Place custom code between <code> tags
+    constructor() {
+        super();
+        this.selectedSourceLanguages = new Array<Language>();
+    }
+
+    selectedSourceLanguages: Array<Language>;
     /// </code>
 
     // Generated code. Do not place code below this line.

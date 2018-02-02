@@ -25,10 +25,25 @@ export class SourceMaterialsListComponent implements OnInit {
     this.allowedExtensions = this._requestService.getLookup(LookupNames.sourceMaterialDocumentFormatExtensions).map(ext => { return ext.code });
   }
 
+  /**
+   * For each uploaded files we will create a new SourceMaterial entity
+   * @param uploadedFiles the list of uploaded files
+   */
   onUploadedFilesChange(uploadedFiles: UploadedFile[]) {
-    uploadedFiles.forEach (file => {
+    uploadedFiles.forEach(file => {
       let sourceMaterial: SourceMaterial = this._sourceMaterialService.create(
-        this._physicalFileService.create(file, _.find(this._requestService.getLookup(LookupNames.materialClassifications), { code: 'SOUR' })));
+        this._physicalFileService.create(
+          file, _.find(this._requestService.getLookup(LookupNames.materialClassifications), { code: 'SOUR' })), this.request.requestTemplate);
+      this.request.sourceMaterials.push(sourceMaterial);
+
+      // In case of subtitling or other cases
+      //_setCorrrectDocumentFormats(sourceMaterial);
+
+      //if source languages were set by the template we need to set the screen dirty
+      if (sourceMaterial.selectedSourceLanguages.length > 0) {
+        //$scope.vm.many2manyHasChanged = true;
+        //sourceMaterial.entityAspect.removeValidationError('notEmptyCollectionValidator:sourceLanguages');
+      }
     });
   }
 
