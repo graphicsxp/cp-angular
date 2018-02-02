@@ -7,8 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { GridHelpersModule } from '../grid-helpers/grid-helpers.module';
 import { AgencyRoutes } from './agency.routes';
 
-import { AgencyService } from './agency.service';
-import { UserNewComponent } from './user.new.component';
+import { UserService } from './users.service';
+import { UsersListComponent} from './users-list/users-list.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 @NgModule({
   imports: [
@@ -19,8 +20,9 @@ import { UserNewComponent } from './user.new.component';
     SharedModule,
   ],
   declarations: [
-    UserNewComponent
+    UsersListComponent,
+    UserDetailsComponent
   ],
-  providers: [AgencyService],
+  providers: [UserService],
 })
 export class AgencyModule { }

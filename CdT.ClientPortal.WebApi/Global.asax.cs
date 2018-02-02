@@ -22,7 +22,7 @@ namespace CdT.ClientPortal.WebApi
 
         protected void Application_Start()
         {
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            //GlobalConfiguration.Configure(WebApiConfig.Register);
             // change json casing to camelCase for ApiController only:http://stackoverflow.com/questions/15040838/mvc-jsonresult-camelcase-serialization
             // for returning custom json from mvc controller see:http://www.matskarlsson.se/blog/serialize-net-objects-as-camelcase-json
             var formatters = GlobalConfiguration.Configuration.Formatters;
