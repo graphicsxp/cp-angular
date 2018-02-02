@@ -411,7 +411,7 @@ export class RegistrationHelper {
         metadataStore.registerEntityTypeCtor('JobRevision', JobRevision);
         metadataStore.registerEntityTypeCtor('JobModification', JobModification);
         metadataStore.registerEntityTypeCtor('JobEditing', JobEditing);
-        metadataStore.registerEntityTypeCtor('PhysicalFile', PhysicalFile);
+        metadataStore.registerEntityTypeCtor('PhysicalFile', PhysicalFile, PhysicalFile.physicalFilePostInitializer);
         metadataStore.registerEntityTypeCtor('NetworkSharedFile', NetworkSharedFile);
         metadataStore.registerEntityTypeCtor('Url', Url);
         metadataStore.registerEntityTypeCtor('AssessmentTaskPropertySet', AssessmentTaskPropertySet);

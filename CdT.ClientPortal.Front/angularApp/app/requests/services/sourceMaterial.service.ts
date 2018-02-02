@@ -6,6 +6,7 @@ import { EntityManagerService } from "../../entity-manager.service";
 import { RequestTemplate } from '../../model/breeze/request-template';
 import { LookupNames } from '../../model/lookups';
 import * as _ from 'lodash';
+import { DocumentFormat } from '../../model/breeze/document-format';
 
 @Injectable()
 export class SourceMaterialService extends BaseRepositoryService {
@@ -31,6 +32,13 @@ export class SourceMaterialService extends BaseRepositoryService {
             //}
 
             sourceMaterial.isPrivate = template.private;
+
+            //set the document format
+            if (template.service && template.service.code === 'ST') {
+                sourceMaterial.targetFormats = _.filter(this._entityManagerService.getLookup(LookupNames.documentFormats), (df) => { return _.includes(DocumentFormat.validSubtitlingFormatCodes, df.code); });
+            } else if (sourceMaterial) {
+                sourceMaterial.setTargetFormats();
+            }
 
             //check if template's outputFormat is compatible with the uploaded file extension(take the first one)
             if (template.documentFormat) {

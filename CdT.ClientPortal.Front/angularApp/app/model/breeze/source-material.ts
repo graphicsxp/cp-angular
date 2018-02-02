@@ -10,17 +10,31 @@ import { Request } from './request';
 
 /// <code-import> Place custom imports between <code-import> tags
 import { Language } from './language';
+import { DocumentFormatTarget } from './document-format-target';
+import * as _ from 'lodash';
+import { EntityManagerService } from '../../entity-manager.service';
+import { LookupNames } from '../lookups';
+import { PhysicalFile } from './physical-file';
 /// </code-import>
 
 export class SourceMaterial extends EntityBase {
-    
+
     /// <code> Place custom code between <code> tags
-    constructor() {
+    selectedSourceLanguages: Array<Language>;
+    targetFormats: Array<DocumentFormatTarget>;
+
+    constructor(private _entityManagerService: EntityManagerService) {
         super();
         this.selectedSourceLanguages = new Array<Language>();
+        this.targetFormats = Array<DocumentFormatTarget>();
     }
 
-    selectedSourceLanguages: Array<Language>;
+    public setTargetFormats() {
+        this.targetFormats = _.chain(this._entityManagerService.getLookup(LookupNames.documentFormatTargets))
+            .filter((f) => { return f.sourceId === (this.material as PhysicalFile).documentFormat.id; })
+            .map('target').value();
+    }
+
     /// </code>
 
     // Generated code. Do not place code below this line.
