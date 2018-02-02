@@ -1,7 +1,6 @@
 <div class="widget grid-wrapper table-responsive" *ngIf="request.id">
 
-  <kendo-upload [saveUrl]="uploadSaveUrl"></kendo-upload>
-
+  <cdt-uploader [allowedExtensions]="allowedExtensions" [multiple]="true" [maxFiles]="100" [uploadedFiles]="getUploadedFiles()" (uploadedFilesChange)="onUploadedFilesChange($event)"></cdt-uploader>
   <div id="dropZone" class="grid-toolbar">
     <!-- the condition for disabling the uploader is that the number of documents has reached 100 -->
     <!-- <file-uploader max-length="80 " maxfiles="99 " array-list-uploaded="vm.uploadedFiles " file-type="source

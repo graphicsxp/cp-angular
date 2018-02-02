@@ -1,5 +1,5 @@
 import { Request } from './../../model/entity-model';
-import { RequestService } from './../requests.service';
+import { RequestService } from './../services/request.service';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router/src/interfaces';
 import { Observable } from 'rxjs/Observable';

@@ -15,7 +15,7 @@ using Serilog;
 
 namespace ClientPortal.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class FileManagementController : BaseApiController
     {
         private readonly ISession _session;

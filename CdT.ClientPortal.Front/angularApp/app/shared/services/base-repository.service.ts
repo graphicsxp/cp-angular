@@ -118,7 +118,7 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
     return promise;
   }
 
-  getLookup(name:LookupNames): any[] {
-    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from(name));
+  getLookup(name: string): any[] {
+    return this._entityManagerService.getLookup(name);
   }
 }

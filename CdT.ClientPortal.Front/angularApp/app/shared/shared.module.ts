@@ -13,6 +13,8 @@ import { DataFieldInputComponent } from './components/data-field/data-field-inpu
 import { DataFieldSelectComponent } from './components/data-field/data-field-select/data-field-select.component';
 import { ValidatorComponent } from './components/validator/validator.component';
 import { MultiSelectComponent } from './components/multiselect/multiselect.component';
+import { UploaderComponent } from './components/uploader/uploader.component';
+import { UploadModule } from '@progress/kendo-angular-upload';
 
 @NgModule({
     imports: [
@@ -20,7 +22,8 @@ import { MultiSelectComponent } from './components/multiselect/multiselect.compo
         RouterModule,
         FormsModule,
         GridHelpersModule,
-        MultiSelectModule
+        MultiSelectModule,
+        UploadModule
     ],
 
     declarations: [
@@ -29,7 +32,8 @@ import { MultiSelectComponent } from './components/multiselect/multiselect.compo
         DataFieldInputComponent,
         DataFieldSelectComponent,
         ValidatorComponent,
-        MultiSelectComponent
+        MultiSelectComponent,
+        UploaderComponent
     ],
 
     exports: [
@@ -40,8 +44,8 @@ import { MultiSelectComponent } from './components/multiselect/multiselect.compo
         ValidatorComponent,
         MultiSelectComponent,
         MultiSelectModule,
-        DropdownModule
-        
+        DropdownModule,
+        UploaderComponent
     ]    
 })
 

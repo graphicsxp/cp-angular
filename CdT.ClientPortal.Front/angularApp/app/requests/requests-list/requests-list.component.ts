@@ -1,4 +1,4 @@
-import { RequestService } from './../requests.service';
+import { RequestService } from './../services/request.service';
 import { Status } from './../../model/status';
 import { Observable } from 'rxjs/Rx';
 import { Component, OnInit, ElementRef } from '@angular/core';
@@ -28,8 +28,8 @@ export class RequestsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.statuses = this._requestService.getLookup(LookupNames.Status).map(s => { return { code: s.code, defaultLabel: s.defaultLabel } });
-    this.clients = this._requestService.getLookup(LookupNames.Client);
+    this.statuses = this._requestService.getLookup(LookupNames.statuses).map(s => { return { code: s.code, defaultLabel: s.defaultLabel } });
+    this.clients = this._requestService.getLookup(LookupNames.clients);
   }
 
   /* KENDO GRID */

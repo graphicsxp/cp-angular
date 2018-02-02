@@ -1,14 +1,14 @@
 import { EntityManagerService } from './../../entity-manager.service';
 import { Observable } from 'rxjs/Observable';
 import { Purpose, Department, DeliveryMode, Request } from './../../model/entity-model';
-import { RequestService } from './../requests.service';
+import { RequestService } from './../services/request.service';
 import { ViewChild, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import * as _ from 'lodash';
 import { Contact } from '../../model/contact';
 import { EntityState } from 'breeze-client';
-import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { ToasterService } from 'angular2-toaster';
 import { LookupNames } from '../../model/lookups';
 import { NavigationExtras } from '@angular/router/src/router';
 
@@ -46,10 +46,10 @@ export class RequestDetailComponent implements OnInit {
     this._route.data.subscribe((data: { request: Request }) => {
       this.request = data.request;
     })
-    this.purposes = this._requestService.getLookup(LookupNames.Purpose);
-    this.deliveryModes = this._requestService.getLookup(LookupNames.DeliveryMode);
-    this.templates = this._requestService.getLookup(LookupNames.RequestTemplate).map(t => { return { text: t.templateName, value: t.id } });
-    this.filteredTemplateList = this.templates.slice();
+    this.purposes = this._requestService.getLookup(LookupNames.purposes);
+    this.deliveryModes = this._requestService.getLookup(LookupNames.deliveryModes);
+    // this.templates = this._requestService.getLookup(LookupNames.RequestTemplate).map(t => { return { text: t.templateName, value: t.id } });
+    //this.filteredTemplateList = this.templates.slice();
     this.activeContacts = _.filter(this.request.client.contacts, { 'isActive': true });
     this.selectedContacts = [];
     this.selectedRecipients = [];

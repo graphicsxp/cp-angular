@@ -5,12 +5,11 @@ import { RequestContactsConcat } from './request-contacts-concat.pipe';
 import { RequestsListComponent } from './requests-list/requests-list.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UploadModule } from '@progress/kendo-angular-upload';
 
 import { FormsModule } from '@angular/forms';
 import { GridHelpersModule } from '../grid-helpers/grid-helpers.module';
 import { RequestsRoutes } from './requests.routes';
-import { RequestService } from './requests.service';
+import { RequestService } from './services/request.service';
 import { RequestDetailComponent } from './request-detail/request-detail.component';
 import { RequestJobsComponent } from './request-jobs/request-jobs.component';
 import { SourceMaterialsListComponent } from './source-materials-list/source-materials-list.component';
@@ -22,8 +21,7 @@ import { SourceMaterialsListItemComponent } from './source-materials-list-item/s
     FormsModule,
     GridHelpersModule,
     RequestsRoutes,
-    SharedModule,
-    UploadModule
+    SharedModule
     // TemplatesModule
   ],
   declarations: [
