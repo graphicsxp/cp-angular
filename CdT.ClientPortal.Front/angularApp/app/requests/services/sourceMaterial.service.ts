@@ -1,3 +1,4 @@
+import { GlobalService } from './../../shared/services/global.service';
 import { SourceMaterial } from './../../model/breeze/source-material';
 import { Material } from './../../model/breeze/material';
 import { Injectable } from "@angular/core";
@@ -11,25 +12,25 @@ import { DocumentFormat } from '../../model/breeze/document-format';
 @Injectable()
 export class SourceMaterialService extends BaseRepositoryService {
 
-    constructor(protected _entityManagerService: EntityManagerService) {
+    constructor(protected _entityManagerService: EntityManagerService, public globalService: GlobalService) {
         super(_entityManagerService);
         this.entityName = 'SourceMaterial';
+        console.log(this.globalService);
     }
 
     public create(material: Material, template: RequestTemplate): SourceMaterial {
         let sourceMaterial: SourceMaterial = super.createEntity({ material: material }) as SourceMaterial;
 
         if (template) {
-            //TODO create global parameter for pricingPolicy
-            //if ($scope.vm.pricingPolicy2018Avalaible) {
-            // new confidentiality feature, override other parameters
-            sourceMaterial.confidentiality = template.confidentiality;
-            sourceMaterial.isExternalized = sourceMaterial.confidentiality.isExternalized;
-            sourceMaterial.isConfidential = sourceMaterial.confidentiality.isConfidential;
-            //}else
-            sourceMaterial.isConfidential = template.confidential;
-            sourceMaterial.isExternalized = template.externalisable;
-            //}
+            if (this.globalService.pricingPolicy2018Avalaible) {
+                // new confidentiality feature, override other parameters
+                sourceMaterial.confidentiality = template.confidentiality;
+                sourceMaterial.isExternalized = sourceMaterial.confidentiality.isExternalized;
+                sourceMaterial.isConfidential = sourceMaterial.confidentiality.isConfidential;
+            } else {
+                sourceMaterial.isConfidential = template.confidential;
+                sourceMaterial.isExternalized = template.externalisable;
+            }
 
             sourceMaterial.isPrivate = template.private;
 
@@ -49,8 +50,8 @@ export class SourceMaterialService extends BaseRepositoryService {
             }
 
             //add the selectedSourceLanguages to the sourceMaterial
-            _.map(template.sourceLanguages, 'language').forEach(function (lg) { sourceMaterial.selectedSourceLanguages.push(lg); });
-            
+            _.map(template.sourceLanguages, 'language').forEach(function (lg) { sourceMaterial.selectedLanguages.push(lg); });
+
         }
 
         return sourceMaterial;

@@ -1,3 +1,4 @@
+import { EntityManagerService } from './../../entity-manager.service';
 import { LookupNames } from './../../model/lookups';
 import { PhysicalFileService } from './../../shared/services/physicalFile.service';
 import { SourceMaterial } from './../../model/breeze/source-material';
@@ -19,10 +20,43 @@ export class SourceMaterialsListComponent implements OnInit {
 
   public allowedExtensions: string[];
 
-  constructor(private _requestService: RequestService, private _sourceMaterialService: SourceMaterialService, private _physicalFileService: PhysicalFileService) { }
+  constructor(private _entityManagerService: EntityManagerService, private _sourceMaterialService: SourceMaterialService, private _physicalFileService: PhysicalFileService) { }
 
   ngOnInit() {
-    this.allowedExtensions = this._requestService.getLookup(LookupNames.sourceMaterialDocumentFormatExtensions).map(ext => { return ext.code });
+    this.allowedExtensions = this._entityManagerService.getLookup(LookupNames.sourceMaterialDocumentFormatExtensions).map(ext => { return ext.code });
+  }
+
+  /**
+   * Returns the first not deleted material so that we know where to put the copy down button
+   */
+  public getFirstNotDeletedMaterial(){
+    return _.find(this.request.sourceMaterials, (m) => { return !m.isScreenDeleted; });
+  }
+  
+  public onBatchUpdate(event){
+console.log(event);
+// var dlg = dialogs.confirm('Please confirm', 'Copy data to all documents ?');
+
+// dlg.result.then(function (btn) {
+//     //find index of first not deleted material
+//     var startIdx = _.indexOf($scope.vm.request.sourceMaterials, _.find($scope.vm.request.sourceMaterials, function (el) { return !el.isScreenDeleted; }));
+
+//     for (var i = startIdx; i < $scope.vm.request.sourceMaterials.length; i++) {
+//         var material = $scope.vm.request.sourceMaterials[i];
+//         if (!material.isScreenDeleted && i !== index) {
+//             material.selectedSourceLanguages = _.clone($scope.vm.request.sourceMaterials[0].selectedSourceLanguages);
+//             material.isConfidential = $scope.vm.request.sourceMaterials[0].isConfidential;
+//             material.isExternalized = $scope.vm.request.sourceMaterials[0].isExternalized;
+//             material.confidentiality = $scope.vm.request.sourceMaterials[0].confidentiality;
+//             material.isPrivate = $scope.vm.request.sourceMaterials[0].isPrivate;
+//             // copy outputFormat if format is in targetFormats of the destination material
+//             if (material.targetFormats.indexOf($scope.vm.request.sourceMaterials[0].deliverableDocumentFormat) !== -1) {
+//                 material.deliverableDocumentFormat = $scope.vm.request.sourceMaterials[0].deliverableDocumentFormat;
+//             }
+//         }
+//     }
+//     return $q.when([]);
+// });
   }
 
   /**
@@ -33,14 +67,14 @@ export class SourceMaterialsListComponent implements OnInit {
     uploadedFiles.forEach(file => {
       let sourceMaterial: SourceMaterial = this._sourceMaterialService.create(
         this._physicalFileService.create(
-          file, _.find(this._requestService.getLookup(LookupNames.materialClassifications), { code: 'SOUR' })), this.request.requestTemplate);
+          file, _.find(this._entityManagerService.getLookup(LookupNames.materialClassifications), { code: 'SOUR' })), this.request.requestTemplate);
       this.request.sourceMaterials.push(sourceMaterial);
 
       // In case of subtitling or other cases
       //_setCorrrectDocumentFormats(sourceMaterial);
 
       //if source languages were set by the template we need to set the screen dirty
-      if (sourceMaterial.selectedSourceLanguages.length > 0) {
+      if (sourceMaterial.selectedLanguages.length > 0) {
         //$scope.vm.many2manyHasChanged = true;
         //sourceMaterial.entityAspect.removeValidationError('notEmptyCollectionValidator:sourceLanguages');
       }
@@ -54,4 +88,17 @@ export class SourceMaterialsListComponent implements OnInit {
     return _.chain(this.request.sourceMaterials).map(sm => { return sm.material.fileName; }).value();
   };
 
+  /**
+   * called from parent component when saving
+   */
+  onSave = function(){
+    this.request.sourceMaterials.forEach((material) => {
+      this._entityManagerService.checkMany2ManyModifications('SourceMaterialLanguage', material, material.selectedLanguages, material.sourceLanguages, 'material', 'language');
+    });
+
+    var sourceMaterialsToDelete = _.filter(this.request.sourceMaterials, (mat) => { return mat.isScreenDeleted; });   
+
+    // deletes entities and detaches related bags, cascade delete done server side
+    this._entityManagerService.deleteEntities(sourceMaterialsToDelete, ['sourceLanguages', 'jobs']);    
+  }
 }

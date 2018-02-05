@@ -1,0 +1,23 @@
+<div *ngIf="globalService.pricingPolicy2018Avalaible">
+  <p-dropdown #confidentialityList [options]="confidentialities" [(ngModel)]="sourceMaterial.confidentiality" (onChange)="onConfidentialityChanged($event)"
+    optionLabel="defaultLabel" dataKey="id" placeholder="Choose a confidentiality"></p-dropdown>
+  <i *ngIf="sourceMaterial.confidentiality?.code === 'SC'" class="fa fa-info-circle fa-lg ng-scope" style="color:red" aria-hidden="true"
+    bs-tooltip data-title="{{sourceMaterial.confidentiality?.description}}"></i>
+  <cdt-validator [entity]="sourceMaterial" [propName]="'confidentiality'"></cdt-validator>
+</div>
+
+<div *ngIf="!globalService.pricingPolicy2018Avalaible" class="row">
+  <div class="col-xs-6">
+    <input name="isConfidential" type="checkbox" class="ios-switch" [(ngModel)]="sourceMaterial.isConfidential" [disabled]="sourceMaterial.isScreenDeleted"
+      (click)="toggleConfidential(sourceMaterial)" />
+    <span class="switch"></span>
+  </div>
+  <div class="col-xs-6">
+    <div *ngIf="sourceMaterial.isConfidential">
+      Outsourceable:
+      <input name="isExternalized" type="checkbox" class="ios-switch" [(ngModel)]="sourceMaterial.isExternalized" [disabled]="sourceMaterial.isScreenDeleted"
+      />
+      <span class="switch"></span>
+    </div>
+  </div>
+</div>
