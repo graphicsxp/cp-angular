@@ -37,7 +37,7 @@ namespace CdT.ClientPortal.WebApi.Providers
                 return;
             }
 
-            if (await userManager.IsLockedOutAsync(user.Id))
+            if (await userManager.IsLockedOutAsync(user.Id) || user.IsApproved == false)
             {
                 context.SetError("invalid_grant", "The user is locked out.");
                 return;

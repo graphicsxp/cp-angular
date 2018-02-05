@@ -29,7 +29,9 @@
                 <i class="fa fa-user fa-stack-1x"></i>
                 <i class="fa fa-ban fa-stack-2x" *ngIf="!dataItem.IsApproved"></i>
             </a>
-            <a (click)="unlockUser(dataItem)"><i class="fa fa-lock fa-lg" *ngIf="dataItem.IsLockedOut"></i></a>
+            <a (click)="unlockUser(dataItem)">
+                <i class="fa fa-lock fa-lg" *ngIf="dataItem.IsLockedOut"></i>
+            </a>
         </ng-template>
     </kendo-grid-column>
 </kendo-grid>
