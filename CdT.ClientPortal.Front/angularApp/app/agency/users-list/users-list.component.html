@@ -1,4 +1,7 @@
 <kendo-grid [data]="users" [sortable]="true" [filterable]="true">
+    <ng-template kendoGridToolbarTemplate>
+        <button name="add" id="add" class="btn btn-primary btn-sm pull-right" bs-tooltip data-title="Create a new user" routerLink="/agency/users/detail/new">Create</button>
+    </ng-template>
     <!-- <kendo-grid-column title="username" field="UserName" width="90">
         <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
             <span>{{dataItem.FirstName}} {{dataItem.LastName}}</span><br/>

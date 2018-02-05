@@ -7,7 +7,7 @@ const routes: Routes = [
         //        path: '', canActivateChild: [InitGuard], children: [
         path: '', children: [
             { path: 'users', component: UsersListComponent },
-            { path: 'detail/:id', component: UserDetailsComponent },
+            { path: 'users/detail/:id', component: UserDetailsComponent },
 
             // { path: 'requests', component: RequestsListComponent },
             // { path: 'detail/:id', component: RequestDetailComponent, resolve: { request: RequestDetailResolver }, canDeactivate: [CanDeactivateGuard] },
