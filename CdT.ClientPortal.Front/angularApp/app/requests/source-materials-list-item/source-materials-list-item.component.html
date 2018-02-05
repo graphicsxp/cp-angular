@@ -41,8 +41,7 @@
   <a class="btn grid-button grid-edit-row btn-primary" *ngIf="sourceMaterial.isScreenDeleted" (click)="toggleDelete(sourceMaterial)">
     <i class="fa fa-refresh"></i>
   </a>
-  <a class="btn grid-button grid-edit-row btn-primary" id="SrcCopyDown" *ngIf="showCopyDown"
-    (click)="batchUpdate($index)">
+  <a class="btn grid-button grid-edit-row btn-primary" id="SrcCopyDown" *ngIf="showCopyDown" (click)="onBatchUpdate()">
     <i class="fa fa-arrow-down"></i>
   </a>
 </td>

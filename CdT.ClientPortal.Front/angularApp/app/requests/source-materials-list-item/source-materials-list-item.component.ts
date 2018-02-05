@@ -1,10 +1,10 @@
+import { SourceMaterial } from './../../model/breeze/source-material';
 import { EntityState } from 'breeze-client';
 import { LookupNames } from './../../model/lookups';
 import { PhysicalFile } from './../../model/breeze/physical-file';
 import { DocumentFormat } from './../../model/breeze/document-format';
 import { Language } from './../../model/breeze/language';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { SourceMaterial } from '../../model/breeze/source-material';
 import { EntityManagerService } from '../../entity-manager.service';
 import * as _ from 'lodash';
 import { Material } from '../../model/breeze/material';
@@ -24,7 +24,7 @@ export class SourceMaterialsListItemComponent implements OnInit {
 
   @Input() public sourceMaterial: SourceMaterial;
   @Input() public showCopyDown: boolean;
-  @Output() public batchUpdate = new EventEmitter<number>();
+  @Output() public batchUpdate = new EventEmitter<SourceMaterial>();
 
   ngOnInit() {
     this.languages = this._entityManagerService.getLookup(LookupNames.languages);
@@ -38,8 +38,8 @@ export class SourceMaterialsListItemComponent implements OnInit {
   public getFirstNotDeletedMaterial() { }
   public asPhysicalFile(material: Material): PhysicalFile { return material as PhysicalFile; }
 
-  public onBatchUpdate(){
-//this.
+  public onBatchUpdate() {
+    this.batchUpdate.emit(this.sourceMaterial);
   }
 
   public onSelectedLanguagesChanged(event) {
