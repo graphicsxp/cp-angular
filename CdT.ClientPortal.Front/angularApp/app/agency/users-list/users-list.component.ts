@@ -34,6 +34,19 @@ export class UsersListComponent implements OnInit {
     this.userService.unlockUser(user.UserName).subscribe(
       res => {
         this.toasterService.pop('success', 'Get users', `User ${user.UserName} unlocked`);
+        this.userService.getAllUsers().subscribe(
+          res => {
+            this.users = [];
+            for (let r of res) {
+              this.users.push(r);
+            }
+            console.log(res);
+          },
+          err => {
+            this.toasterService.pop('error', 'Get users', err.error);
+            console.log('Error occurred');
+          }
+        );
       },
       err => {
         this.toasterService.pop('error', 'Get users', err.error);
