@@ -320,7 +320,7 @@ export class RegistrationHelper {
         metadataStore.registerEntityTypeCtor('RequestContact', RequestContact);
         metadataStore.registerEntityTypeCtor('Material', Material);
         metadataStore.registerEntityTypeCtor('MaterialClassification', MaterialClassification);
-        metadataStore.registerEntityTypeCtor('SourceMaterial', SourceMaterial);
+        metadataStore.registerEntityTypeCtor('SourceMaterial', SourceMaterial, SourceMaterial.sourceMaterialPostInitializer);
         metadataStore.registerEntityTypeCtor('SourceMaterialLanguage', SourceMaterialLanguage);
         metadataStore.registerEntityTypeCtor('PriorityMultiplier', PriorityMultiplier);
         metadataStore.registerEntityTypeCtor('Priority', Priority);

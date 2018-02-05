@@ -162,6 +162,28 @@ export class EntityManagerService {
     }
   }
 
+
+  /**
+   * Delete entitities and make sure the childrenCollections, if any, are detached first
+   *@method deleteEntities
+   *@entity{object} the parent entities to delete
+   *@childrenCollections{string} the name of the children collections to detach
+   */
+  public deleteEntities(entities, childrenCollections) {
+    entities.forEach((entity) => {
+      if (childrenCollections instanceof Array) {
+        childrenCollections.forEach((childCollection) => {
+          while (entity[childCollection] instanceof Array && entity[childCollection].length !== 0) {
+            if (entity[childCollection] instanceof Array) { //safe guard
+              this.em.detachEntity(entity[childCollection][0]);
+            }
+          }
+        });
+      }
+      entity.entityAspect.setDeleted();
+    });
+  }
+
   /**
    * Triggers a change notification accross the entityManager for a given entity
    * If the entity is in status Added, we call the breeze private method _notifyStateChange.
@@ -193,7 +215,7 @@ export class EntityManagerService {
       var filteredEntities;
       //if it's an array, filter detached entities
       if (Array.isArray(entities)) {
-        filteredEntities = _.filter(entities, function (entity) {
+        filteredEntities = _.filter(entities, (entity) => {
           return entity.entityAspect.entityState !== EntityState.Detached;
         });
       }
@@ -207,10 +229,10 @@ export class EntityManagerService {
         }
       }
       // filter also deleted entities
-      var entitiesGraph = this.em.getEntityGraph(filteredEntities, properties).filter(function (entity) {
+      var entitiesGraph = this.em.getEntityGraph(filteredEntities, properties).filter((entity) => {
         return entity.entityAspect.entityState !== EntityState.Deleted;
       });
-      var hasError = _.some(entitiesGraph, function (entity) {
+      var hasError = _.some(entitiesGraph, (entity) => {
         return entity.entityAspect.hasValidationErrors;
       });
       return hasError;

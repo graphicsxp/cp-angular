@@ -14,7 +14,8 @@ import { DocumentFormatExtension } from './document-format-extension';
 export class PhysicalFile extends Material {
 
     /// <code> Place custom code between <code> tags
-    constructor(private _entityManagerService: EntityManagerService) {
+
+    constructor(/*public _entityManagerService: EntityManagerService*/) {
         super();
     }
 
@@ -22,18 +23,18 @@ export class PhysicalFile extends Material {
         if (physicalFile.id === DataType.Guid.defaultValue) {
             physicalFile.physicalVolume = 0;
             //TODO: find solution 
-            // physicalFile.documentFormat = this.getSourceFormat(physicalFile.fileName);
+            //physicalFile.documentFormat = physicalFile._entityManagerService.getLookup();
             physicalFile.materialType = 'File';
         }
     }
 
-    private getSourceFormat(filename): DocumentFormat {
-        let format: DocumentFormat = null;
-        let extension = filename.substring(filename.lastIndexOf('.') + 1, filename.length);
-        let formatExt: DocumentFormatExtension = _.find(this._entityManagerService.getLookup(LookupNames.documentFormatExtensions), { code: extension.toUpperCase() });
-        if (formatExt) { format = formatExt.documentFormat; }
-        return format;
-    }
+    // static getSourceFormat(filename): DocumentFormat {
+    //     let format: DocumentFormat = null;
+    //     let extension = filename.substring(filename.lastIndexOf('.') + 1, filename.length);
+    //     let formatExt: DocumentFormatExtension = _.find(this._entityManagerService.getLookup(LookupNames.documentFormatExtensions), { code: extension.toUpperCase() });
+    //     if (formatExt) { format = formatExt.documentFormat; }
+    //     return format;
+    // }
     /// </code>
 
     // Generated code. Do not place code below this line.
