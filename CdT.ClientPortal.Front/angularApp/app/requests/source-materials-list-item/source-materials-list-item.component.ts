@@ -1,5 +1,7 @@
+import { GlobalService } from './../../shared/services/global.service';
 import { Component, OnInit, Input, Output } from '@angular/core';
-import { SourceMaterial } from '../../model/source-material';
+import { SourceMaterial } from '../../model/breeze/source-material';
+import { PhysicalFile, Material } from '../../model/breeze/entity-model';
 
 @Component({
   selector: '[cdt-source-materials-list-item]',
@@ -8,13 +10,14 @@ import { SourceMaterial } from '../../model/source-material';
 })
 export class SourceMaterialsListItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(public globalService: GlobalService) { }
 
   @Input() public sourceMaterial: SourceMaterial;
 
   ngOnInit() {
   }
 
-  public canSetPrivacy() { }
+  public canSetPrivacy(sourceMaterial: SourceMaterial) { }
   public getFirstNotDeletedMaterial() { }
+  public asPhysicalFile(material: Material): PhysicalFile { return material as PhysicalFile; }
 }

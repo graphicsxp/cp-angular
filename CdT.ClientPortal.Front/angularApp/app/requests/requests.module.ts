@@ -9,11 +9,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GridHelpersModule } from '../grid-helpers/grid-helpers.module';
 import { RequestsRoutes } from './requests.routes';
-import { RequestService } from './requests.service';
+import { RequestService } from './services/request.service';
 import { RequestDetailComponent } from './request-detail/request-detail.component';
 import { RequestJobsComponent } from './request-jobs/request-jobs.component';
 import { SourceMaterialsListComponent } from './source-materials-list/source-materials-list.component';
 import { SourceMaterialsListItemComponent } from './source-materials-list-item/source-materials-list-item.component';
+import { SourceMaterialService } from './services/sourceMaterial.service';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import { SourceMaterialsListItemComponent } from './source-materials-list-item/s
     FormsModule,
     GridHelpersModule,
     RequestsRoutes,
-    SharedModule,
+    SharedModule
     // TemplatesModule
   ],
   declarations: [
@@ -32,6 +33,6 @@ import { SourceMaterialsListItemComponent } from './source-materials-list-item/s
     SourceMaterialsListComponent,
     SourceMaterialsListItemComponent
   ],
-  providers: [RequestService, /*InitGuard,*/ RequestDetailResolver],
+  providers: [RequestService, SourceMaterialService, /*InitGuard,*/ RequestDetailResolver],
 })
 export class RequestsModule { }

@@ -3,7 +3,7 @@ import { NamingConvention, NavigationProperty, EntityState } from 'breeze-client
 import { EntityManager, EntityQuery, config } from 'breeze-client';
 import 'breeze-client-labs/breeze.getEntityGraph';
 import { Injectable } from '@angular/core';
-import { RegistrationHelper } from './model/registration-helper';
+import { RegistrationHelper } from './model/breeze/registration-helper';
 import * as _ from 'lodash';
 import { EntityAction } from 'breeze-client';
 import { IStructuralType } from 'breeze-client';
@@ -16,10 +16,11 @@ import { CustomValidatorService } from './shared/services/custom-validator.servi
  */
 @Injectable()
 export class EntityManagerService {
-  public readonly em: EntityManager = new EntityManager(environment.webapiUrl);
+  public readonly em: EntityManager = new EntityManager(`${environment.backendUrl}${environment.breezeEndpoint}`);
 
   private _initialized: boolean;
   private _hasChanges: boolean;
+  private _lookups: Object;
 
   constructor(private _customValidatorService: CustomValidatorService) {
     this.em.metadataStore.namingConvention = NamingConvention.camelCase.setAsDefault();
@@ -38,7 +39,7 @@ export class EntityManagerService {
         resolve(true);
       } else {
         this._initialized = true;
-        let existingChanges = localStorage['changeCache'];
+        let existingChanges = localStorage.getItem('changeCache');
         if (existingChanges) {
           this.em.importEntities(existingChanges);
           localStorage.removeItem('changeCache');
@@ -64,6 +65,7 @@ export class EntityManagerService {
             }
           }
           this.em.executeQuery(EntityQuery.from('Lookups')).then(lookupsResponse => {
+            this._lookups = lookupsResponse.results[0];
             resolve(true);
           }, error => console.error(error));
         }, error => console.error(error));
@@ -216,5 +218,9 @@ export class EntityManagerService {
     else {
       return false;
     }
+  }
+
+  public getLookup(name: string) {
+    return this._lookups[name];
   }
 }

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { EntityManagerService } from './../entity-manager.service';
-import { Client, Status, Request } from './../model/entity-model';
+import { Client, Status, Request } from './../model/breeze/entity-model';
 import { Injectable } from '@angular/core';
 import { EntityQuery } from 'breeze-client';
 import { BaseRepositoryService } from '../shared/services/base-repository.service';
@@ -14,7 +14,7 @@ export class TemplateService extends BaseRepositoryService {
   }
 
   public create() {
-    return super.create();
+    return super.createEntity();
   }
 
   public query(state: any): void {

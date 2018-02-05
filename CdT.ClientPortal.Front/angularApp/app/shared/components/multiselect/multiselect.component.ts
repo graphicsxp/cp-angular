@@ -1,4 +1,4 @@
-import { Contact } from './../../../model/contact';
+import { Contact } from './../../../model/breeze/contact';
 import { Component, OnInit, Input, DoCheck, IterableDiffers, IterableDiffer, Output, EventEmitter } from '@angular/core';
 import { OnChanges, SimpleChanges } from '@angular/core';
 

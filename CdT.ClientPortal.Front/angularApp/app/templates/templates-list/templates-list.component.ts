@@ -1,7 +1,7 @@
 import { State } from '@progress/kendo-data-query';
 import { Observable } from 'rxjs/Observable';
 import { GridDataResult, PageChangeEvent, DataStateChangeEvent } from '@progress/kendo-angular-grid';
-import { RequestTemplate } from './../../model/request-template';
+import { RequestTemplate } from './../../model/breeze/request-template';
 import { Component, OnInit } from '@angular/core';
 import { TemplateService } from '../templates.service';
 import { DialogService, DialogRef, DialogCloseResult } from '@progress/kendo-angular-dialog';

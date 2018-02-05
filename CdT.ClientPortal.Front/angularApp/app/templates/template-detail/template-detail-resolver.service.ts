@@ -1,4 +1,4 @@
-import { RequestTemplate } from './../../model/entity-model';
+import { RequestTemplate } from './../../model/breeze/entity-model';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router/src/interfaces';
 import { Observable } from 'rxjs/Observable';

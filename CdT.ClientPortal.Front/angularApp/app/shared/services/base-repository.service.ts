@@ -1,5 +1,6 @@
+import { Entity } from 'breeze-client';
 import { LookupNames } from './../../model/lookups';
-import { Purpose, Client, Status, Request, DeliveryMode, RequestTemplate } from './../../model/entity-model';
+import { Purpose, Client, Status, Request, DeliveryMode, RequestTemplate } from './../../model/breeze/entity-model';
 
 import { EntityManagerService } from './../../entity-manager.service';
 import { GridDataResult } from '@progress/kendo-angular-grid';
@@ -10,22 +11,29 @@ import 'rxjs/add/operator/catch';
 import { EntityManager, EntityQuery, Predicate, FilterQueryOp } from 'breeze-client';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { groupBy } from '@progress/kendo-data-query';
-import { RequestType } from '../../model/request-type';
+import { RequestType } from '../../model/breeze/request-type';
 
 /**
  * The BaseRepositoryService implements basic CRUD operations. It should remain as generic as possible.
  */
 export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResult> {
 
+  /**
+   * the entityName is set in repository services inherited from the the base service
+   */
   protected entityName: String = '';
 
   constructor(protected _entityManagerService: EntityManagerService) {
     super(null);
   }
 
-  protected create(args = null) {
-    args = args || {};
-    return this._entityManagerService.em.createEntity(<string>this.entityName, args);
+  /**
+   * Creates a new breeze Entity
+   * @param config if we need to set children properties of the created entity
+   */
+  protected createEntity(config?: {}): Entity {
+    config = config || {};
+    return this._entityManagerService.em.createEntity(<string>this.entityName, config);
   }
 
   public getById(entityName, resource, id, children, forceRefresh = false): Observable<any> {
@@ -118,7 +126,12 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
     return promise;
   }
 
-  getLookup(name:LookupNames): any[] {
-    return this._entityManagerService.em.executeQueryLocally(EntityQuery.from(name));
+  /**
+   * Added here for convenience as it avoids injecting entityManagerService in components. Most of the 
+   * time we can access this directly from the dedicated repository service of the component.
+   * @param name the name of the lookup we want to retrieve
+   */
+  getLookup(name: string): any[] {
+    return this._entityManagerService.getLookup(name);
   }
 }

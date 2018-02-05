@@ -6,6 +6,9 @@
 export const environment = {
     production: false,
     //webapiUrl: 'http://localhost:3002/'
-    webapiUrl: 'https://localhost/CdT.ClientPortal.WebApi/breeze/eai/'
+    backendUrl: 'https://localhost/CdT.ClientPortal.WebApi',
+    breezeEndpoint: '/breeze/eai',
+    webApiEndpoint: '/api'   ,
+    uploadEndpoint: '/filemanagement/upload'
   };
   

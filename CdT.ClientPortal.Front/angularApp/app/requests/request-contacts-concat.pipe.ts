@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Request, Contact, RequestContact } from '../model/entity-model';
+import { Request, Contact, RequestContact } from '../model/breeze/entity-model';
 @Pipe({
     name: 'requestcontactsconcat'
 })

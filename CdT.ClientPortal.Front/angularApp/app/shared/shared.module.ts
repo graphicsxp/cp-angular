@@ -1,3 +1,4 @@
+import { GlobalService } from './services/global.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { GridHelpersModule } from './../grid-helpers/grid-helpers.module';
@@ -13,6 +14,9 @@ import { DataFieldInputComponent } from './components/data-field/data-field-inpu
 import { DataFieldSelectComponent } from './components/data-field/data-field-select/data-field-select.component';
 import { ValidatorComponent } from './components/validator/validator.component';
 import { MultiSelectComponent } from './components/multiselect/multiselect.component';
+import { UploaderComponent } from './components/uploader/uploader.component';
+import { UploadModule } from '@progress/kendo-angular-upload';
+import { PhysicalFileService } from './services/physicalFile.service';
 
 @NgModule({
     imports: [
@@ -20,7 +24,8 @@ import { MultiSelectComponent } from './components/multiselect/multiselect.compo
         RouterModule,
         FormsModule,
         GridHelpersModule,
-        MultiSelectModule
+        MultiSelectModule,
+        UploadModule
     ],
 
     declarations: [
@@ -29,9 +34,14 @@ import { MultiSelectComponent } from './components/multiselect/multiselect.compo
         DataFieldInputComponent,
         DataFieldSelectComponent,
         ValidatorComponent,
-        MultiSelectComponent
+        MultiSelectComponent,
+        UploaderComponent
     ],
 
+    providers: [
+        GlobalService,
+        PhysicalFileService
+    ],
     exports: [
         NavigationComponent,
         CustomFooterComponent,
@@ -40,8 +50,8 @@ import { MultiSelectComponent } from './components/multiselect/multiselect.compo
         ValidatorComponent,
         MultiSelectComponent,
         MultiSelectModule,
-        DropdownModule
-        
+        DropdownModule,
+        UploaderComponent
     ]    
 })
 
