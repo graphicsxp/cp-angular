@@ -25,10 +25,7 @@
             ],
             "scripts": [
                 "../node_modules/jquery/dist/jquery.min.js",
-                "../node_modules/bootstrap/dist/js/bootstrap.min.js",
-                "../node_modules/font-awesome/css/font-awesome.min.css",
-                "../node_modules/primeng/resources/themes/omega/theme.css",
-                "../node_modules/primeng/resources/primeng.min.css"
+                "../node_modules/bootstrap/dist/js/bootstrap.min.js"                
             ],
             "environmentSource": "environments/environment.ts",
             "environments": {
