@@ -440,6 +440,18 @@ namespace CdT.ClientPortal.WebApi.Controllers
         }
 
         [HttpPost]
+        public async Task ToggleUserApproved([FromBody] string userName)
+        {
+            ClientPortalUser user = await this._userManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent(string.Format("User {0} not found", userName)), ReasonPhrase = "Business exception" });
+            }
+            user.IsApproved = !user.IsApproved;
+            await this._userManager.UpdateAsync(user);
+        }
+
+        [HttpPost]
         public async Task UnlockUser([FromBody] string userName)
         {
             ClientPortalUser user = await this._userManager.FindByNameAsync(userName);
