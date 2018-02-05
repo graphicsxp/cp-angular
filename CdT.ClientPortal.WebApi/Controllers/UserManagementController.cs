@@ -191,8 +191,7 @@ namespace CdT.ClientPortal.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<UserEditDTO> GetUser([FromUri]
-                                               string userName)
+        public async Task<UserEditDTO> GetUser([FromUri] string userName)
         {
             ClientPortalUser user = await this._userManager.FindByNameAsync(userName);
             if (user == null)
@@ -438,6 +437,21 @@ namespace CdT.ClientPortal.WebApi.Controllers
             ClientPortalUser user = await this._userManager.FindByNameAsync(command.DefaultRole.UserName);
             user.DefaultRole = command.DefaultRole.Rolename;
             await this._userManager.UpdateAsync(user);
+        }
+
+        [HttpPost]
+        public async Task UnlockUser([FromBody] string userName)
+        {
+            ClientPortalUser user = await this._userManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = new StringContent(string.Format("User {0} not found", userName)), ReasonPhrase = "Business exception" });
+            }
+            if (user.LockoutEndDateUtc > DateTime.UtcNow)
+            {
+                await this._userManager.ResetAccessFailedCountAsync(user.Id);
+                await this._userManager.SetLockoutEndDateAsync(user.Id, DateTime.UtcNow);
+            }
         }
 
         public class ChangePasswordModel
