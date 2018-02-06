@@ -61,6 +61,20 @@ export class SourceMaterialsListItemComponent implements OnInit {
     }
   }
 
+  // public canSetPrivacy() {
+  //   if (this.sourceMaterial.isPrivate && this.sourceMaterial.uploadedBy) {
+  //       if (sourceMaterial.uploadedBy === $rootScope.userInfo.currentUser) {
+  //           return true;
+  //       }
+  //       else {
+  //           return false;
+  //       }
+  //   }
+  //   else {
+  //       return true;
+  //   }
+//};
+
   public onOutputFormat(event) {
     // var service = modelService.request.getSelectedService($scope.vm.request);
     //         if (service && service.code === 'ST' && !_.includes(modelService.documentFormat.validSubtitlingFormatCodes, value.code)) {
