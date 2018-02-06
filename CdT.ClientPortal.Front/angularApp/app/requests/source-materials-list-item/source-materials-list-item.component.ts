@@ -36,7 +36,6 @@ export class SourceMaterialsListItemComponent implements OnInit {
     }
   }
 
-  public getFirstNotDeletedMaterial() { }
   public asPhysicalFile(material: Material): PhysicalFile { return material as PhysicalFile; }
 
   public onBatchUpdate() {

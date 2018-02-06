@@ -39,25 +39,25 @@ export class SourceMaterialsListComponent implements OnInit {
     return _.find(this.request.sourceMaterials, (m) => { return !m.isScreenDeleted; });
   }
 
-  public onBatchUpdate(event) {
+  public onBatchUpdate(sourceMaterial) {
 
     this._confirmationService.confirm({
       message: 'Copy data to all documents ?',
       accept: () => {
         //find index of first not deleted material
-        var startIdx = _.indexOf(this.request.sourceMaterials, _.find(this.request.sourceMaterials, (sm) => { return !sm.isScreenDeleted; }));
+        var startIdx = _.indexOf(this.request.sourceMaterials, sourceMaterial);
 
         for (var i = startIdx; i < this.request.sourceMaterials.length; i++) {
           var material = this.request.sourceMaterials[i];
-          if (!material.isScreenDeleted && material !== event) {
-            material.selectedLanguages = _.clone(this.request.sourceMaterials[startIdx].selectedLanguages);
-            material.isConfidential = this.request.sourceMaterials[startIdx].isConfidential;
-            material.isExternalized = this.request.sourceMaterials[startIdx].isExternalized;
-            material.confidentiality = this.request.sourceMaterials[startIdx].confidentiality;
-            material.isPrivate = this.request.sourceMaterials[startIdx].isPrivate;
+          if (!material.isScreenDeleted && material !== sourceMaterial) {
+            material.selectedLanguages = _.clone(sourceMaterial.selectedLanguages);
+            material.isConfidential = sourceMaterial.isConfidential;
+            material.isExternalized = sourceMaterial.isExternalized;
+            material.confidentiality = sourceMaterial.confidentiality;
+            material.isPrivate = sourceMaterial.isPrivate;
             // copy outputFormat if format is in targetFormats of the destination material
-            if (this._sourceMaterialService.getTargetFormats(material).indexOf(this.request.sourceMaterials[startIdx].deliverableDocumentFormat) !== -1) {
-              material.deliverableDocumentFormat = this.request.sourceMaterials[0].deliverableDocumentFormat;
+            if (this._sourceMaterialService.getTargetFormats(material).indexOf(sourceMaterial.deliverableDocumentFormat) !== -1) {
+              material.deliverableDocumentFormat = sourceMaterial.deliverableDocumentFormat;
             }
           }
         }
