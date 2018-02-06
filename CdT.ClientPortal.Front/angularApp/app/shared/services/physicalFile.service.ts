@@ -6,10 +6,9 @@ import { MaterialClassification } from '../../model/breeze/material-classificati
 import { UploadedFile } from '../../model/uploadedFile';
 
 @Injectable()
-export class PhysicalFileService extends BaseRepositoryService {
+export class PhysicalFileService extends BaseRepositoryService<PhysicalFile> {
     constructor(protected _entityManagerService: EntityManagerService) {
-        super(_entityManagerService);
-        this.entityName = 'PhysicalFile';
+        super(_entityManagerService,PhysicalFile);
     }
 
     public create(file: UploadedFile, classification: MaterialClassification): PhysicalFile {
@@ -19,9 +18,9 @@ export class PhysicalFileService extends BaseRepositoryService {
                 fileName: file.name,
                 fileSize: file.size,
                 materialClassification: classification
-            }) as PhysicalFile;
+            });
         } else {
-            return super.createEntity() as PhysicalFile;
+            return super.createEntity();
         }
     }
 }

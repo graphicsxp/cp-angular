@@ -5,14 +5,13 @@ import { BaseRepositoryService } from "../../shared/services/base-repository.ser
 import { EntityManagerService } from "../../entity-manager.service";
 
 @Injectable()
-export class SourceMaterialService extends BaseRepositoryService {
+export class SourceMaterialService extends BaseRepositoryService<SourceMaterial> {
 
     constructor(protected _entityManagerService: EntityManagerService) {
-        super(_entityManagerService);
-        this.entityName = 'SourceMaterial';
+        super(_entityManagerService, SourceMaterial);
     }
 
     public create(material:Material): SourceMaterial {
-        return  super.createEntity({material: material}) as SourceMaterial;
+        return  super.createEntity({material: material});
     }
 }

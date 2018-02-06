@@ -16,20 +16,21 @@ import { RequestType } from '../../model/breeze/request-type';
 /**
  * The BaseRepositoryService implements basic CRUD operations. It should remain as generic as possible.
  */
-export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResult> {
+export abstract class BaseRepositoryService<T extends Entity> extends BehaviorSubject<GridDataResult> {
 
   protected entityName: String = '';
-
-  constructor(protected _entityManagerService: EntityManagerService) {
+ 
+  constructor(protected _entityManagerService: EntityManagerService, ctor: { new (): T }) {
     super(null);
+    this.entityName = ctor.name;
   }
 
-  protected createEntity(config?: {}): Entity {
+  protected createEntity(config?: {}): T {
     config = config || {};
-    return this._entityManagerService.em.createEntity(<string>this.entityName, config);
+    return this._entityManagerService.em.createEntity(<string>this.entityName, config) as T;
   }
 
-  public getById(entityName, resource, id, children, forceRefresh = false): Observable<any> {
+  public getById(entityName, resource, id, children, forceRefresh = false): Observable<T> {
     let promise = new Promise<any>((resolve, reject) => {
       var entity = this._entityManagerService.em.getEntityByKey(entityName, id);
 
@@ -53,7 +54,7 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
       }
     });
 
-    return Observable.fromPromise(promise).map(entity => (<any>entity));
+    return Observable.fromPromise(promise).map(entity => (<T>entity));
   }
 
   protected fetch(tableName: string, state: any, expand: string): Observable<GridDataResult> {
