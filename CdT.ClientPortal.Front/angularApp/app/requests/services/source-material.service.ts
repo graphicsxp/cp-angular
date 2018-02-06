@@ -15,12 +15,11 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
 
     constructor(protected _entityManagerService: EntityManagerService, public globalService: GlobalService) {
         super(_entityManagerService, SourceMaterial);
-        this.entityName = 'SourceMaterial';
         console.log(this.globalService);
     }
 
     public create(material: Material, template: RequestTemplate): SourceMaterial {
-        let sourceMaterial: SourceMaterial = super.createEntity({ material: material }) as SourceMaterial;
+        let sourceMaterial = super.createEntity({ material: material });
 
         if (template) {
             if (this.globalService.pricingPolicy2018Avalaible) {
@@ -56,7 +55,6 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
         }
 
         return sourceMaterial;
->>>>>>> 253cfb99caef3ddff49847535121666ad4c90348
     }
 
     /**

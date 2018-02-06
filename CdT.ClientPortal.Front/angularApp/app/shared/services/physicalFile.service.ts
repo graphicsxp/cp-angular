@@ -12,7 +12,7 @@ import * as _ from 'lodash';
 @Injectable()
 export class PhysicalFileService extends BaseRepositoryService<PhysicalFile> {
     constructor(protected _entityManagerService: EntityManagerService) {
-        super(_entityManagerService,PhysicalFile);
+        super(_entityManagerService, PhysicalFile);
     }
 
     public create(file: UploadedFile, classification: MaterialClassification): PhysicalFile {
