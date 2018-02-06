@@ -44,7 +44,7 @@ export class EntityManagerService {
           this.em.importEntities(existingChanges);
           localStorage.removeItem('changeCache');
         }
-        this.em.fetchMetadata().then(_ => {
+        this.em.fetchMetadata().then(() => {
 
           let allTypes: IStructuralType[] = this.em.metadataStore.getEntityTypes();
           for (var i = 0; i < allTypes.length; i++) {
@@ -67,8 +67,14 @@ export class EntityManagerService {
           this.em.executeQuery(EntityQuery.from('Lookups')).then(lookupsResponse => {
             this._lookups = lookupsResponse.results[0];
             resolve(true);
-          }, error => console.error(error));
-        }, error => console.error(error));
+          }, error => {
+            console.error(error)
+            resolve(false);
+          });
+        }, error => {
+          console.error(error)
+          resolve(false);
+        });
       }
     });
     return promise;
