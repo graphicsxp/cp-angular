@@ -3,7 +3,7 @@
   {{asPhysicalFile(sourceMaterial.material).documentFormat?.code}}
 </td>
 <td>
-  {{sourceMaterial.material.fileName}}
+  {{asPhysicalFile(sourceMaterial.material).fileName}}
   <!-- <download ng-if="canSetPrivacy(sourceMaterial)" material="sourceMaterial.material" />
   <a ng-if="!canSetPrivacy(sourceMaterial)" ng-click="denyDownload()">{{sourceMaterial.material.fileName}}</a>
   <validator model="sourceMaterial.material" validate-property="fileName"></validator> -->
