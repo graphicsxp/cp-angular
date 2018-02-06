@@ -320,7 +320,7 @@ export class RegistrationHelper {
         metadataStore.registerEntityTypeCtor('RequestContact', RequestContact);
         metadataStore.registerEntityTypeCtor('Material', Material);
         metadataStore.registerEntityTypeCtor('MaterialClassification', MaterialClassification);
-        metadataStore.registerEntityTypeCtor('SourceMaterial', SourceMaterial);
+        metadataStore.registerEntityTypeCtor('SourceMaterial', SourceMaterial, SourceMaterial.sourceMaterialPostInitializer);
         metadataStore.registerEntityTypeCtor('SourceMaterialLanguage', SourceMaterialLanguage);
         metadataStore.registerEntityTypeCtor('PriorityMultiplier', PriorityMultiplier);
         metadataStore.registerEntityTypeCtor('Priority', Priority);
@@ -411,7 +411,7 @@ export class RegistrationHelper {
         metadataStore.registerEntityTypeCtor('JobRevision', JobRevision);
         metadataStore.registerEntityTypeCtor('JobModification', JobModification);
         metadataStore.registerEntityTypeCtor('JobEditing', JobEditing);
-        metadataStore.registerEntityTypeCtor('PhysicalFile', PhysicalFile);
+        metadataStore.registerEntityTypeCtor('PhysicalFile', PhysicalFile, PhysicalFile.physicalFilePostInitializer);
         metadataStore.registerEntityTypeCtor('NetworkSharedFile', NetworkSharedFile);
         metadataStore.registerEntityTypeCtor('Url', Url);
         metadataStore.registerEntityTypeCtor('AssessmentTaskPropertySet', AssessmentTaskPropertySet);

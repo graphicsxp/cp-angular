@@ -1,5 +1,37 @@
-<kendo-grid [data]="users">
-    <kendo-grid-column title="username" field="UserName" width="90">
+<kendo-grid [data]="users" [sortable]="true" [filterable]="true">
+    <ng-template kendoGridToolbarTemplate>
+        <button name="add" id="add" class="btn btn-primary btn-sm pull-right" bs-tooltip data-title="Create a new user" routerLink="/agency/users/detail/new">Create</button>
+    </ng-template>
+    <!-- <kendo-grid-column title="username" field="UserName" width="90">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <span>{{dataItem.FirstName}} {{dataItem.LastName}}</span><br/>
+            <span>User name:{{dataItem.UserName}}</span><br/>
+            <a href="mailto:{{dataItem.Email}}">{{dataItem.Email}}</a><br/>
+            <span>Phone:{{dataItem.PhoneNumber}}</span>
+        </ng-template>
+    </kendo-grid-column> -->
+    <kendo-grid-column title="Username" field="UserName">
     </kendo-grid-column>
-    <kendo-grid-checkbox-column title="Status" field="IsApproved" width="5"></kendo-grid-checkbox-column>
+    <kendo-grid-column title="First name" field="FirstName">
+    </kendo-grid-column>
+    <kendo-grid-column title="Last name" field="LastName">
+    </kendo-grid-column>
+    <kendo-grid-column title="Email" field="Email">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <a href="mailto:{{dataItem.Email}}">{{dataItem.Email}}</a>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column title="Phone" field="Phone">
+    </kendo-grid-column>
+    <kendo-grid-column title="Status" field="IsApproved">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            <a (click)="togglerUserApproved(dataItem)" class="fa-stack">
+                <i class="fa fa-user fa-stack-1x"></i>
+                <i class="fa fa-ban fa-stack-2x" *ngIf="!dataItem.IsApproved"></i>
+            </a>
+            <a (click)="unlockUser(dataItem)">
+                <i class="fa fa-lock fa-lg" *ngIf="dataItem.IsLockedOut"></i>
+            </a>
+        </ng-template>
+    </kendo-grid-column>
 </kendo-grid>

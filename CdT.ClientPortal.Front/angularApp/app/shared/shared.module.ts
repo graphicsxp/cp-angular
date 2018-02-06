@@ -1,3 +1,4 @@
+import { GlobalService } from './services/global.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { GridHelpersModule } from './../grid-helpers/grid-helpers.module';
@@ -38,6 +39,7 @@ import { PhysicalFileService } from './services/physicalFile.service';
     ],
 
     providers: [
+        GlobalService,
         PhysicalFileService
     ],
     exports: [

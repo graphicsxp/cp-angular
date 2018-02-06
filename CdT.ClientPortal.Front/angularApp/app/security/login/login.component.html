@@ -1,0 +1,44 @@
+<div class="content clearfix">
+    <div id="login-form" style="text-align:center" class="login-fields widget">
+        <h1>
+            <span class="AppName">Freelance portal</span>
+        </h1>
+        <img style="width:50px" src="/Content/images/entete.png">
+        <form action="/Account/Login?ReturnUrl=%2F" id="loginForm" method="post" novalidate="novalidate"><input name="__RequestVerificationToken" type="hidden" value="HP9hHIkwNxByPBqukzWA31T1ZfpwOayv7Z_UOxFwB5Xj5OscxOppeHteJMd5MHn1HlK-lrG7818NuPi6lgNRD0D7Ie1Z47OnrITSrBrQ6L01">
+            <fieldset>
+                <div class="controls-row">
+                    <div class="form-group _error">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input autofocus="autofocus" class="form-control valid" data-val="true" data-val-required="Please enter a user name" id="userName" name="UserName" placeholder="user name" required="" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="form-group _error">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            <input autocomplete="off" class="form-control valid" data-val="true" data-val-required="Please enter a password" id="password" name="Password" placeholder="password" required="" type="password">
+                        </div>
+                    </div>
+                </div>
+                <div class="validation-summary-errors">
+                    <ul>
+                        <li id="passwordCapsLock" name="passwordCapsLock" class="capslock-error " style="display: none;margin-bottom:5px"><i class="fa fa-warning-sign"></i><span for="Password">&nbsp;Caps lock is on</span> </li>
+                    </ul>
+                </div>
+                <div class="has-error">
+                    <div class="validation-summary-valid" data-valmsg-summary="true">
+                        <ul>
+                            <li style="display:none"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="login-actions">
+                    <div>
+                        <input type="submit" value="Log in" id="logIn" name="logIn" class="btn btn-shadow btn-primary">
+                        <a id="forgot" class="small-link" href="/Account/ForgotPassword/forgot?user=freelanceadm">Forgot your password?</a>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

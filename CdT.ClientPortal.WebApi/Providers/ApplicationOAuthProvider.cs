@@ -29,7 +29,7 @@ namespace CdT.ClientPortal.WebApi.Providers
             // get ther current lifetimescope from the requqest
             var autofacLifetimeScope = OwinContextExtensions.GetAutofacLifetimeScope(context.OwinContext);
             var userManager = autofacLifetimeScope.Resolve<ClientPortalUserManager>();
-            ClientPortalUser user = await userManager.FindAsync(context.UserName, context.Password);
+            ClientPortalUser user = await userManager.FindByNameAsync(context.UserName);
 
             if (user == null)
             {
@@ -37,13 +37,32 @@ namespace CdT.ClientPortal.WebApi.Providers
                 return;
             }
 
+            if (await userManager.IsLockedOutAsync(user.Id) || user.IsApproved == false)
+            {
+                context.SetError("invalid_grant", "The user is locked out.");
+                return;
+            }
+
+            if (!await userManager.CheckPasswordAsync(user, context.Password))
+            {
+                await userManager.AccessFailedAsync(user.Id);
+                if (await userManager.IsLockedOutAsync(user.Id))
+                {
+                    context.SetError("invalid_grant", "The user is locked out.");
+                    return;
+                }
+                context.SetError("invalid_grant", "The user name or password is incorrect.");
+                return;
+            }
+
+            await userManager.ResetAccessFailedCountAsync(user.Id);
+
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, OAuthDefaults.AuthenticationType);
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager, CookieAuthenticationDefaults.AuthenticationType);
 
             AuthenticationProperties properties = CreateProperties(user.UserName);
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
-            context.Request.Context.Authentication.SignIn(cookiesIdentity);
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)

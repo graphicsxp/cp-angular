@@ -24,14 +24,14 @@ export class UserDetailsComponent implements OnInit {
   public onSave(): void {
     this.userService.createUser(this.user)
       .subscribe(
-      res => {
-        this.toasterService.pop('success', 'Creating user', `User ${res.UserName} successfully created`);
-        console.log(res);
-      },
-      err => {
-        this.toasterService.pop('error', 'creating user', err.error);
-        console.log('Error occurred');
-      }
+        res => {
+          this.toasterService.pop('success', 'Creating user', `User ${res.UserName} successfully created`);
+          console.log(res);
+        },
+        err => {
+          this.toasterService.pop('error', 'creating user', err.error);
+          console.log('Error occurred');
+        }
       );
   }
 }

@@ -1,4 +1,3 @@
-import { Priority } from './priority';
 import { EntityBase } from './entity-base';
 import { Forecast } from './forecast';
 import { RequestType } from './request-type';
@@ -19,6 +18,7 @@ import { Status } from './status';
 
 /// <code-import> Place custom imports between <code-import> tags
 import { DataType } from 'breeze-client';
+import { Priority } from './priority';
 import * as _ from 'lodash';
 /// </code-import>
 

@@ -32,4 +32,12 @@ export class UserService {
   public getAllUsers(): Observable<any> {
     return this.http.get('http://localhost/cdt.clientportal.webapi/api/UserManagement/GetAllUsers')
   }
+
+  public toggleUserApproved(userName: string): Observable<any> {
+    return this.http.post('http://localhost/cdt.clientportal.webapi/api/UserManagement/ToggleUserApproved', '"' + userName + '"', { headers: { 'Content-Type': 'application/json' } });
+  }
+
+  public unlockUser(userName: string): Observable<any> {
+    return this.http.post('http://localhost/cdt.clientportal.webapi/api/UserManagement/UnlockUser', '"' + userName + '"', { headers: { 'Content-Type': 'application/json' } });
+  }
 }

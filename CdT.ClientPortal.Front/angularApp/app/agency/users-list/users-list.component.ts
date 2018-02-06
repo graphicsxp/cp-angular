@@ -30,6 +30,51 @@ export class UsersListComponent implements OnInit {
     );
   }
 
+  togglerUserApproved(user: ClientPortalUserList) {
+    this.userService.toggleUserApproved(user.UserName).subscribe(
+      res => {
+        this.toasterService.pop('success', 'Get users', `User ${user.UserName} updated`);
+        this.userService.getAllUsers().subscribe(
+          res => {
+            this.users = [];
+            for (let r of res) {
+              this.users.push(r);
+            }
+          },
+          err => {
+            this.toasterService.pop('error', 'Get users', err.error);
+          }
+        );
+      },
+      err => {
+        this.toasterService.pop('error', 'Get users', err.error);
+      }
+    );
+  }
+
+  unlockUser(user: ClientPortalUserList) {
+    this.userService.unlockUser(user.UserName).subscribe(
+      res => {
+        this.toasterService.pop('success', 'Get users', `User ${user.UserName} unlocked`);
+        this.userService.getAllUsers().subscribe(
+          res => {
+            this.users = [];
+            for (let r of res) {
+              this.users.push(r);
+            }
+          },
+          err => {
+            this.toasterService.pop('error', 'Get users', err.error);
+          }
+        );
+      },
+      err => {
+        this.toasterService.pop('error', 'Get users', err.error);
+      }
+    );
+  }
+
+
   ngOnInit() {
 
   }

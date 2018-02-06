@@ -11,6 +11,7 @@ import { EntityState } from 'breeze-client';
 import { ToasterService } from 'angular2-toaster';
 import { LookupNames } from '../../model/lookups';
 import { NavigationExtras } from '@angular/router/src/router';
+import { SourceMaterialsListComponent } from '../source-materials-list/source-materials-list.component';
 
 @Component({
   selector: 'cdt-request-detail',
@@ -31,7 +32,8 @@ export class RequestDetailComponent implements OnInit {
   public selectedRecipients: Contact[];
 
   @ViewChild('requestForm') requestForm: NgForm;
-  @ViewChild("templateList") templateList;
+  @ViewChild('templateList') templateList;
+  @ViewChild('sourceMaterialList') private sourceMaterialList: SourceMaterialsListComponent;
 
   constructor(
     private _requestService: RequestService,
@@ -107,17 +109,23 @@ export class RequestDetailComponent implements OnInit {
     this._entityManagerService.checkMany2ManyModifications('RequestContact', this.request, this.selectedContacts, this.request.requestContacts, 'request', 'contact', false);
     this._entityManagerService.checkMany2ManyModifications('RequestDeliveryContact', this.request, this.selectedRecipients, this.request.requestDeliveryContacts, 'request', 'contact', false);
 
+    this.sourceMaterialList.onSave();
+    // var promise = null;
+    // if (sourceMaterialsToDelete.length > 0) {
+    //     promise = _updateTATOnDeleteSourceDocuments();
+    // } else {
+    //     promise = $q.resolve(true);
+    // }
     this._requestService.save().then(() => {
       this._toasterService.pop('success', 'The request was saved successfully !');
       if (this._route.snapshot.params['id'] === 'new') {
         let ne: NavigationExtras = { skipLocationChange: true };
-        this._router.navigateByUrl(`requests/detail/${this.request.id}`, ne );
+        this._router.navigateByUrl(`requests/detail/${this.request.id}`, ne);
       }
 
     }, error => {
       if (!error.entityErrors && error.message) {
-        //use toaster and intercept elsewhere
-        //this.errorMessage = error.message;
+        this._toasterService.pop('failed', error.message);
       }
     });
   }
@@ -129,10 +137,14 @@ export class RequestDetailComponent implements OnInit {
 
   private _hasErrors(): boolean {
     let many2ManyHasErrors = this.selectedContacts.length === 0 || this.selectedRecipients.length === 0;
-    // selected source languages check
-    //many2ManyHasErrors = many2ManyHasErrors || _.chain($scope.vm.request.sourceMaterials).map('selectedSourceLanguages').some(function (elem) {
-    //  return elem.length === 0;
-    //}).value();
-    return many2ManyHasErrors || this._entityManagerService.hasErrors(this.request, /*'sourceMaterials'*/ null);
+    //selected source languages check
+    many2ManyHasErrors = many2ManyHasErrors || _.chain(this.request.sourceMaterials).map('selectedLanguages').some(function (elem) {
+      return elem.length === 0;
+    }).value();
+    return many2ManyHasErrors || this._entityManagerService.hasErrors(this.request, 'sourceMaterials');
+  }
+
+  public hasRightToSend(): boolean {
+    return true;
   }
 }

@@ -1,5 +1,5 @@
 import { ToasterModule } from 'angular2-toaster';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +21,9 @@ import { CustomValidatorService } from './shared/services/custom-validator.servi
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 
+import { SecurityModule } from './security/security.module';
+import { SecurityContext } from '@angular/platform-browser/src/security/dom_sanitization_service';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -36,7 +39,8 @@ import { DropdownModule } from 'primeng/dropdown';
         DialogModule,
         ToasterModule,
         MultiSelectModule,
-        DropdownModule
+        DropdownModule,
+        SecurityModule
     ],
 
     declarations: [
