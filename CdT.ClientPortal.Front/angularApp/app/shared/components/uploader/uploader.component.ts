@@ -14,10 +14,8 @@ import { SuccessEvent } from '@progress/kendo-angular-upload/dist/es/upload-even
               [(ngModel)]="myFiles"
               [batch]="true"
               [multiple]="multiple"
-              [restrictions]="myRestrictions"              
-              >
-              
-            </kendo-upload>`,
+              [restrictions]="myRestrictions">
+              </kendo-upload>`,
   styleUrls: ['./uploader.component.scss']
 })
 export class UploaderComponent implements OnInit {
@@ -43,7 +41,7 @@ export class UploaderComponent implements OnInit {
   }
 
   public onSuccess(event: SuccessEvent) {
-    let files: Array<UploadedFile> = new Array<UploadedFile>();
+    const files: Array<UploadedFile> = new Array<UploadedFile>();
     event.response.body.forEach(element => {
       files.push(new UploadedFile(element.Path, element.Name, element.Size));
     });
@@ -77,7 +75,6 @@ export class UploaderComponent implements OnInit {
 
   private getFileName(fileNameWithExtention) {
     return fileNameWithExtention ?
-      /([^\/]+)(?=\.\w+$)/.exec(fileNameWithExtention)[1] :
-      '';
+      /([^\/]+)(?=\.\w+$)/.exec(fileNameWithExtention)[1] : '';
   }
 }

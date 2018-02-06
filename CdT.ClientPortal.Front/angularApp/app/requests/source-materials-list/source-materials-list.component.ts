@@ -44,11 +44,11 @@ export class SourceMaterialsListComponent implements OnInit {
     this._confirmationService.confirm({
       message: 'Copy data to all documents ?',
       accept: () => {
-        //find index of first not deleted material
-        var startIdx = _.indexOf(this.request.sourceMaterials, sourceMaterial);
+        // find index of first not deleted material
+        const startIdx = _.indexOf(this.request.sourceMaterials, sourceMaterial);
 
-        for (var i = startIdx; i < this.request.sourceMaterials.length; i++) {
-          var material = this.request.sourceMaterials[i];
+        for (let i = startIdx; i < this.request.sourceMaterials.length; i++) {
+          const material = this.request.sourceMaterials[i];
           if (!material.isScreenDeleted && material !== sourceMaterial) {
             material.selectedLanguages = _.clone(sourceMaterial.selectedLanguages);
             material.isConfidential = sourceMaterial.isConfidential;
@@ -71,18 +71,18 @@ export class SourceMaterialsListComponent implements OnInit {
    */
   onUploadedFilesChange(uploadedFiles: UploadedFile[]) {
     uploadedFiles.forEach(file => {
-      let sourceMaterial: SourceMaterial = this._sourceMaterialService.create(
+      const sourceMaterial: SourceMaterial = this._sourceMaterialService.create(
         this._physicalFileService.create(
           file, _.find(this._entityManagerService.getLookup(LookupNames.materialClassifications), { code: 'SOUR' })), this.request.requestTemplate);
       this.request.sourceMaterials.push(sourceMaterial);
 
       // In case of subtitling or other cases
-      //_setCorrrectDocumentFormats(sourceMaterial);
+      // _setCorrrectDocumentFormats(sourceMaterial);
 
-      //if source languages were set by the template we need to set the screen dirty
+      // if source languages were set by the template we need to set the screen dirty
       if (sourceMaterial.selectedLanguages.length > 0) {
-        //$scope.vm.many2manyHasChanged = true;
-        //sourceMaterial.entityAspect.removeValidationError('notEmptyCollectionValidator:sourceLanguages');
+        // $scope.vm.many2manyHasChanged = true;
+        // sourceMaterial.entityAspect.removeValidationError('notEmptyCollectionValidator:sourceLanguages');
       }
     });
   }
@@ -109,7 +109,7 @@ export class SourceMaterialsListComponent implements OnInit {
       this._entityManagerService.checkMany2ManyModifications('SourceMaterialLanguage', material, material.selectedLanguages, material.sourceLanguages, 'material', 'language');
     });
 
-    var sourceMaterialsToDelete = _.filter(this.request.sourceMaterials, (mat) => { return mat.isScreenDeleted; });
+    const sourceMaterialsToDelete = _.filter(this.request.sourceMaterials, (mat) => { return mat.isScreenDeleted; });
 
     // deletes entities and detaches related bags, cascade delete done server side
     this._entityManagerService.deleteEntities(sourceMaterialsToDelete, ['sourceLanguages', 'jobs']);

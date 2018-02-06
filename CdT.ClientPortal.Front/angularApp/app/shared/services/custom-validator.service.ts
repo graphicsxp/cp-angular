@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { DataType, Validator } from "breeze-client";
+import { Injectable } from '@angular/core';
+import { DataType, Validator } from 'breeze-client';
 
 @Injectable()
 export class CustomValidatorService {
@@ -10,12 +10,12 @@ export class CustomValidatorService {
 
     // Validators for validating the guid with default value
     public nonDefaultGuidValidator(): Validator {
-        let name = 'nonGuidIdValidator';
-        let context = {
+        const name = 'nonGuidIdValidator';
+        const context = {
             messageTemplate: 'the %displayName% is required.'
         };
 
-        let validator = new Validator(name, _valFunction, context);
+        const validator = new Validator(name, _valFunction, context);
 
         function _valFunction(value) {
             return value ? value !== DataType.Guid.defaultValue : false;

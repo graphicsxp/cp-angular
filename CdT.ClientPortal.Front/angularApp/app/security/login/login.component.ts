@@ -11,22 +11,22 @@ export class LoginComponent implements OnInit {
 
   public userName: string;
   public password: string;
-  private returnUrl: string;
+  private _returnUrl: string;
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) { }
+  constructor(private _route: ActivatedRoute, private _router: Router, private _authService: AuthService) { }
 
   ngOnInit() {
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   public onLogin(): void {
-    this.authService.login(this.userName, this.password)/*.subscribe(
+    this._authService.login(this.userName, this.password)/*.subscribe(
       () => {
           console.log("User is logged in");
           this.router.navigateByUrl('/');
       }
   )*/;
-    this.router.navigate([this.returnUrl]);
+    this._router.navigate([this._returnUrl]);
   }
 }

@@ -2177,11 +2177,11 @@ input[type=checkbox] {
     -moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
     box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
     background: #fcfff4;
-    background: -webkit-linear-gradient(top, #eee 0%, #ddd 40%, #ccc 100%);
-    background: -moz-linear-gradient(top, #eee 0%, #ddd 40%, #ccc 100%);
-    background: -o-linear-gradient(top, #eee 0%, #ddd 40%, #ccc 100%);
-    background: -ms-linear-gradient(top, #eee 0%, #ddd 40%, #ccc 100%);
-    background: linear-gradient(top, #eee 0%, #ddd 40%, #ccc 100%);
+    background: -webkit-linear-gradient(bottom, #eee 0%, #ddd 40%, #ccc 100%);
+    background: -moz-linear-gradient(bottom, #eee 0%, #ddd 40%, #ccc 100%);
+    background: -o-linear-gradient(bottom, #eee 0%, #ddd 40%, #ccc 100%);
+    background: -ms-linear-gradient(bottom, #eee 0%, #ddd 40%, #ccc 100%);
+    background: linear-gradient(bottom, #eee 0%, #ddd 40%, #ccc 100%);
     //filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#eee', endColorstr='#ddd', GradientType=0);
 }
 

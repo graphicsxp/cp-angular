@@ -41,7 +41,7 @@ export class RequestDetailComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router,
     private _toasterService: ToasterService) {
-    //this.filteredTemplateList = this.templates.slice();
+    // this.filteredTemplateList = this.templates.slice();
   }
 
   ngOnInit() {
@@ -51,7 +51,7 @@ export class RequestDetailComponent implements OnInit {
     this.purposes = this._requestService.getLookup(LookupNames.purposes);
     this.deliveryModes = this._requestService.getLookup(LookupNames.deliveryModes);
     // this.templates = this._requestService.getLookup(LookupNames.RequestTemplate).map(t => { return { text: t.templateName, value: t.id } });
-    //this.filteredTemplateList = this.templates.slice();
+    // this.filteredTemplateList = this.templates.slice();
     this.activeContacts = _.filter(this.request.client.contacts, { 'isActive': true });
     this.selectedContacts = [];
     this.selectedRecipients = [];
@@ -104,7 +104,7 @@ export class RequestDetailComponent implements OnInit {
   }
 
   onSave(): void {
-    if (this.requestForm.invalid) return;
+    if (this.requestForm.invalid) { return };
 
     this._entityManagerService.checkMany2ManyModifications('RequestContact', this.request, this.selectedContacts, this.request.requestContacts, 'request', 'contact', false);
     this._entityManagerService.checkMany2ManyModifications('RequestDeliveryContact', this.request, this.selectedRecipients, this.request.requestDeliveryContacts, 'request', 'contact', false);
@@ -119,7 +119,7 @@ export class RequestDetailComponent implements OnInit {
     this._requestService.save().then(() => {
       this._toasterService.pop('success', 'The request was saved successfully !');
       if (this._route.snapshot.params['id'] === 'new') {
-        let ne: NavigationExtras = { skipLocationChange: true };
+        const ne: NavigationExtras = { skipLocationChange: true };
         this._router.navigateByUrl(`requests/detail/${this.request.id}`, ne);
       }
 
@@ -137,7 +137,7 @@ export class RequestDetailComponent implements OnInit {
 
   private _hasErrors(): boolean {
     let many2ManyHasErrors = this.selectedContacts.length === 0 || this.selectedRecipients.length === 0;
-    //selected source languages check
+    // selected source languages check
     many2ManyHasErrors = many2ManyHasErrors || _.chain(this.request.sourceMaterials).map('selectedLanguages').some(function (elem) {
       return elem.length === 0;
     }).value();
@@ -148,3 +148,4 @@ export class RequestDetailComponent implements OnInit {
     return true;
   }
 }
+
