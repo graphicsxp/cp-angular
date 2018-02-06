@@ -17,6 +17,7 @@ import { MultiSelectComponent } from './components/multiselect/multiselect.compo
 import { UploaderComponent } from './components/uploader/uploader.component';
 import { UploadModule } from '@progress/kendo-angular-upload';
 import { PhysicalFileService } from './services/physicalFile.service';
+import { ExtensionIconPipe } from './pipes/extension-icon.pipe';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { PhysicalFileService } from './services/physicalFile.service';
         DataFieldSelectComponent,
         ValidatorComponent,
         MultiSelectComponent,
-        UploaderComponent
+        UploaderComponent,
+        ExtensionIconPipe
     ],
 
     providers: [
@@ -51,7 +53,8 @@ import { PhysicalFileService } from './services/physicalFile.service';
         MultiSelectComponent,
         MultiSelectModule,
         DropdownModule,
-        UploaderComponent
+        UploaderComponent,
+        ExtensionIconPipe
     ]    
 })
 

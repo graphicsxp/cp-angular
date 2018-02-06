@@ -6,9 +6,10 @@ import { RequestService } from './../services/request.service';
 import { Request } from './../../model/breeze/request';
 import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
-import { SourceMaterialService } from '../services/sourceMaterial.service';
+import { SourceMaterialService } from '../services/source-material.service';
 import { UploadedFile } from '../../model/uploadedFile';
 import { GlobalService } from '../../shared/services/global.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'cdt-source-materials-list',
@@ -24,7 +25,8 @@ export class SourceMaterialsListComponent implements OnInit {
   constructor(private _entityManagerService: EntityManagerService,
     private _sourceMaterialService: SourceMaterialService,
     private _physicalFileService: PhysicalFileService,
-    public globalService: GlobalService) { }
+    public globalService: GlobalService,
+    private _confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.allowedExtensions = this._entityManagerService.getLookup(LookupNames.sourceMaterialDocumentFormatExtensions).map(ext => { return ext.code });
@@ -38,29 +40,29 @@ export class SourceMaterialsListComponent implements OnInit {
   }
 
   public onBatchUpdate(event) {
-    console.log(event);
-    // var dlg = dialogs.confirm('Please confirm', 'Copy data to all documents ?');
 
-    // dlg.result.then(function (btn) {
-    //     //find index of first not deleted material
-    //     var startIdx = _.indexOf($scope.vm.request.sourceMaterials, _.find($scope.vm.request.sourceMaterials, function (el) { return !el.isScreenDeleted; }));
+    this._confirmationService.confirm({
+      message: 'Copy data to all documents ?',
+      accept: () => {
+        //find index of first not deleted material
+        var startIdx = _.indexOf(this.request.sourceMaterials, _.find(this.request.sourceMaterials, (sm) => { return !sm.isScreenDeleted; }));
 
-    //     for (var i = startIdx; i < $scope.vm.request.sourceMaterials.length; i++) {
-    //         var material = $scope.vm.request.sourceMaterials[i];
-    //         if (!material.isScreenDeleted && i !== index) {
-    //             material.selectedSourceLanguages = _.clone($scope.vm.request.sourceMaterials[0].selectedSourceLanguages);
-    //             material.isConfidential = $scope.vm.request.sourceMaterials[0].isConfidential;
-    //             material.isExternalized = $scope.vm.request.sourceMaterials[0].isExternalized;
-    //             material.confidentiality = $scope.vm.request.sourceMaterials[0].confidentiality;
-    //             material.isPrivate = $scope.vm.request.sourceMaterials[0].isPrivate;
-    //             // copy outputFormat if format is in targetFormats of the destination material
-    //             if (material.targetFormats.indexOf($scope.vm.request.sourceMaterials[0].deliverableDocumentFormat) !== -1) {
-    //                 material.deliverableDocumentFormat = $scope.vm.request.sourceMaterials[0].deliverableDocumentFormat;
-    //             }
-    //         }
-    //     }
-    //     return $q.when([]);
-    // });
+        for (var i = startIdx; i < this.request.sourceMaterials.length; i++) {
+          var material = this.request.sourceMaterials[i];
+          if (!material.isScreenDeleted && material !== event) {
+            material.selectedLanguages = _.clone(this.request.sourceMaterials[startIdx].selectedLanguages);
+            material.isConfidential = this.request.sourceMaterials[startIdx].isConfidential;
+            material.isExternalized = this.request.sourceMaterials[startIdx].isExternalized;
+            material.confidentiality = this.request.sourceMaterials[startIdx].confidentiality;
+            material.isPrivate = this.request.sourceMaterials[startIdx].isPrivate;
+            // copy outputFormat if format is in targetFormats of the destination material
+            if (this._sourceMaterialService.getTargetFormats(material).indexOf(this.request.sourceMaterials[startIdx].deliverableDocumentFormat) !== -1) {
+              material.deliverableDocumentFormat = this.request.sourceMaterials[0].deliverableDocumentFormat;
+            }
+          }
+        }
+      }
+    });
   }
 
   /**
@@ -90,6 +92,13 @@ export class SourceMaterialsListComponent implements OnInit {
    */
   getUploadedFiles = function () {
     return _.chain(this.request.sourceMaterials).map(sm => { return sm.material.fileName; }).value();
+  };
+
+  /**
+   * Returns the number of documents that are not in the deleted state
+   */
+  getNumberOfDocuments = function () {
+    return this.request ? _.filter(this.request.sourceMaterials, (material) => { return material.isScreenDeleted !== true; }).length : 0;
   };
 
   /**

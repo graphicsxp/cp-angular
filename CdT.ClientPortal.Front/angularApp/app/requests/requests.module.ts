@@ -14,7 +14,7 @@ import { RequestDetailComponent } from './request-detail/request-detail.componen
 import { RequestJobsComponent } from './request-jobs/request-jobs.component';
 import { SourceMaterialsListComponent } from './source-materials-list/source-materials-list.component';
 import { SourceMaterialsListItemComponent } from './source-materials-list-item/source-materials-list-item.component';
-import { SourceMaterialService } from './services/sourceMaterial.service';
+import { SourceMaterialService } from './services/source-material.service';
 import { SourceMaterialConfidentialityComponent } from './source-material-confidentiality/source-material-confidentiality.component';
 
 @NgModule({

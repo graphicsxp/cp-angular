@@ -1,6 +1,5 @@
 <td>
-  <!-- <extension-icon extension="sourceMaterial.material.documentFormat.code"></extension-icon> -->
-  {{asPhysicalFile(sourceMaterial.material).documentFormat?.code}}
+  <span [outerHTML]="sourceMaterial.material.documentFormat.code | extensionIcon"></span>
 </td>
 <td>
   {{asPhysicalFile(sourceMaterial.material).fileName}}

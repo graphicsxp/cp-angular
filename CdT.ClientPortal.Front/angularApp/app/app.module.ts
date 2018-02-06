@@ -20,9 +20,9 @@ import { CanDeactivateGuard } from './shared/can-deactivate-guard';
 import { CustomValidatorService } from './shared/services/custom-validator.service';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SecurityModule } from './security/security.module';
-import { SecurityContext } from '@angular/platform-browser/src/security/dom_sanitization_service';
+import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 @NgModule({
     imports: [
@@ -37,6 +37,7 @@ import { SecurityContext } from '@angular/platform-browser/src/security/dom_sani
         CoreModule.forRoot(),
         HomeModule,
         DialogModule,
+        ConfirmDialogModule,
         ToasterModule,
         MultiSelectModule,
         DropdownModule,
@@ -50,6 +51,7 @@ import { SecurityContext } from '@angular/platform-browser/src/security/dom_sani
         EntityManagerService,
         CustomValidatorService,
         CanDeactivateGuard,
+        ConfirmationService,
         { provide: APP_INITIALIZER, useFactory: onAppInit, multi: true, deps: [EntityManagerService] }
     ],
     bootstrap: [AppComponent],
