@@ -36,12 +36,6 @@ export class SourceMaterial extends EntityBase {
         }
     }
 
-    // public setTargetFormats() {
-    //     this.targetFormats = _.chain(this.entityAspect.entityManager.getLookup(LookupNames.documentFormatTargets))
-    //         .filter((f) => { return f.sourceId === (this.material as PhysicalFile).documentFormat.id; })
-    //         .map('target').value();
-    // }
-
     public setSelectedSourceLanguages() {
         this.selectedLanguages = [];
 
