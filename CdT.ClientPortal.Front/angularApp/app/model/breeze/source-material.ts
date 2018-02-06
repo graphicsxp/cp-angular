@@ -23,26 +23,24 @@ export class SourceMaterial extends EntityBase {
 
     /// <code> Place custom code between <code> tags
     selectedLanguages: Array<Language>;
-    targetFormats: Array<DocumentFormatTarget>;
     isScreenDeleted: boolean;
 
-    constructor(private _entityManagerService: EntityManagerService) {
+    constructor() {
         super();
-        this.selectedLanguages = new Array<Language>();
-        this.targetFormats = Array<DocumentFormatTarget>();
     }
 
     static sourceMaterialPostInitializer(sourceMaterial: SourceMaterial) {
         if (sourceMaterial.id === DataType.Guid.defaultValue) {
+            sourceMaterial.selectedLanguages = new Array<Language>();
             sourceMaterial.useSourceAsPreformatted = false;
         }
     }
 
-    public setTargetFormats() {
-        this.targetFormats = _.chain(this._entityManagerService.getLookup(LookupNames.documentFormatTargets))
-            .filter((f) => { return f.sourceId === (this.material as PhysicalFile).documentFormat.id; })
-            .map('target').value();
-    }
+    // public setTargetFormats() {
+    //     this.targetFormats = _.chain(this.entityAspect.entityManager.getLookup(LookupNames.documentFormatTargets))
+    //         .filter((f) => { return f.sourceId === (this.material as PhysicalFile).documentFormat.id; })
+    //         .map('target').value();
+    // }
 
     public setSelectedSourceLanguages() {
         this.selectedLanguages = [];

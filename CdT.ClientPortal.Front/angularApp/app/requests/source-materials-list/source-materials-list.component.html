@@ -1,7 +1,7 @@
 <div class="widget grid-wrapper table-responsive" *ngIf="request.id">
 
   <cdt-uploader [allowedExtensions]="allowedExtensions" [multiple]="true" [maxFiles]="100" [uploadedFiles]="getUploadedFiles()" (uploadedFilesChange)="onUploadedFilesChange($event)"></cdt-uploader>
-  <div id="dropZone" class="grid-toolbar">
+  <div class="grid-toolbar">
     <!-- the condition for disabling the uploader is that the number of documents has reached 100 -->
     <!-- <file-uploader max-length="80 " maxfiles="99 " array-list-uploaded="vm.uploadedFiles " file-type="source
     " accepted-formats="vm.sourceMaterialSupportedFormats "
@@ -11,12 +11,12 @@
     <span ng-hide="request.id">N/A</span>
     <span ng-show="request.id">Total documents:
       <b>
-        <!-- <span ng-bind="getNumberOfDocuments()"></span> -->
+        <span>{{getNumberOfDocuments()}}</span>
       </b>
     </span>
   </div>
   <div ng-if="request.sourceMaterials.length > 0">
-    <table class="table table-striped requests-sources table-responsive">
+    <table class="table table-striped table-responsive">
       <thead>
         <tr>
           <th></th>
@@ -25,14 +25,14 @@
           <th>Private</th>
           <th>Output format</th>
           <th>Source language(s)</th>
-          <th *ngIf="pricingPolicy2018Avalaible">Confidentiality</th>
-          <th *ngIf="!pricingPolicy2018Avalaible">Confidential</th>
-          <th *ngIf="!pricingPolicy2018Avalaible"></th>
+          <th *ngIf="globalService.pricingPolicy2018Avalaible">Confidentiality</th>
+          <th *ngIf="!globalService.pricingPolicy2018Avalaible">Confidential</th>
+          <th *ngIf="!globalService.pricingPolicy2018Avalaible"></th>
         </tr>
       </thead>
       <tbody>
         <tr cdt-source-materials-list-item *ngFor="let sourceMaterial of request.sourceMaterials" [sourceMaterial]="sourceMaterial"
-          [ngClass]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[sourceMaterial.isScreenDeleted]" [showCopyDown]="sourceMaterial.material.fileName === getFirstNotDeletedMaterial().material.fileName && request.sourceMaterials.length > 1" 
+          [ngClass]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[sourceMaterial.isScreenDeleted]" [showCopyDown]="sourceMaterial.material.fileName === getFirstNotDeletedMaterial()?.material.fileName && request.sourceMaterials.length > 1" 
           (batchUpdate)="onBatchUpdate($event)">
       </tbody>
     </table>

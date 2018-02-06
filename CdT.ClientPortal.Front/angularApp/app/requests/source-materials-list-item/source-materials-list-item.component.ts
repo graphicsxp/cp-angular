@@ -1,3 +1,5 @@
+import { EntityManagerService } from './../../entity-manager.service';
+import { SourceMaterialService } from './../services/source-material.service';
 import { SourceMaterial } from './../../model/breeze/source-material';
 import { EntityState } from 'breeze-client';
 import { LookupNames } from './../../model/lookups';
@@ -5,7 +7,6 @@ import { PhysicalFile } from './../../model/breeze/physical-file';
 import { DocumentFormat } from './../../model/breeze/document-format';
 import { Language } from './../../model/breeze/language';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { EntityManagerService } from '../../entity-manager.service';
 import * as _ from 'lodash';
 import { Material } from '../../model/breeze/material';
 
@@ -26,7 +27,8 @@ export class SourceMaterialsListItemComponent implements OnInit {
   @Input() public showCopyDown: boolean;
   @Output() public batchUpdate = new EventEmitter<SourceMaterial>();
 
-  ngOnInit() {
+  ngOnInit() {    
+    //this._sourceMaterialService.setTargetFormats(this.sourceMaterial);
     this.languages = this._entityManagerService.getLookup(LookupNames.languages);
     this.targetFormats = _.chain(this._entityManagerService.getLookup(LookupNames.documentFormatTargets)).filter((format) => { return format.sourceId === (this.sourceMaterial.material as PhysicalFile).documentFormat.id; }).map('target').value();
     if (this.sourceMaterial.id) {
@@ -34,7 +36,6 @@ export class SourceMaterialsListItemComponent implements OnInit {
     }
   }
 
-  public canSetPrivacy(sourceMaterial: SourceMaterial) { }
   public getFirstNotDeletedMaterial() { }
   public asPhysicalFile(material: Material): PhysicalFile { return material as PhysicalFile; }
 
@@ -60,6 +61,14 @@ export class SourceMaterialsListItemComponent implements OnInit {
       this.sourceMaterial.entityAspect.setModified();
     }
   }
+
+  public canSetPrivacy(): boolean {
+    if (this.sourceMaterial.isPrivate && this.sourceMaterial.uploadedBy) {
+      //TODO change when user info is implemented
+      return (this.sourceMaterial.uploadedBy === '$rootScope.userInfo.currentUser')
+    }
+    return true;
+  };
 
   public onOutputFormat(event) {
     // var service = modelService.request.getSelectedService($scope.vm.request);

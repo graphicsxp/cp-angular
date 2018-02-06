@@ -1,3 +1,4 @@
+import { PhysicalFile } from './../../model/breeze/physical-file';
 import { GlobalService } from './../../shared/services/global.service';
 import { SourceMaterial } from './../../model/breeze/source-material';
 import { Material } from './../../model/breeze/material';
@@ -36,9 +37,9 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
 
             //set the document format
             if (template.service && template.service.code === 'ST') {
-                sourceMaterial.targetFormats = _.filter(this._entityManagerService.getLookup(LookupNames.documentFormats), (df) => { return _.includes(DocumentFormat.validSubtitlingFormatCodes, df.code); });
+                //sourceMaterial.targetFormats = _.filter(this._entityManagerService.getLookup(LookupNames.documentFormats), (df) => { return _.includes(DocumentFormat.validSubtitlingFormatCodes, df.code); });
             } else if (sourceMaterial) {
-                sourceMaterial.setTargetFormats();
+                //this.setTargetFormats(sourceMaterial);
             }
 
             //check if template's outputFormat is compatible with the uploaded file extension(take the first one)
@@ -56,5 +57,15 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
 
         return sourceMaterial;
 >>>>>>> 253cfb99caef3ddff49847535121666ad4c90348
+    }
+
+    /**
+     * Returns a list of DocumentFormat that matches the possible target formats for the given SourceMaterial
+     * @param sourceMaterial 
+     */
+    public getTargetFormats(sourceMaterial: SourceMaterial) : Array<DocumentFormat> {
+        return _.chain(this._entityManagerService.getLookup(LookupNames.documentFormatTargets))
+            .filter((f) => { return f.sourceId === (sourceMaterial.material as PhysicalFile).documentFormat.id; })
+            .map('target').value();
     }
 }

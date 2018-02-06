@@ -11,6 +11,7 @@
             "assets": [
                 "assets",
                 "images",
+                "fonts",
                 "favicon.ico"
             ],
             "index": "index.html",

@@ -6,8 +6,10 @@ import { RequestService } from './../services/request.service';
 import { Request } from './../../model/breeze/request';
 import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
-import { SourceMaterialService } from '../services/sourceMaterial.service';
+import { SourceMaterialService } from '../services/source-material.service';
 import { UploadedFile } from '../../model/uploadedFile';
+import { GlobalService } from '../../shared/services/global.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'cdt-source-materials-list',
@@ -20,7 +22,11 @@ export class SourceMaterialsListComponent implements OnInit {
 
   public allowedExtensions: string[];
 
-  constructor(private _entityManagerService: EntityManagerService, private _sourceMaterialService: SourceMaterialService, private _physicalFileService: PhysicalFileService) { }
+  constructor(private _entityManagerService: EntityManagerService,
+    private _sourceMaterialService: SourceMaterialService,
+    private _physicalFileService: PhysicalFileService,
+    public globalService: GlobalService,
+    private _confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.allowedExtensions = this._entityManagerService.getLookup(LookupNames.sourceMaterialDocumentFormatExtensions).map(ext => { return ext.code });
@@ -29,34 +35,34 @@ export class SourceMaterialsListComponent implements OnInit {
   /**
    * Returns the first not deleted material so that we know where to put the copy down button
    */
-  public getFirstNotDeletedMaterial(){
+  public getFirstNotDeletedMaterial() {
     return _.find(this.request.sourceMaterials, (m) => { return !m.isScreenDeleted; });
   }
-  
-  public onBatchUpdate(event){
-console.log(event);
-// var dlg = dialogs.confirm('Please confirm', 'Copy data to all documents ?');
 
-// dlg.result.then(function (btn) {
-//     //find index of first not deleted material
-//     var startIdx = _.indexOf($scope.vm.request.sourceMaterials, _.find($scope.vm.request.sourceMaterials, function (el) { return !el.isScreenDeleted; }));
+  public onBatchUpdate(event) {
 
-//     for (var i = startIdx; i < $scope.vm.request.sourceMaterials.length; i++) {
-//         var material = $scope.vm.request.sourceMaterials[i];
-//         if (!material.isScreenDeleted && i !== index) {
-//             material.selectedSourceLanguages = _.clone($scope.vm.request.sourceMaterials[0].selectedSourceLanguages);
-//             material.isConfidential = $scope.vm.request.sourceMaterials[0].isConfidential;
-//             material.isExternalized = $scope.vm.request.sourceMaterials[0].isExternalized;
-//             material.confidentiality = $scope.vm.request.sourceMaterials[0].confidentiality;
-//             material.isPrivate = $scope.vm.request.sourceMaterials[0].isPrivate;
-//             // copy outputFormat if format is in targetFormats of the destination material
-//             if (material.targetFormats.indexOf($scope.vm.request.sourceMaterials[0].deliverableDocumentFormat) !== -1) {
-//                 material.deliverableDocumentFormat = $scope.vm.request.sourceMaterials[0].deliverableDocumentFormat;
-//             }
-//         }
-//     }
-//     return $q.when([]);
-// });
+    this._confirmationService.confirm({
+      message: 'Copy data to all documents ?',
+      accept: () => {
+        //find index of first not deleted material
+        var startIdx = _.indexOf(this.request.sourceMaterials, _.find(this.request.sourceMaterials, (sm) => { return !sm.isScreenDeleted; }));
+
+        for (var i = startIdx; i < this.request.sourceMaterials.length; i++) {
+          var material = this.request.sourceMaterials[i];
+          if (!material.isScreenDeleted && material !== event) {
+            material.selectedLanguages = _.clone(this.request.sourceMaterials[startIdx].selectedLanguages);
+            material.isConfidential = this.request.sourceMaterials[startIdx].isConfidential;
+            material.isExternalized = this.request.sourceMaterials[startIdx].isExternalized;
+            material.confidentiality = this.request.sourceMaterials[startIdx].confidentiality;
+            material.isPrivate = this.request.sourceMaterials[startIdx].isPrivate;
+            // copy outputFormat if format is in targetFormats of the destination material
+            if (this._sourceMaterialService.getTargetFormats(material).indexOf(this.request.sourceMaterials[startIdx].deliverableDocumentFormat) !== -1) {
+              material.deliverableDocumentFormat = this.request.sourceMaterials[0].deliverableDocumentFormat;
+            }
+          }
+        }
+      }
+    });
   }
 
   /**
@@ -89,16 +95,23 @@ console.log(event);
   };
 
   /**
+   * Returns the number of documents that are not in the deleted state
+   */
+  getNumberOfDocuments = function () {
+    return this.request ? _.filter(this.request.sourceMaterials, (material) => { return material.isScreenDeleted !== true; }).length : 0;
+  };
+
+  /**
    * called from parent component when saving
    */
-  onSave = function(){
+  onSave = function () {
     this.request.sourceMaterials.forEach((material) => {
       this._entityManagerService.checkMany2ManyModifications('SourceMaterialLanguage', material, material.selectedLanguages, material.sourceLanguages, 'material', 'language');
     });
 
-    var sourceMaterialsToDelete = _.filter(this.request.sourceMaterials, (mat) => { return mat.isScreenDeleted; });   
+    var sourceMaterialsToDelete = _.filter(this.request.sourceMaterials, (mat) => { return mat.isScreenDeleted; });
 
     // deletes entities and detaches related bags, cascade delete done server side
-    this._entityManagerService.deleteEntities(sourceMaterialsToDelete, ['sourceLanguages', 'jobs']);    
+    this._entityManagerService.deleteEntities(sourceMaterialsToDelete, ['sourceLanguages', 'jobs']);
   }
 }

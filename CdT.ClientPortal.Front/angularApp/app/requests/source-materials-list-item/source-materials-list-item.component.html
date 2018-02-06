@@ -1,6 +1,5 @@
 <td>
-  <!-- <extension-icon extension="sourceMaterial.material.documentFormat.code"></extension-icon> -->
-  {{asPhysicalFile(sourceMaterial.material).documentFormat?.code}}
+  <span [outerHTML]="sourceMaterial.material.documentFormat.code | extensionIcon"></span>
 </td>
 <td>
   {{asPhysicalFile(sourceMaterial.material).fileName}}
@@ -10,13 +9,13 @@
 </td>
 <td>{{sourceMaterial.uploadedBy}}</td>
 <td>
-  <input name="isPrivate" type="checkbox" class="ios-switch" [ngModel]="sourceMaterial.isPrivate" [disabled]="sourceMaterial.isScreenDeleted || !canSetPrivacy(sourceMaterial)"
+  <input name="isPrivate" type="checkbox" class="ios-switch" [(ngModel)]="sourceMaterial.isPrivate" [disabled]="sourceMaterial.isScreenDeleted || !canSetPrivacy(sourceMaterial)"
   />
   <span class="switch"></span>
   <i class="fa fa-info-circle fa-lg ng-scope" bs-tooltip="" data-title="A document marked as private and all related outcomes are accessible only by the person that has uploaded the document"></i>
 </td>
 <td class="text-nowrap">
-  <p-dropdown #outputFormatList [options]="targetFormats" [ngModel]="sourceMaterial.deliverableDocumentFormat" (onChange)="onOutputFormat($event)"
+  <p-dropdown #outputFormatList [options]="targetFormats" [(ngModel)]="sourceMaterial.deliverableDocumentFormat" (onChange)="onOutputFormat($event)"
     optionLabel="defaultLabel" dataKey="id" placeholder="Choose a document format"></p-dropdown>
   <cdt-validator [entity]="sourceMaterial" [propName]="'deliverableDocumentFormat'"></cdt-validator>
 </td>
@@ -35,13 +34,13 @@
 </td>
 <td>
   <a id="{{ 'btnDelete-' + $index }}" class="btn grid-button grid-edit-row btn-danger" *ngIf="!sourceMaterial.isScreenDeleted"
-    (click)="toggleDelete(sourceMaterial)">
-    <i class="fa fa-trash-o"></i>
+    (click)="toggleDelete()">
+    <i class="fa fa-trash-o fa-inverse"></i>
   </a>
-  <a class="btn grid-button grid-edit-row btn-primary" *ngIf="sourceMaterial.isScreenDeleted" (click)="toggleDelete(sourceMaterial)">
-    <i class="fa fa-refresh"></i>
+  <a class="btn grid-button grid-edit-row btn-primary" *ngIf="sourceMaterial.isScreenDeleted" (click)="toggleDelete()">
+    <i class="fa fa-refresh fa-inverse"></i>
   </a>
   <a class="btn grid-button grid-edit-row btn-primary" id="SrcCopyDown" *ngIf="showCopyDown" (click)="onBatchUpdate()">
-    <i class="fa fa-arrow-down"></i>
+    <i class="fa fa-arrow-down fa-inverse"></i>
   </a>
 </td>
