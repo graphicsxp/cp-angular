@@ -21,12 +21,11 @@ export class LoginComponent implements OnInit {
   }
 
   public onLogin(): void {
-    this.authService.login(this.userName, this.password)/*.subscribe(
+    this.authService.login(this.userName, this.password).subscribe(
       () => {
-          console.log("User is logged in");
-          this.router.navigateByUrl('/');
+        console.log("User is logged in");
+        this.router.navigate([this.returnUrl]);
       }
-  )*/;
-    this.router.navigate([this.returnUrl]);
+    );
   }
 }

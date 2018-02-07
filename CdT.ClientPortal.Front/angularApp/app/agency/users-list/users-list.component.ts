@@ -21,11 +21,9 @@ export class UsersListComponent implements OnInit {
         for (let r of res) {
           this.users.push(r);
         }
-        console.log(res);
       },
       err => {
-        this.toasterService.pop('error', 'Get users', err.error);
-        console.log('Error occurred');
+        this.toasterService.pop('error', 'Get users', err.error.Message);
       }
     );
   }
