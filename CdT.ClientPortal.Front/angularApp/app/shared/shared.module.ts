@@ -55,7 +55,7 @@ import { ExtensionIconPipe } from './pipes/extension-icon.pipe';
         DropdownModule,
         UploaderComponent,
         ExtensionIconPipe
-    ]    
+    ]
 })
 
 export class SharedModule { }

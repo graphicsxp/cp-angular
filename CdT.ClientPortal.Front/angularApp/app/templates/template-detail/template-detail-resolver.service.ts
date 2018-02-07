@@ -12,7 +12,7 @@ export class RequestTemplateResolver implements Resolve<RequestTemplate> {
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RequestTemplate> {
 
-        let id = route.paramMap.get('id');
+        const id = route.paramMap.get('id');
 
         if (id !== 'new') {
 
@@ -22,7 +22,7 @@ export class RequestTemplateResolver implements Resolve<RequestTemplate> {
                 null,
                 true) as Observable<RequestTemplate>;
         } else {
-            let promise = new Promise<any>((resolve, reject) => {
+            const promise = new Promise<any>((resolve, reject) => {
                 resolve(this._templateService.create());
             });
 

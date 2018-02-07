@@ -10,8 +10,9 @@ import { IStructuralType } from 'breeze-client';
 import { EntityType } from 'breeze-client';
 import { Validator } from 'breeze-client';
 import { CustomValidatorService } from './shared/services/custom-validator.service';
+
 /**
- * Provides a breeze EntityManager at application level. 
+ * Provides a breeze EntityManager at application level.
  * Configures the metadataStore. This is meant to be done once at application startup (see APP_INITIALIZER)
  */
 @Injectable()
@@ -25,7 +26,7 @@ export class EntityManagerService {
   constructor(private _customValidatorService: CustomValidatorService) {
     this.em.metadataStore.namingConvention = NamingConvention.camelCase.setAsDefault();
 
-    //this.em.metadataStore.importMetadata('../../mocks/metadata.json');
+    // this.em.metadataStore.importMetadata('../../mocks/metadata.json');
 
     RegistrationHelper.register(this.em.metadataStore);
     this.em.hasChangesChanged.subscribe((args) => {
@@ -34,25 +35,25 @@ export class EntityManagerService {
   }
 
   public initialize() {
-    let promise = new Promise<boolean>((resolve, reject) => {
+    const promise = new Promise<boolean>((resolve, reject) => {
       if (this._initialized) {
         resolve(true);
       } else {
         this._initialized = true;
-        let existingChanges = localStorage.getItem('changeCache');
+        const existingChanges = localStorage.getItem('changeCache');
         if (existingChanges) {
           this.em.importEntities(existingChanges);
           localStorage.removeItem('changeCache');
         }
         this.em.fetchMetadata().then(() => {
 
-          let allTypes: IStructuralType[] = this.em.metadataStore.getEntityTypes();
-          for (var i = 0; i < allTypes.length; i++) {
-            let myType: EntityType = allTypes[i] as EntityType;
+          const allTypes: IStructuralType[] = this.em.metadataStore.getEntityTypes();
+          for (let i = 0; i < allTypes.length; i++) {
+            const myType: EntityType = allTypes[i] as EntityType;
             // check navigation properties
             if (myType.foreignKeyProperties) {
-              for (var j = 0; j < myType.foreignKeyProperties.length; j++) {
-                var fk = myType.foreignKeyProperties[j];
+              for (let j = 0; j < myType.foreignKeyProperties.length; j++) {
+                const fk = myType.foreignKeyProperties[j];
                 if (!fk.isNullable) {
                   // http://stackoverflow.com/questions/16733251/breezejs-overriding-displayname
                   if (fk.relatedNavigationProperty) {
@@ -109,17 +110,18 @@ export class EntityManagerService {
     * Created following Ward Bell's advice :  http://stackoverflow.com/questions/20638851/breeze-many-to-many-issues-when-saving
     */
   public checkMany2ManyModifications(entityType: string, parentEntity, childCollection, serverCollection, parentKeyName: string, childKeyName: string, hasExtraProperties: boolean) {
-    //check which children were added to the parentEntity            
+    // check which children were added to the parentEntity
     childCollection.forEach((childEntity) => {
-      var associationChildEntity = hasExtraProperties ? childEntity[childKeyName] : childEntity;
+      const associationChildEntity = hasExtraProperties ? childEntity[childKeyName] : childEntity;
 
-      var childFound = _.find(serverCollection, (association) => {
+      const childFound = _.find(serverCollection, (association) => {
         return associationChildEntity.id === association[childKeyName].id;
       });
-      var prop;
+
+      let prop;
+
       if (!childFound) {
-        var initialValues = {
-        };
+        const initialValues = {};
         initialValues[parentKeyName] = parentEntity;
         initialValues[childKeyName] = associationChildEntity;
 
@@ -133,13 +135,13 @@ export class EntityManagerService {
 
         serverCollection.push(this.em.createEntity(entityType, initialValues));
       } else {
-        var association = serverCollection.filter((el) => { return el[childKeyName].id === associationChildEntity.id; })[0];
+        const association = serverCollection.filter((el) => { return el[childKeyName].id === associationChildEntity.id; })[0];
 
         if (association.entityAspect.entityState.name === 'Modified' || association.entityAspect.entityState.name === 'Deleted') {
-          //if we go in there, something bad happened and we should reject changes.
+          // if we go in there, something bad happened and we should reject changes.
           association.entityAspect.rejectChanges();
         } else if (hasExtraProperties) {
-          //only the extra properties might have changed if the association entity already existed.
+          // only the extra properties might have changed if the association entity already existed.
           for (prop in childEntity) {
             if (prop !== childKeyName) {
               association[prop] = childEntity[prop];
@@ -149,9 +151,9 @@ export class EntityManagerService {
       }
     });
 
-    //check which children were removed from the parentEntity
-    for (var i = 0; i < serverCollection.length; i++) {
-      var childFound = _.find(childCollection, (childEntity) => {
+    // check which children were removed from the parentEntity
+    for (let i = 0; i < serverCollection.length; i++) {
+      const childFound = _.find(childCollection, (childEntity) => {
         childEntity = hasExtraProperties ? childEntity[childKeyName] : childEntity;
 
         return childEntity.id === serverCollection[i][childKeyName].id;
@@ -159,7 +161,7 @@ export class EntityManagerService {
 
       if (!childFound) {
         serverCollection[i].entityAspect.setDeleted();
-        if (!serverCollection.navigationProperty) {  //if the server collection was passed as a filtered array, we need to manually remove the item
+        if (!serverCollection.navigationProperty) {  // if the server collection was passed as a filtered array, we need to manually remove the item
           serverCollection = _.without(serverCollection, serverCollection[i]);
         }
 
@@ -176,11 +178,11 @@ export class EntityManagerService {
    *@childrenCollections{string} the name of the children collections to detach
    */
   public deleteEntities(entities, childrenCollections) {
-    entities.forEach((entity) => {
+    entities.forEach(entity => {
       if (childrenCollections instanceof Array) {
         childrenCollections.forEach((childCollection) => {
           while (entity[childCollection] instanceof Array && entity[childCollection].length !== 0) {
-            if (entity[childCollection] instanceof Array) { //safe guard
+            if (entity[childCollection] instanceof Array) { // safe guard
               this.em.detachEntity(entity[childCollection][0]);
             }
           }
@@ -212,38 +214,35 @@ export class EntityManagerService {
   }
 
   /**
-        * returns a flag, which is true if the entity or one of its properties has validation errors
-        * only direct properties right now
-        * filter detached entities before checking errors
-        */
+  * returns a flag, which is true if the entity or one of its properties has validation errors
+  * only direct properties right now
+  * filter detached entities before checking errors
+  */
   public hasErrors(entities, properties) {
     if (entities) {
-      var filteredEntities;
-      //if it's an array, filter detached entities
+      let filteredEntities;
+      // if it's an array, filter detached entities
       if (Array.isArray(entities)) {
         filteredEntities = _.filter(entities, (entity) => {
           return entity.entityAspect.entityState !== EntityState.Detached;
         });
-      }
-      else {
+      } else {
         // if it's an entity, check if not detached and build a single item array with it
         if (entities.entityAspect.entityState === EntityState.Detached) {
           filteredEntities = [];
-        }
-        else {
+        } else {
           filteredEntities = [entities];
         }
       }
       // filter also deleted entities
-      var entitiesGraph = this.em.getEntityGraph(filteredEntities, properties).filter((entity) => {
+      const entitiesGraph = this.em.getEntityGraph(filteredEntities, properties).filter((entity) => {
         return entity.entityAspect.entityState !== EntityState.Deleted;
       });
-      var hasError = _.some(entitiesGraph, (entity) => {
+      const hasError = _.some(entitiesGraph, (entity) => {
         return entity.entityAspect.hasValidationErrors;
       });
       return hasError;
-    }
-    else {
+    } else {
       return false;
     }
   }

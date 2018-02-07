@@ -19,7 +19,7 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
     }
 
     public create(material: Material, template: RequestTemplate): SourceMaterial {
-        let sourceMaterial = super.createEntity({ material: material });
+        const sourceMaterial = super.createEntity({ material: material });
 
         if (template) {
             if (this.globalService.pricingPolicy2018Avalaible) {
@@ -34,22 +34,24 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
 
             sourceMaterial.isPrivate = template.private;
 
-            //set the document format
+            // set the document format
             if (template.service && template.service.code === 'ST') {
-                //sourceMaterial.targetFormats = _.filter(this._entityManagerService.getLookup(LookupNames.documentFormats), (df) => { return _.includes(DocumentFormat.validSubtitlingFormatCodes, df.code); });
+                // sourceMaterial.targetFormats = _.filter(this._entityManagerService.getLookup(LookupNames.documentFormats), (df) => { return _.includes(DocumentFormat.validSubtitlingFormatCodes, df.code); });
             } else if (sourceMaterial) {
-                //this.setTargetFormats(sourceMaterial);
+                // this.setTargetFormats(sourceMaterial);
             }
 
-            //check if template's outputFormat is compatible with the uploaded file extension(take the first one)
+            // check if template's outputFormat is compatible with the uploaded file extension(take the first one)
             if (template.documentFormat) {
-                var target = _.chain(this._entityManagerService.getLookup(LookupNames.documentFormatTargets)).find({ target: { code: template.documentFormat.code } }).get('target').value();
+                const target = _.chain(this._entityManagerService.getLookup(LookupNames.documentFormatTargets))
+                    .find({ target: { code: template.documentFormat.code } })
+                    .get('target').value();
                 if (target) {
                     sourceMaterial.deliverableDocumentFormat = target;
                 }
             }
 
-            //add the selectedSourceLanguages to the sourceMaterial
+            // add the selectedSourceLanguages to the sourceMaterial
             _.map(template.sourceLanguages, 'language').forEach(function (lg) { sourceMaterial.selectedLanguages.push(lg); });
 
         }
@@ -59,9 +61,9 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
 
     /**
      * Returns a list of DocumentFormat that matches the possible target formats for the given SourceMaterial
-     * @param sourceMaterial 
+     * @param sourceMaterial           
      */
-    public getTargetFormats(sourceMaterial: SourceMaterial) : Array<DocumentFormat> {
+    public getTargetFormats(sourceMaterial: SourceMaterial): Array<DocumentFormat> {
         return _.chain(this._entityManagerService.getLookup(LookupNames.documentFormatTargets))
             .filter((f) => { return f.sourceId === (sourceMaterial.material as PhysicalFile).documentFormat.id; })
             .map('target').value();

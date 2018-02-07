@@ -22,16 +22,6 @@ export class RequestsListComponent implements OnInit {
   public temp: string[];
   public temp2: string;
 
-  constructor(private _requestService: RequestService) {
-    this.view = _requestService;
-    this._requestService.query(this.state);
-  }
-
-  ngOnInit() {
-    this.statuses = this._requestService.getLookup(LookupNames.statuses).map(s => { return { code: s.code, defaultLabel: s.defaultLabel } });
-    this.clients = this._requestService.getLookup(LookupNames.clients);
-  }
-
   /* KENDO GRID */
   public view: Observable<GridDataResult>;
   public pageSizes = [10, 20, 50, 100];
@@ -51,11 +41,21 @@ export class RequestsListComponent implements OnInit {
     }
   };
 
+  constructor(private _requestService: RequestService) {
+    this.view = _requestService;
+    this._requestService.query(this.state);
+  }
+
+  ngOnInit() {
+    this.statuses = this._requestService.getLookup(LookupNames.statuses).map(s => { return { code: s.code, defaultLabel: s.defaultLabel } });
+    this.clients = this._requestService.getLookup(LookupNames.clients);
+  }
+
   public pageChange(event: PageChangeEvent): void {
     // Optionally, clear the selection when paging
     this.mySelection = [];
   }
- 
+
   public dataStateChange(state: DataStateChangeEvent): void {
     this.state = state;
     this._requestService.query(state);
@@ -63,6 +63,5 @@ export class RequestsListComponent implements OnInit {
 
   public onPageSizeChange() {
     this._requestService.query(this.state);
-  }
-  /* KENDO GRID */
+  }  
 }

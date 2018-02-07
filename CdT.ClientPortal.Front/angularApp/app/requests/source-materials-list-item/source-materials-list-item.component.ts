@@ -21,16 +21,18 @@ export class SourceMaterialsListItemComponent implements OnInit {
   public selectedLanguages: Language[];
   public targetFormats: DocumentFormat[];
 
-  constructor(private _entityManagerService: EntityManagerService) { }
-
   @Input() public sourceMaterial: SourceMaterial;
   @Input() public showCopyDown: boolean;
   @Output() public batchUpdate = new EventEmitter<SourceMaterial>();
+  @Output() public sourceLanguagesChanged = new EventEmitter<boolean>();
 
-  ngOnInit() {    
-    //this._sourceMaterialService.setTargetFormats(this.sourceMaterial);
+  constructor(private _entityManagerService: EntityManagerService) { }
+
+  ngOnInit() {
+    // this._sourceMaterialService.setTargetFormats(this.sourceMaterial);
     this.languages = this._entityManagerService.getLookup(LookupNames.languages);
-    this.targetFormats = _.chain(this._entityManagerService.getLookup(LookupNames.documentFormatTargets)).filter((format) => { return format.sourceId === (this.sourceMaterial.material as PhysicalFile).documentFormat.id; }).map('target').value();
+    this.targetFormats = _.chain(this._entityManagerService.getLookup(LookupNames.documentFormatTargets))
+      .filter((format) => { return format.sourceId === (this.sourceMaterial.material as PhysicalFile).documentFormat.id; }).map('target').value();
     if (this.sourceMaterial.id) {
       this.sourceMaterial.setSelectedSourceLanguages();
     }
@@ -45,14 +47,12 @@ export class SourceMaterialsListItemComponent implements OnInit {
   public onSelectedLanguagesChanged(event) {
     this.sourceMaterial.selectedLanguages = event;
     this._entityManagerService.triggerStatusNotification(this.sourceMaterial);
+    this.sourceLanguagesChanged.emit(true);
   }
 
   public toggleDelete() {
-    // var pos = $scope.vm.uploadedFiles.indexOf(sm.material.fileName);
-    //         $scope.vm.uploadedFiles.splice(pos, 1);
-
     if (this.sourceMaterial.entityAspect.entityState === EntityState.Added) {
-      //detach both sourcematerial and material
+      // detach both sourcematerial and material
       this.sourceMaterial.material.entityAspect.setDetached();
       this.sourceMaterial.entityAspect.setDetached();
     } else {
@@ -63,7 +63,7 @@ export class SourceMaterialsListItemComponent implements OnInit {
 
   public canSetPrivacy(): boolean {
     if (this.sourceMaterial.isPrivate && this.sourceMaterial.uploadedBy) {
-      //TODO change when user info is implemented
+      // TODO change when user info is implemented
       return (this.sourceMaterial.uploadedBy === '$rootScope.userInfo.currentUser')
     }
     return true;

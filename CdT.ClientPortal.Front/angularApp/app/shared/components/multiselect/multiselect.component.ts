@@ -6,7 +6,7 @@ import { OnChanges, SimpleChanges } from '@angular/core';
  * This component encapsulates the kendo multiselect and accepts an array of Any as datasource.
  * This is to centralized the logic related to m-2-m which implies watching the array for changes.
  * When the array changes we emit the even (2-way databinding) and it's up to the parent component 
- * to handle it. 
+ * to handle it.
  */
 @Component({
   selector: 'cdt-multiselect',
@@ -14,7 +14,7 @@ import { OnChanges, SimpleChanges } from '@angular/core';
 })
 export class MultiSelectComponent implements OnInit, /*OnChanges,*/ DoCheck {
   private _differ: IterableDiffer<any>;
-  private _initialized: boolean = false;
+  private _initialized: Boolean = false;
 
   @Input() public data;
   @Input() public textField;
@@ -35,7 +35,7 @@ export class MultiSelectComponent implements OnInit, /*OnChanges,*/ DoCheck {
   // }
 
   ngDoCheck() {
-    let changes = this._differ.diff(this.model);
+    const changes = this._differ.diff(this.model);
     if (changes && this._initialized) {
       this.modelChange.emit(this.model);
     }

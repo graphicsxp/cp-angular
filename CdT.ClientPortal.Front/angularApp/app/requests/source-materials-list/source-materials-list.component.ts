@@ -21,6 +21,7 @@ export class SourceMaterialsListComponent implements OnInit {
   @Input() request: Request
 
   public allowedExtensions: string[];
+  public hasSourceLanguagesChanged: Boolean;
 
   constructor(private _entityManagerService: EntityManagerService,
     private _sourceMaterialService: SourceMaterialService,
@@ -44,11 +45,11 @@ export class SourceMaterialsListComponent implements OnInit {
     this._confirmationService.confirm({
       message: 'Copy data to all documents ?',
       accept: () => {
-        //find index of first not deleted material
-        var startIdx = _.indexOf(this.request.sourceMaterials, sourceMaterial);
+        // find index of first not deleted material
+        const startIdx = _.indexOf(this.request.sourceMaterials, sourceMaterial);
 
-        for (var i = startIdx; i < this.request.sourceMaterials.length; i++) {
-          var material = this.request.sourceMaterials[i];
+        for (let i = startIdx; i < this.request.sourceMaterials.length; i++) {
+          const material = this.request.sourceMaterials[i];
           if (!material.isScreenDeleted && material !== sourceMaterial) {
             material.selectedLanguages = _.clone(sourceMaterial.selectedLanguages);
             material.isConfidential = sourceMaterial.isConfidential;
@@ -63,6 +64,10 @@ export class SourceMaterialsListComponent implements OnInit {
         }
       }
     });
+  }
+
+  public onSourceLanguagesChanged(event:boolean){
+    this.hasSourceLanguagesChanged = event;
   }
 
   /**
@@ -109,7 +114,7 @@ export class SourceMaterialsListComponent implements OnInit {
       this._entityManagerService.checkMany2ManyModifications('SourceMaterialLanguage', material, material.selectedLanguages, material.sourceLanguages, 'material', 'language');
     });
 
-    var sourceMaterialsToDelete = _.filter(this.request.sourceMaterials, (mat) => { return mat.isScreenDeleted; });
+    const sourceMaterialsToDelete = _.filter(this.request.sourceMaterials, (mat) => { return mat.isScreenDeleted; });
 
     // deletes entities and detaches related bags, cascade delete done server side
     this._entityManagerService.deleteEntities(sourceMaterialsToDelete, ['sourceLanguages', 'jobs']);

@@ -49,17 +49,17 @@ export class TemplatesListComponent implements OnInit {
 
   delete(template: RequestTemplate) {
     const dialog: DialogRef = this.dialogService.open({
-      title: "Please confirm",
-      content: "Are you sure you want to delete this template ?",
+      title: 'Please confirm',
+      content: 'Are you sure you want to delete this template ?',
       actions: [
-        { text: "Yes", primary: true },
-        { text: "No" }
+        { text: 'Yes', primary: true },
+        { text: 'No' }
       ]
     });
 
     dialog.result.subscribe((result) => {
-      let r:DialogAction= result as DialogAction
-      if (r.primary) {
+      const dialogAction: DialogAction = result as DialogAction
+      if (dialogAction.primary) {
         template.isDeleted = true;
         this._templateService.save().then(() => {
           this._templateService.query(this.state);

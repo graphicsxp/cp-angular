@@ -25,7 +25,7 @@
     </kendo-grid-column>
     <kendo-grid-column title="Status" field="IsApproved">
         <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-            <a (click)="togglerUserApproved(dataItem)" class="fa-stack">
+            <a (click)="toggleUserApproved(dataItem)" class="fa-stack">
                 <i class="fa fa-user fa-stack-1x"></i>
                 <i class="fa fa-ban fa-stack-2x" *ngIf="!dataItem.IsApproved"></i>
             </a>
