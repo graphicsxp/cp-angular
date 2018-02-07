@@ -41,12 +41,8 @@ export class RequestDetailComponent implements OnInit {
     private _entityManagerService: EntityManagerService,
     private _route: ActivatedRoute,
     private _router: Router,
-<<<<<<< HEAD
     private _toasterService: ToasterService,
     private _confirmationService: ConfirmationService) {
-=======
-    private _toasterService: ToasterService) {
->>>>>>> ba5361ce2ed03962592309a81fac485b31629093
     // this.filteredTemplateList = this.templates.slice();
   }
 
@@ -97,10 +93,6 @@ export class RequestDetailComponent implements OnInit {
     this._entityManagerService.triggerStatusNotification(this.request);
   };
 
-  /**
-   * 
-   * @param value 
-   */
   handleFilter(value) {
     this.filteredTemplateList = this.templates.filter((s) => s.text.toLowerCase().indexOf(value.value.text.toLowerCase()) !== -1);
   }
@@ -110,35 +102,64 @@ export class RequestDetailComponent implements OnInit {
   }
 
   onSave(): void {
-<<<<<<< HEAD
-    let promise: Promise<any>;
-
-    if (this.sourceMaterialList.hasSourceLanguagesChanged) {
-      this._confirmationService.confirm({
-        rejectVisible: false,
-        // acceptLabel: 'OK',
-        message: `You have made changes on the source languages. In case of replacing/removing one source language the existing
-         jobs for that language will be DELETED. Please make sure the job definitions are in order before sending the request.`,
-        accept: () => {
-          // $scope.checkJobSourceLanguage();
-          promise = this._save();
+    this._beforeSave().then(() => {
+      this._save().then(() => {
+        if (this._route.snapshot.params['id'] === 'new') {
+          const ne: NavigationExtras = { skipLocationChange: true };
+          this._router.navigateByUrl(`requests/detail/${this.request.id}`, ne);
         }
-      });
-    } else {
-      promise = this._save();
-    }
+      })
+    });
+  }
 
-    promise.then(() => {
-      if (this._route.snapshot.params['id'] === 'new') {
-        const ne: NavigationExtras = { skipLocationChange: true };
-        this._router.navigateByUrl(`requests/detail/${this.request.id}`, ne);
+  canSave(): boolean {
+    /*!vm.sourceLanguagesChanged && !vm.many2manyHasChanged && !hasChanges()) || hasErrors() */
+    return this._entityManagerService.hasChanges() && !this._hasErrors();
+  }
+
+  onNext() {
+    if (this._entityManagerService.hasChanges()) {
+      this._beforeSave().then(() => {
+        this._save().then(() => {
+          this._router.navigateByUrl(`requests/detail/${this.request.id}/jobs`);
+        })
+      })
+    } else {
+      this._router.navigateByUrl(`requests/detail/${this.request.id}/jobs`);
+    }
+  }
+
+  /**
+   * Check if the next button can be enabled
+   */
+  canClickNext() {
+    return this.request.sourceMaterials.length > 0 && !_.every(this.request.sourceMaterials, { isScreenDeleted: true });
+  };
+
+  public hasRightToSend(): boolean {
+    return true;
+  }
+
+  private _beforeSave(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (this.sourceMaterialList.hasSourceLanguagesChanged) {
+        this._confirmationService.confirm({
+          rejectVisible: false,
+          // acceptLabel: 'OK',
+          message: `You have made changes on the source languages. In case of replacing/removing one source language the existing
+           jobs for that language will be DELETED. Please make sure the job definitions are in order before sending the request.`,
+          accept: () => {
+            // $scope.checkJobSourceLanguage();
+            resolve();
+          }
+        });
+      } else {
+        resolve();
       }
     });
   }
 
   private _save(): Promise<any> {
-=======
->>>>>>> ba5361ce2ed03962592309a81fac485b31629093
     if (this.requestForm.invalid) { return };
 
     this._entityManagerService.checkMany2ManyModifications('RequestContact', this.request, this.selectedContacts, this.request.requestContacts, 'request', 'contact', false);
@@ -151,15 +172,6 @@ export class RequestDetailComponent implements OnInit {
     // } else {
     //     promise = $q.resolve(true);
     // }
-<<<<<<< HEAD
-=======
-    this._requestService.save().then(() => {
-      this._toasterService.pop('success', 'The request was saved successfully !');
-      if (this._route.snapshot.params['id'] === 'new') {
-        const ne: NavigationExtras = { skipLocationChange: true };
-        this._router.navigateByUrl(`requests/detail/${this.request.id}`, ne);
-      }
->>>>>>> ba5361ce2ed03962592309a81fac485b31629093
 
     return new Promise((resolve, reject) => this._requestService.save().then(() => {
       this._toasterService.pop('success', 'The request was saved successfully !');
@@ -173,11 +185,6 @@ export class RequestDetailComponent implements OnInit {
     }));
   }
 
-  canSave(): boolean {
-    /*!vm.sourceLanguagesChanged && !vm.many2manyHasChanged && !hasChanges()) || hasErrors() */
-    return this._entityManagerService.hasChanges() && !this._hasErrors();
-  }
-
   private _hasErrors(): boolean {
     let many2ManyHasErrors = this.selectedContacts.length === 0 || this.selectedRecipients.length === 0;
     // selected source languages check
@@ -185,23 +192,6 @@ export class RequestDetailComponent implements OnInit {
       return elem.length === 0;
     }).value();
     return many2ManyHasErrors || this._entityManagerService.hasErrors(this.request, 'sourceMaterials');
-  }
-
-  onNext() {
-    if (this._entityManagerService.hasChanges()) {
-      this.onSave();
-    }
-  }
-
-  /**
-   * Check if the next button can be enabled
-   */
-  canClickNext() {
-    return this.request.sourceMaterials.length > 0 && !_.every(this.request.sourceMaterials, { isScreenDeleted: true });
-  };
-
-  public hasRightToSend(): boolean {
-    return true;
   }
 }
 

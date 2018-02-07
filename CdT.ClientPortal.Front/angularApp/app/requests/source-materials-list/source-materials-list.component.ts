@@ -21,7 +21,7 @@ export class SourceMaterialsListComponent implements OnInit {
   @Input() request: Request
 
   public allowedExtensions: string[];
-  public hasSourceLanguagesChanged:boolean;
+  public hasSourceLanguagesChanged: Boolean;
 
   constructor(private _entityManagerService: EntityManagerService,
     private _sourceMaterialService: SourceMaterialService,
@@ -45,19 +45,11 @@ export class SourceMaterialsListComponent implements OnInit {
     this._confirmationService.confirm({
       message: 'Copy data to all documents ?',
       accept: () => {
-<<<<<<< HEAD
-        //find index of first not deleted material
-        let startIdx = _.indexOf(this.request.sourceMaterials, sourceMaterial);
-
-        for (let i = startIdx; i < this.request.sourceMaterials.length; i++) {
-          let material = this.request.sourceMaterials[i];
-=======
         // find index of first not deleted material
         const startIdx = _.indexOf(this.request.sourceMaterials, sourceMaterial);
 
         for (let i = startIdx; i < this.request.sourceMaterials.length; i++) {
           const material = this.request.sourceMaterials[i];
->>>>>>> ba5361ce2ed03962592309a81fac485b31629093
           if (!material.isScreenDeleted && material !== sourceMaterial) {
             material.selectedLanguages = _.clone(sourceMaterial.selectedLanguages);
             material.isConfidential = sourceMaterial.isConfidential;
@@ -84,18 +76,18 @@ export class SourceMaterialsListComponent implements OnInit {
    */
   onUploadedFilesChange(uploadedFiles: UploadedFile[]) {
     uploadedFiles.forEach(file => {
-      const sourceMaterial: SourceMaterial = this._sourceMaterialService.create(
+      let sourceMaterial: SourceMaterial = this._sourceMaterialService.create(
         this._physicalFileService.create(
           file, _.find(this._entityManagerService.getLookup(LookupNames.materialClassifications), { code: 'SOUR' })), this.request.requestTemplate);
       this.request.sourceMaterials.push(sourceMaterial);
 
       // In case of subtitling or other cases
-      // _setCorrrectDocumentFormats(sourceMaterial);
+      //_setCorrrectDocumentFormats(sourceMaterial);
 
-      // if source languages were set by the template we need to set the screen dirty
+      //if source languages were set by the template we need to set the screen dirty
       if (sourceMaterial.selectedLanguages.length > 0) {
-        // $scope.vm.many2manyHasChanged = true;
-        // sourceMaterial.entityAspect.removeValidationError('notEmptyCollectionValidator:sourceLanguages');
+        //$scope.vm.many2manyHasChanged = true;
+        //sourceMaterial.entityAspect.removeValidationError('notEmptyCollectionValidator:sourceLanguages');
       }
     });
   }
@@ -122,11 +114,7 @@ export class SourceMaterialsListComponent implements OnInit {
       this._entityManagerService.checkMany2ManyModifications('SourceMaterialLanguage', material, material.selectedLanguages, material.sourceLanguages, 'material', 'language');
     });
 
-<<<<<<< HEAD
-    let sourceMaterialsToDelete = _.filter(this.request.sourceMaterials, (mat) => { return mat.isScreenDeleted; });
-=======
     const sourceMaterialsToDelete = _.filter(this.request.sourceMaterials, (mat) => { return mat.isScreenDeleted; });
->>>>>>> ba5361ce2ed03962592309a81fac485b31629093
 
     // deletes entities and detaches related bags, cascade delete done server side
     this._entityManagerService.deleteEntities(sourceMaterialsToDelete, ['sourceLanguages', 'jobs']);
