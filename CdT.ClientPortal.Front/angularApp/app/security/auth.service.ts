@@ -14,7 +14,7 @@ export class AuthService {
 
   public login(userName: string, password: string): Observable<any> {
     // call token provider
-    let url = 'http://localhost/cdt.clientportal.webapi/token';
+    const url = 'http://localhost/cdt.clientportal.webapi/token';
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const params = new HttpParams()
@@ -25,7 +25,7 @@ export class AuthService {
     return this.http.post(url, params, { headers: headers })
       .map(
       res => {
-        localStorage.setItem('token', res.access_token);
+        localStorage.setItem('token', res['access_token']);
       },
       err => {
         console.log('Error occured');

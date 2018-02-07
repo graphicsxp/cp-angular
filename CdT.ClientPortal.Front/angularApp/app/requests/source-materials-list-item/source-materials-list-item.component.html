@@ -9,7 +9,7 @@
 </td>
 <td>{{sourceMaterial.uploadedBy}}</td>
 <td>
-  <input name="isPrivate" type="checkbox" class="ios-switch" [(ngModel)]="sourceMaterial.isPrivate" [disabled]="sourceMaterial.isScreenDeleted || !canSetPrivacy()"
+  <input name="isPrivate" type="checkbox" class="ios-switch" [(ngModel)]="sourceMaterial.isPrivate" [disabled]="sourceMaterial.isMarkedForDeletion || !canSetPrivacy()"
   />
   <span class="switch"></span>
   <i class="fa fa-info-circle fa-lg ng-scope" bs-tooltip="" data-title="A document marked as private and all related outcomes are accessible only by the person that has uploaded the document"></i>
@@ -33,11 +33,11 @@
   <cdt-source-material-confidentiality [sourceMaterial]="sourceMaterial"></cdt-source-material-confidentiality>
 </td>
 <td>
-  <a id="{{ 'btnDelete-' + $index }}" class="btn grid-button grid-edit-row btn-danger" *ngIf="!sourceMaterial.isScreenDeleted"
+  <a id="{{ 'btnDelete-' + $index }}" class="btn grid-button grid-edit-row btn-danger" *ngIf="!sourceMaterial.isMarkedForDeletion"
     (click)="toggleDelete()">
     <i class="fa fa-trash-o fa-inverse"></i>
   </a>
-  <a class="btn grid-button grid-edit-row btn-primary" *ngIf="sourceMaterial.isScreenDeleted" (click)="toggleDelete()">
+    <a class="btn grid-button grid-edit-row btn-primary" *ngIf="sourceMaterial.isMarkedForDeletion" (click)="toggleDelete()">
     <i class="fa fa-refresh fa-inverse"></i>
   </a>
   <a class="btn grid-button grid-edit-row btn-primary" id="SrcCopyDown" *ngIf="showCopyDown" (click)="onBatchUpdate()">

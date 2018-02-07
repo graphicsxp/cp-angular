@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, OnChanges } from '@angular/core';
+import { Request } from '../../model/breeze/request';
 
 @Component({
   selector: 'cdt-request-header',
@@ -13,6 +14,7 @@ export class RequestHeaderComponent implements OnInit {
   public isAdmin: Boolean = false;
   public canShowWSVolumes() { return false; }
   public disableScreen() { return false; }
+  public openComments() { }
 
   constructor() { }
 

@@ -54,4 +54,7 @@ export class RequestJobsHeaderComponent implements OnInit {
 
   isPriorityInvalid(): Boolean { return false; }
   checkInvalidServices(): Boolean { return true; }
+  onServiceChanged() { }
+  addReferences() { }
+  onPriorityChanged() { }
 }
