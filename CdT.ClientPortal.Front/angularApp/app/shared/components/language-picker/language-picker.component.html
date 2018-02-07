@@ -1,0 +1,11 @@
+<a>{{sm.selectedSourceLanguages |splitArrayToString:'abbreviation':', ':true }}</a>
+                            <language-picker single-Language="'true'" model="selectedSourceLanguages" type="source" icon="'icon'" *ngIf="!readOnly()" id="LanguagePickerSL{{index}}"/>
+
+<button type="button" (click)="showLanguagePicker($event,op);" class="btn btn-default btn-icon">
+    <i class="fa fa-pencil" style="font-size:24px"></i>
+</button>
+
+<p-overlayPanel #op>
+todo
+    
+</p-overlayPanel>

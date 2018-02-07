@@ -18,6 +18,9 @@ import { UploaderComponent } from './components/uploader/uploader.component';
 import { UploadModule } from '@progress/kendo-angular-upload';
 import { PhysicalFileService } from './services/physicalFile.service';
 import { ExtensionIconPipe } from './pipes/extension-icon.pipe';
+import { LanguagePickerComponent } from './components/language-picker/language-picker.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
     imports: [
@@ -26,7 +29,9 @@ import { ExtensionIconPipe } from './pipes/extension-icon.pipe';
         FormsModule,
         GridHelpersModule,
         MultiSelectModule,
-        UploadModule
+        UploadModule,
+        OverlayPanelModule,
+        ButtonModule
     ],
 
     declarations: [
@@ -37,6 +42,7 @@ import { ExtensionIconPipe } from './pipes/extension-icon.pipe';
         ValidatorComponent,
         MultiSelectComponent,
         UploaderComponent,
+        LanguagePickerComponent,
         ExtensionIconPipe
     ],
 
@@ -54,6 +60,7 @@ import { ExtensionIconPipe } from './pipes/extension-icon.pipe';
         MultiSelectModule,
         DropdownModule,
         UploaderComponent,
+        LanguagePickerComponent,
         ExtensionIconPipe
     ]    
 })

@@ -30,5 +30,6 @@ export class Language extends EntityBase {
     eUExitDate: Date;
     isEULanguage: boolean;
     sDLLanguageCode: string;
+    isChecked: Boolean;
 }
 

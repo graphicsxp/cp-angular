@@ -32,6 +32,7 @@
 <td>
   <cdt-source-material-confidentiality [sourceMaterial]="sourceMaterial"></cdt-source-material-confidentiality>
 </td>
+<td><language-picker [model]="sourceMaterial.selectedSourceLanguages"></language-picker></td>
 <td>
   <a id="{{ 'btnDelete-' + $index }}" class="btn grid-button grid-edit-row btn-danger" *ngIf="!sourceMaterial.isScreenDeleted"
     (click)="toggleDelete()">
