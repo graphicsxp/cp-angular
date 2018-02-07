@@ -41,8 +41,12 @@ export class RequestDetailComponent implements OnInit {
     private _entityManagerService: EntityManagerService,
     private _route: ActivatedRoute,
     private _router: Router,
+<<<<<<< HEAD
     private _toasterService: ToasterService,
     private _confirmationService: ConfirmationService) {
+=======
+    private _toasterService: ToasterService) {
+>>>>>>> ba5361ce2ed03962592309a81fac485b31629093
     // this.filteredTemplateList = this.templates.slice();
   }
 
@@ -106,6 +110,7 @@ export class RequestDetailComponent implements OnInit {
   }
 
   onSave(): void {
+<<<<<<< HEAD
     let promise: Promise<any>;
 
     if (this.sourceMaterialList.hasSourceLanguagesChanged) {
@@ -132,6 +137,8 @@ export class RequestDetailComponent implements OnInit {
   }
 
   private _save(): Promise<any> {
+=======
+>>>>>>> ba5361ce2ed03962592309a81fac485b31629093
     if (this.requestForm.invalid) { return };
 
     this._entityManagerService.checkMany2ManyModifications('RequestContact', this.request, this.selectedContacts, this.request.requestContacts, 'request', 'contact', false);
@@ -144,6 +151,15 @@ export class RequestDetailComponent implements OnInit {
     // } else {
     //     promise = $q.resolve(true);
     // }
+<<<<<<< HEAD
+=======
+    this._requestService.save().then(() => {
+      this._toasterService.pop('success', 'The request was saved successfully !');
+      if (this._route.snapshot.params['id'] === 'new') {
+        const ne: NavigationExtras = { skipLocationChange: true };
+        this._router.navigateByUrl(`requests/detail/${this.request.id}`, ne);
+      }
+>>>>>>> ba5361ce2ed03962592309a81fac485b31629093
 
     return new Promise((resolve, reject) => this._requestService.save().then(() => {
       this._toasterService.pop('success', 'The request was saved successfully !');
@@ -188,3 +204,4 @@ export class RequestDetailComponent implements OnInit {
     return true;
   }
 }
+

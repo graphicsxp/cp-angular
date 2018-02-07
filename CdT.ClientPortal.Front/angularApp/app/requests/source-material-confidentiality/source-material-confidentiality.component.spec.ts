@@ -8,9 +8,9 @@ describe('SourceMaterialConfidentialityComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SourceMaterialConfidentialityComponent ]
+      declarations: [SourceMaterialConfidentialityComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -10,15 +10,14 @@ import * as _ from 'lodash';
 import { LookupNames } from '../../model/lookups';
 
 @Injectable()
-export class RequestService extends BaseRepositoryService {
+export class RequestService extends BaseRepositoryService<Request> {
 
   constructor(protected _entityManagerService: EntityManagerService) {
-    super(_entityManagerService);
-    this.entityName = 'Request';
+    super(_entityManagerService, Request);
   }
 
   public create(): Request {
-    let request: Request = super.createEntity() as Request;
+    const request: Request = super.createEntity();
     request.requestType = _.find(this.getLookup(LookupNames.requestTypes), { code: 'RST001' });
     request.client = _.find(this.getLookup(LookupNames.clients), { clientPortalId: 250001 });
     request.deliveryMode = _.find(this.getLookup(LookupNames.deliveryModes), { code: 'No' });

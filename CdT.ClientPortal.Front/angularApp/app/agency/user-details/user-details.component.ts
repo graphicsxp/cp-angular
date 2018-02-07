@@ -14,7 +14,7 @@ export class UserDetailsComponent implements OnInit {
 
   public user: ClientPortalUser;
 
-  constructor(private userService: UserService, private toasterService: ToasterService) {
+  constructor(private _userService: UserService, private _toasterService: ToasterService) {
     this.user = new ClientPortalUser();
   }
 
@@ -22,14 +22,14 @@ export class UserDetailsComponent implements OnInit {
   }
 
   public onSave(): void {
-    this.userService.createUser(this.user)
+    this._userService.createUser(this.user)
       .subscribe(
         res => {
-          this.toasterService.pop('success', 'Creating user', `User ${res.UserName} successfully created`);
+          this._toasterService.pop('success', 'Creating user', `User ${res.UserName} successfully created`);
           console.log(res);
         },
         err => {
-          this.toasterService.pop('error', 'creating user', err.error);
+          this._toasterService.pop('error', 'creating user', err.error);
           console.log('Error occurred');
         }
       );

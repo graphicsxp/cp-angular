@@ -16,37 +16,34 @@ import { RequestType } from '../../model/breeze/request-type';
 /**
  * The BaseRepositoryService implements basic CRUD operations. It should remain as generic as possible.
  */
-export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResult> {
+export abstract class BaseRepositoryService<T extends Entity> extends BehaviorSubject<GridDataResult> {
 
   /**
    * the entityName is set in repository services inherited from the the base service
    */
   protected entityName: String = '';
 
-  constructor(protected _entityManagerService: EntityManagerService) {
+  constructor(protected _entityManagerService: EntityManagerService, ctor: { new(): T }) {
     super(null);
+    this.entityName = ctor.name;
   }
 
-  /**
-   * Creates a new breeze Entity
-   * @param config if we need to set children properties of the created entity
-   */
-  protected createEntity(config?: {}): Entity {
+  protected createEntity(config?: {}): T {
     config = config || {};
-    return this._entityManagerService.em.createEntity(<string>this.entityName, config);
+    return this._entityManagerService.em.createEntity(<string>this.entityName, config) as T;
   }
 
-  public getById(entityName, resource, id, children, forceRefresh = false): Observable<any> {
-    let promise = new Promise<any>((resolve, reject) => {
-      var entity = this._entityManagerService.em.getEntityByKey(entityName, id);
+  public getById(entityName, resource, id, children, forceRefresh = false): Observable<T> {
+    const promise = new Promise<any>((resolve, reject) => {
+      const entity = this._entityManagerService.em.getEntityByKey(entityName, id);
 
       // if (entity && entity.isReadyForEdit && !forceRefresh) {
       if (entity && !forceRefresh) {
-        return new Promise((resolve, reject) => {
+        return new Promise(() => {
           resolve(entity);
         });
       } else {
-        var query = EntityQuery.from(resource).where('id', FilterQueryOp.Equals, id);
+        let query = EntityQuery.from(resource).where('id', FilterQueryOp.Equals, id);
 
         if (children) {
           query = query.expand(children);
@@ -60,17 +57,17 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
       }
     });
 
-    return Observable.fromPromise(promise).map(entity => (<any>entity));
+    return Observable.fromPromise(promise).map(entity => (<T>entity));
   }
 
   protected fetch(tableName: string, state: any, expand: string): Observable<GridDataResult> {
-    let promise = new Promise<any>((resolve, reject) => {
+    const promise = new Promise<any>((resolve, reject) => {
       let query = EntityQuery.from(tableName);
       let orderBy = '';
       //query = query.orderBy('lastName desc, firstName');
 
       if (state.filter) {
-        let p: Predicate[] = new Array();
+        let predicate: Predicate[] = new Array();
 
         state.filter.filters.forEach((filter) => {
           if (filter.value instanceof Array) {
@@ -80,13 +77,13 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
               multiselectPredicates.push(new Predicate(filter.field, filter.operator, value));
             });
 
-            p.push(Predicate.or(multiselectPredicates));
+            predicate.push(Predicate.or(multiselectPredicates));
           } else {
-            p.push(Predicate.and(new Predicate(filter.field, filter.operator, filter.value)));
+            predicate.push(Predicate.and(new Predicate(filter.field, filter.operator, filter.value)));
           }
         });
 
-        query = query.where(Predicate.and(p));
+        query = query.where(Predicate.and(predicate));
       }
 
       if (state.sort) {
@@ -105,7 +102,7 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
         if (state && state.group) {
           state.group.map(group => group.aggregates = state.aggregates);
         }
-        var gridData = groupBy(queryResult.results, state.group);
+        const gridData = groupBy(queryResult.results, state.group);
 
         resolve({ data: gridData, totalRecords: queryResult.inlineCount })
       },
@@ -119,7 +116,7 @@ export abstract class BaseRepositoryService extends BehaviorSubject<GridDataResu
   }
 
   public save() {
-    let promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject) => {
       this._entityManagerService.em.saveChanges().then(() => resolve(),
         error => reject(error));
     });

@@ -1,5 +1,5 @@
 <td>
-  <span [outerHTML]="sourceMaterial.material.documentFormat.code | extensionIcon"></span>
+  <span [outerHTML]="asPhysicalFile(sourceMaterial.material).documentFormat.code | extensionIcon"></span>
 </td>
 <td>
   {{asPhysicalFile(sourceMaterial.material).fileName}}
@@ -9,7 +9,7 @@
 </td>
 <td>{{sourceMaterial.uploadedBy}}</td>
 <td>
-  <input name="isPrivate" type="checkbox" class="ios-switch" [(ngModel)]="sourceMaterial.isPrivate" [disabled]="sourceMaterial.isScreenDeleted || !canSetPrivacy(sourceMaterial)"
+  <input name="isPrivate" type="checkbox" class="ios-switch" [(ngModel)]="sourceMaterial.isPrivate" [disabled]="sourceMaterial.isScreenDeleted || !canSetPrivacy()"
   />
   <span class="switch"></span>
   <i class="fa fa-info-circle fa-lg ng-scope" bs-tooltip="" data-title="A document marked as private and all related outcomes are accessible only by the person that has uploaded the document"></i>
