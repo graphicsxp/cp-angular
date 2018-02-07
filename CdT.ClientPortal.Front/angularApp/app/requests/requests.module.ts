@@ -1,3 +1,4 @@
+import { MomentModule } from 'angular2-moment';
 import { RequestJobsResolver } from './request-jobs/request-jobs-resolver.service';
 import { TemplatesModule } from './../templates/templates.module';
 import { SharedModule } from './../shared/shared.module';
@@ -18,6 +19,7 @@ import { SourceMaterialsListItemComponent } from './source-materials-list-item/s
 import { SourceMaterialService } from './services/source-material.service';
 import { SourceMaterialConfidentialityComponent } from './source-material-confidentiality/source-material-confidentiality.component';
 import { RequestHeaderComponent } from './request-header/request-header.component';
+import { RequestJobsHeaderComponent } from './request-jobs/request-jobs-header/request-jobs-header.component';
 
 @NgModule({
   imports: [
@@ -25,7 +27,8 @@ import { RequestHeaderComponent } from './request-header/request-header.componen
     FormsModule,
     GridHelpersModule,
     RequestsRoutes,
-    SharedModule
+    SharedModule,
+    MomentModule
     // TemplatesModule
   ],
   declarations: [
@@ -36,7 +39,8 @@ import { RequestHeaderComponent } from './request-header/request-header.componen
     SourceMaterialsListComponent,
     SourceMaterialsListItemComponent,
     SourceMaterialConfidentialityComponent,
-    RequestHeaderComponent
+    RequestHeaderComponent,
+    RequestJobsHeaderComponent
   ],
   providers: [RequestService, SourceMaterialService, /*InitGuard,*/ RequestDetailResolver, RequestJobsResolver],
 })

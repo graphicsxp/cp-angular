@@ -23,7 +23,7 @@ export class UsersListComponent implements OnInit {
         }
       },
       err => {
-        this.toasterService.pop('error', 'Get users', err.error.Message);
+        this._toasterService.pop('error', 'Get users', err.error.Message);
       }
     );
   }

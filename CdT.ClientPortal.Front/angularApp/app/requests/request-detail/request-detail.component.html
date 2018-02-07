@@ -1,5 +1,5 @@
 <div class="page-view">
-    <cdt-request-header [request]="requestService.currentRequest"></cdt-request-header>
+    <cdt-request-header #requestHeader [request]="requestService.currentRequest"></cdt-request-header>
     <form (ngSubmit)="onSave()" class="form-horizontal" #requestForm="ngForm">
         <fieldset [disabled]="requestService.currentRequest.status.code==='MTS' && !hasRightToSend()">
 

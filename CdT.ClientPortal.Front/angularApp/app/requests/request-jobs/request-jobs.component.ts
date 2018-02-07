@@ -2,6 +2,7 @@ import { RequestService } from './../services/request.service';
 import { ActivatedRoute } from '@angular/router';
 import { Request } from './../../model/breeze/request';
 import { Component, OnInit } from '@angular/core';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'cdt-request-jobs',
@@ -9,7 +10,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./request-jobs.component.scss']
 })
 export class RequestJobsComponent implements OnInit {
-
   constructor(public requestService: RequestService, private _route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -19,4 +19,7 @@ export class RequestJobsComponent implements OnInit {
       }
     });
   }
+
+  // TODO implement (see disableScreen method in old CP)
+  isDisabled(): Boolean { return false; }
 }

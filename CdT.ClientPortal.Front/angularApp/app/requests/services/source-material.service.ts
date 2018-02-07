@@ -21,6 +21,12 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
     public create(material: Material, template: RequestTemplate): SourceMaterial {
         const sourceMaterial = super.createEntity({ material: material });
 
+        sourceMaterial.confidentiality = _.find(this._entityManagerService.getLookup(LookupNames.confidentialities), { code: 'NO' });
+        sourceMaterial.isConfidential = sourceMaterial.confidentiality.isConfidential;
+        sourceMaterial.isExternalized = sourceMaterial.confidentiality.isExternalized;
+        sourceMaterial.isPrivate = false;
+        sourceMaterial.useSourceAsPreformatted = false;
+
         if (template) {
             if (this.globalService.pricingPolicy2018Avalaible) {
                 // new confidentiality feature, override other parameters

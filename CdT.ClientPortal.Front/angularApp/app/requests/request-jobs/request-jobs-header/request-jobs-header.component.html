@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="widget grid-wrapper table-responsive" style="margin-top:10px;">
+      <table class="table table-responsive">
+        <tr>
+          <th style="border:0">Service</th>
+          <th style="border:0">References</th>
+          <th style="border: 0">
+            Priority
+            <i *ngIf="selectedPriority.code === 'PR'" class="fa fa-info-circle fa-lg" bs-tooltip data-title="For a request to be considered as scheduled, the forecast conditions have to be respected, e.g. language combination, number of pages, deadline, etc."></i>
+          </th>
+          <th style="border:0">
+            Receipt date
+            <i ng-if="requestService.currentRequest.quotationOnly" class="fa fa-info-circle fa-lg" bs-tooltip data-title="The receipt date depends on the date and time of request submission. Therefore, it is only displayed if the request is pre-approved."></i>
+          </th>
+          <th style="border:0">Turnaround
+            <i class="fa fa-info-circle fa-lg" bs-tooltip data-title="The turnaround time is the number of working days after the submission of the request."></i>
+          </th>
+          <th style="border:0">Indicative deadline
+            <i class="fa fa-info-circle fa-lg" bs-tooltip data-title="The delivery deadline depends on the date and time of request submission. For pre-approved requests, the deadline is calculated from the submission date (or from receipt date if the request is submitted outside of working hours). For requests for quotation, the deadline is calculated from the approval date (or from receipt date if the request is approved outside of working hours)."></i>
+          </th>
+          <th style="border:0">Request for quotation only</th>
+        </tr>
+        <tr>
+          <td>
+            <select id="selectedService" name="selectedService" class="form-control" [(ngModel)]="selectedService" (change)="onServiceChanged()"
+              [disabled]="requestService.currentRequest.requestTemplate && requestService.currentRequest.requestTemplate.service">
+              <option *ngFor="let service of services" [ngValue]="service">{{service.defaultLabel}}</option>
+            </select>
+            <i *ngIf="requestService.currentRequest.requestTemplate && requestService.currentRequest.requestTemplate.service" class="fa fa-info-circle fa-lg"
+              bs-tooltip data-title="Service cannot be changed because selected template does not support it. Please deselect the template in order to change the service."></i>
+          </td>
+          <td>
+            <span class="badge">{{requestService.currentRequest.referenceSet?.references.length}}</span>
+            <button type="button" [disabled]="disabled" (click)="addReferences()" class="btn btn-link">Add/edit</button>
+          </td>
+          <td>
+            <select id="selectedPriority" name="selectedPriority" class="form-control" [(ngModel)]="selectedPriority" (change)="onPriorityChanged()">
+              <option *ngFor="let priority of priorities" [ngValue]="priority">{{priority.defaultLabel}}</option>
+            </select>
+            <span [style]="{'visibility': isPriorityInvalid() ? 'visible' : 'hidden'}">
+              <i class="fa fa-warning" style="color:red;" bs-tooltip data-title="Very Urgent priority is not available for volumes greater than 5 pages or Modification, Editing, Revision"></i>
+            </span>
+          </td>
+          <td>
+            <span *ngIf="(!requestService.currentRequest.quotationOnly || requestService.currentRequest.status.code === 'UNDE')">{{receiptDate | amDateFormat:'DD/MM/YYYY HH:mm'}}</span>
+          </td>
+          <td>
+            <div *ngIf="!checkInvalidServices()">{{requestService.currentRequest.tat}}</div>
+            <div *ngIf="checkInvalidServices()">-</div>
+            <div *ngIf="checkInvalidServices()">Not Available
+              <i class="fa fa-info-circle fa-lg" bs-tooltip data-title="The turnaround time and the deadline for the chosen language service need to be agreed with the Workflow Management Section"></i>
+            </div>
+          </td>
+          <td>
+            <span *ngIf="(!requestService.currentRequest.quotationOnly || requestService.currentRequest.status.code === 'UNDE') && !checkInvalidServices()">{{ requestService.currentRequest.deadline | amDateFormat:'DD/MM/YYYY HH:mm'}}</span>
+            <div *ngIf="checkInvalidServices()">Not Available
+              <i class="fa fa-info-circle fa-lg" bs-tooltip data-title="The turnaround time and the deadline for the chosen language service need to be agreed with the Workflow Management Section"></i>
+            </div>
+          </td>
+          <td>
+            <input id="cbAutomaticAppr" name="automaticAppr" type="checkbox" [(ngModel)]="request.quotationOnly" class="ios-switch" />
+            <span class="switch"></span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

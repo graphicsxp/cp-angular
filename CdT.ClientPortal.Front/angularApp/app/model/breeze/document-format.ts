@@ -9,7 +9,7 @@ import { DocumentFormatTarget } from './document-format-target';
 export class DocumentFormat extends EntityBase {
 
     /// <code> Place custom code between <code> tags
-    public static validSubtitlingFormatCodes: Array<String> = ['PC', 'SR', 'VT', 'W3'];        
+    public static validSubtitlingFormatCodes: Array<String> = ['PC', 'SR', 'VT', 'W3'];
     /// </code>
 
     // Generated code. Do not place code below this line.
