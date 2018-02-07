@@ -142,7 +142,7 @@
             <div class="clearfix form-actions pull-right">
                 <div class="pull-right">
                     <button class="btn btn-primary" type="submit" [disabled]="!canSave()">Save</button>
-                    <a id="btnJobs" class="btn btn-primary" routerLink="jobs" data-title="define jobs" bs-tooltip>Next</a>
+                    <a id="btnJobs" class="btn btn-primary" (click)="onNext()" data-title="define jobs" bs-tooltip *ngIf="canClickNext()">Next</a>
                 </div>
             </div>
         </div>

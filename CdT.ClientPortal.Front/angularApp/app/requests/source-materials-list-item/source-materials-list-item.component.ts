@@ -26,6 +26,7 @@ export class SourceMaterialsListItemComponent implements OnInit {
   @Input() public sourceMaterial: SourceMaterial;
   @Input() public showCopyDown: boolean;
   @Output() public batchUpdate = new EventEmitter<SourceMaterial>();
+  @Output() public sourceLanguagesChanged = new EventEmitter<boolean>();
 
   ngOnInit() {    
     //this._sourceMaterialService.setTargetFormats(this.sourceMaterial);
@@ -45,12 +46,10 @@ export class SourceMaterialsListItemComponent implements OnInit {
   public onSelectedLanguagesChanged(event) {
     this.sourceMaterial.selectedLanguages = event;
     this._entityManagerService.triggerStatusNotification(this.sourceMaterial);
+    this.sourceLanguagesChanged.emit(true);
   }
 
   public toggleDelete() {
-    // var pos = $scope.vm.uploadedFiles.indexOf(sm.material.fileName);
-    //         $scope.vm.uploadedFiles.splice(pos, 1);
-
     if (this.sourceMaterial.entityAspect.entityState === EntityState.Added) {
       //detach both sourcematerial and material
       this.sourceMaterial.material.entityAspect.setDetached();
