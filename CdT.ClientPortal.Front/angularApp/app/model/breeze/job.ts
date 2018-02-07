@@ -21,7 +21,7 @@ import { Service } from './service';
 export class Job extends EntityBase {
 
     /// <code> Place custom code between <code> tags
-    
+    isMarkedForDeletion: boolean;
     /// </code>
 
     // Generated code. Do not place code below this line.

@@ -12,6 +12,8 @@ import { LookupNames } from '../../model/lookups';
 @Injectable()
 export class RequestService extends BaseRepositoryService<Request> {
 
+  public currentRequest: Request;
+
   constructor(protected _entityManagerService: EntityManagerService) {
     super(_entityManagerService, Request);
   }

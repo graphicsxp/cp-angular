@@ -61,11 +61,25 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
 
     /**
      * Returns a list of DocumentFormat that matches the possible target formats for the given SourceMaterial
-     * @param sourceMaterial           
+     * @param sourceMaterial the sourceMaterial to get a list of targetFormats from
      */
     public getTargetFormats(sourceMaterial: SourceMaterial): Array<DocumentFormat> {
         return _.chain(this._entityManagerService.getLookup(LookupNames.documentFormatTargets))
             .filter((f) => { return f.sourceId === (sourceMaterial.material as PhysicalFile).documentFormat.id; })
             .map('target').value();
+    }
+
+    /**
+     * Delete jobs that don't match any sourceLanguage on the sourceMaterial. This will happen when a sourceLanguage is deleted from
+     * the SourceMaterial and jobs were already assigned to this sourceLanguage
+     * @param sourceMaterial the sourceMaterial to delete jobs from
+     */
+    public deleteJobs(sourceMaterial: SourceMaterial): void {
+        sourceMaterial.jobs.forEach(job => {
+            if (_.find(sourceMaterial.selectedLanguages, lang => { return lang.code === job.sourceLanguage.code })) {
+                job.isMarkedForDeletion = true;
+            }
+        });
+        this._entityManagerService.deleteEntities(_.filter(sourceMaterial.jobs, job => { return job.isScreenDeleted; }), ['jobMaterials']);
     }
 }

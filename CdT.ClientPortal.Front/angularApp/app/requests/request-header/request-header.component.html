@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-6 form-block-edition request-edition general-information">
+    <h1 *ngIf="request.requestIdentifier">REQUEST
+      <span *ngIf="request.quotationOnly">FOR QUOTATION</span>
+      <strong>{{request.client.abbreviation}} {{request.requestIdentifier}}</strong> / REQUEST DETAILS</h1>
+    <h1 *ngIf="!request.requestIdentifier">REQUEST DETAILS</h1>
+  </div>
+  <div class="col-md-6 form-block-edition request-edition general-information">
+    <h1 class="pull-right">
+      <span *ngIf="request.closestDeadline" class="client-deadline-header">Client Deadline {{request.isMultiple ? 'Multiple: Closest Deadline ' : ''}} {{request.closestDeadlineFormatted}}</span>
+      <span *ngIf="request.status" [class]="'badge badge-light status-'  + request.status.defaultLabel.toLowerCase().replace(' ', '-')">{{request.status.defaultLabel}}</span>
+    </h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <button type="button" id="btnComments" [disabled]="disableScreen()" (click)=" openComments()" class="btn btn-default pull-right RbtnMargin">
+      <i class="fa fa-comment-o "></i> Comments
+    </button>
+  </div>
+</div>

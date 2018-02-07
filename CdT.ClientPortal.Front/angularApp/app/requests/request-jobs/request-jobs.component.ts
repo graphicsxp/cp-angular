@@ -1,3 +1,6 @@
+import { RequestService } from './../services/request.service';
+import { ActivatedRoute } from '@angular/router';
+import { Request } from './../../model/breeze/request';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RequestJobsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public requestService: RequestService, private _route: ActivatedRoute) { }
 
   ngOnInit() {
+    this._route.data.subscribe((data: { request: Request }) => {
+      if (data.request) {
+        this.requestService.currentRequest = data.request;
+      }
+    });
   }
-
 }

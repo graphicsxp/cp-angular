@@ -50,7 +50,7 @@ export class SourceMaterialsListComponent implements OnInit {
 
         for (let i = startIdx; i < this.request.sourceMaterials.length; i++) {
           const material = this.request.sourceMaterials[i];
-          if (!material.isScreenDeleted && material !== sourceMaterial) {
+          if (!material.isMarkedForDeletion && material !== sourceMaterial) {
             material.selectedLanguages = _.clone(sourceMaterial.selectedLanguages);
             material.isConfidential = sourceMaterial.isConfidential;
             material.isExternalized = sourceMaterial.isExternalized;
@@ -118,5 +118,7 @@ export class SourceMaterialsListComponent implements OnInit {
 
     // deletes entities and detaches related bags, cascade delete done server side
     this._entityManagerService.deleteEntities(sourceMaterialsToDelete, ['sourceLanguages', 'jobs']);
+
+    // TODO _updateTATOnDeleteSourceDocuments
   }
 }
