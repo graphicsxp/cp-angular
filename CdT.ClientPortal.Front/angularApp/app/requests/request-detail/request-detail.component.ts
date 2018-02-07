@@ -12,6 +12,7 @@ import { ToasterService } from 'angular2-toaster';
 import { LookupNames } from '../../model/lookups';
 import { NavigationExtras } from '@angular/router/src/router';
 import { SourceMaterialsListComponent } from '../source-materials-list/source-materials-list.component';
+import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 @Component({
   selector: 'cdt-request-detail',
@@ -40,8 +41,9 @@ export class RequestDetailComponent implements OnInit {
     private _entityManagerService: EntityManagerService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _toasterService: ToasterService) {
-    //this.filteredTemplateList = this.templates.slice();
+    private _toasterService: ToasterService,
+    private _confirmationService: ConfirmationService) {
+    // this.filteredTemplateList = this.templates.slice();
   }
 
   ngOnInit() {
@@ -51,7 +53,7 @@ export class RequestDetailComponent implements OnInit {
     this.purposes = this._requestService.getLookup(LookupNames.purposes);
     this.deliveryModes = this._requestService.getLookup(LookupNames.deliveryModes);
     // this.templates = this._requestService.getLookup(LookupNames.RequestTemplate).map(t => { return { text: t.templateName, value: t.id } });
-    //this.filteredTemplateList = this.templates.slice();
+    // this.filteredTemplateList = this.templates.slice();
     this.activeContacts = _.filter(this.request.client.contacts, { 'isActive': true });
     this.selectedContacts = [];
     this.selectedRecipients = [];
@@ -91,10 +93,6 @@ export class RequestDetailComponent implements OnInit {
     this._entityManagerService.triggerStatusNotification(this.request);
   };
 
-  /**
-   * 
-   * @param value 
-   */
   handleFilter(value) {
     this.filteredTemplateList = this.templates.filter((s) => s.text.toLowerCase().indexOf(value.value.text.toLowerCase()) !== -1);
   }
@@ -104,7 +102,65 @@ export class RequestDetailComponent implements OnInit {
   }
 
   onSave(): void {
-    if (this.requestForm.invalid) return;
+    this._beforeSave().then(() => {
+      this._save().then(() => {
+        if (this._route.snapshot.params['id'] === 'new') {
+          const ne: NavigationExtras = { skipLocationChange: true };
+          this._router.navigateByUrl(`requests/detail/${this.request.id}`, ne);
+        }
+      })
+    });
+  }
+
+  canSave(): boolean {
+    /*!vm.sourceLanguagesChanged && !vm.many2manyHasChanged && !hasChanges()) || hasErrors() */
+    return this._entityManagerService.hasChanges() && !this._hasErrors();
+  }
+
+  onNext() {
+    if (this._entityManagerService.hasChanges()) {
+      this._beforeSave().then(() => {
+        this._save().then(() => {
+          this._router.navigateByUrl(`requests/detail/${this.request.id}/jobs`);
+        })
+      })
+    } else {
+      this._router.navigateByUrl(`requests/detail/${this.request.id}/jobs`);
+    }
+  }
+
+  /**
+   * Check if the next button can be enabled
+   */
+  canClickNext() {
+    return this.request.sourceMaterials.length > 0 && !_.every(this.request.sourceMaterials, { isScreenDeleted: true });
+  };
+
+  public hasRightToSend(): boolean {
+    return true;
+  }
+
+  private _beforeSave(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (this.sourceMaterialList.hasSourceLanguagesChanged) {
+        this._confirmationService.confirm({
+          rejectVisible: false,
+          // acceptLabel: 'OK',
+          message: `You have made changes on the source languages. In case of replacing/removing one source language the existing
+           jobs for that language will be DELETED. Please make sure the job definitions are in order before sending the request.`,
+          accept: () => {
+            // $scope.checkJobSourceLanguage();
+            resolve();
+          }
+        });
+      } else {
+        resolve();
+      }
+    });
+  }
+
+  private _save(): Promise<any> {
+    if (this.requestForm.invalid) { return };
 
     this._entityManagerService.checkMany2ManyModifications('RequestContact', this.request, this.selectedContacts, this.request.requestContacts, 'request', 'contact', false);
     this._entityManagerService.checkMany2ManyModifications('RequestDeliveryContact', this.request, this.selectedRecipients, this.request.requestDeliveryContacts, 'request', 'contact', false);
@@ -116,35 +172,26 @@ export class RequestDetailComponent implements OnInit {
     // } else {
     //     promise = $q.resolve(true);
     // }
-    this._requestService.save().then(() => {
-      this._toasterService.pop('success', 'The request was saved successfully !');
-      if (this._route.snapshot.params['id'] === 'new') {
-        let ne: NavigationExtras = { skipLocationChange: true };
-        this._router.navigateByUrl(`requests/detail/${this.request.id}`, ne);
-      }
 
+    return new Promise((resolve, reject) => this._requestService.save().then(() => {
+      this._toasterService.pop('success', 'The request was saved successfully !');
+      this.sourceMaterialList.hasSourceLanguagesChanged = false;
+      resolve();
     }, error => {
       if (!error.entityErrors && error.message) {
         this._toasterService.pop('failed', error.message);
       }
-    });
-  }
-
-  canSave(): boolean {
-    /*!vm.sourceLanguagesChanged && !vm.many2manyHasChanged && !hasChanges()) || hasErrors() */
-    return this._entityManagerService.hasChanges() && !this._hasErrors();
+      reject(error);
+    }));
   }
 
   private _hasErrors(): boolean {
     let many2ManyHasErrors = this.selectedContacts.length === 0 || this.selectedRecipients.length === 0;
-    //selected source languages check
+    // selected source languages check
     many2ManyHasErrors = many2ManyHasErrors || _.chain(this.request.sourceMaterials).map('selectedLanguages').some(function (elem) {
       return elem.length === 0;
     }).value();
     return many2ManyHasErrors || this._entityManagerService.hasErrors(this.request, 'sourceMaterials');
   }
-
-  public hasRightToSend(): boolean {
-    return true;
-  }
 }
+

@@ -33,7 +33,7 @@
       <tbody>
         <tr cdt-source-materials-list-item *ngFor="let sourceMaterial of request.sourceMaterials" [sourceMaterial]="sourceMaterial"
           [ngClass]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[sourceMaterial.isScreenDeleted]" [showCopyDown]="sourceMaterial.material.fileName === getFirstNotDeletedMaterial()?.material.fileName && request.sourceMaterials.length > 1" 
-          (batchUpdate)="onBatchUpdate($event)">
+          (batchUpdate)="onBatchUpdate($event)" (sourceLanguagesChanged)="onSourceLanguagesChanged($event)"></tr>
       </tbody>
     </table>
   </div>

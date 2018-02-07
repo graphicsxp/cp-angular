@@ -62,7 +62,7 @@ import { ButtonModule } from 'primeng/button';
         UploaderComponent,
         LanguagePickerComponent,
         ExtensionIconPipe
-    ]    
+    ]
 })
 
 export class SharedModule { }

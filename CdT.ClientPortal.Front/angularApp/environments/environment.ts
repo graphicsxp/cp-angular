@@ -4,11 +4,10 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-    production: false,
-    //webapiUrl: 'http://localhost:3002/'
-    backendUrl: 'https://localhost/CdT.ClientPortal.WebApi',
-    breezeEndpoint: '/breeze/eai',
-    webApiEndpoint: '/api'   ,
-    uploadEndpoint: '/filemanagement/upload'
-  };
-  
+  production: false,
+  // webapiUrl: 'http://localhost:3002/'
+  backendUrl: 'https://localhost/CdT.ClientPortal.WebApi',
+  breezeEndpoint: '/breeze/eai',
+  webApiEndpoint: '/api',
+  uploadEndpoint: '/filemanagement/upload'
+};

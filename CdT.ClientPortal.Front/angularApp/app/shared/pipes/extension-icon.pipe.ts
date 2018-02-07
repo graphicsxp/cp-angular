@@ -1,11 +1,14 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import { Pipe, PipeTransform } from '@angular/core';
 
+/**
+ * Returns an icon matching the extension code passed in input.
+ */
 @Pipe({
     name: 'extensionIcon'
 })
-export class ExtensionIconPipe {
-    transform(extension){
-        let icon:string;
+export class ExtensionIconPipe implements PipeTransform {
+    transform(extension): string {
+        let icon: string;
 
         switch (extension) {
             case 'WO':

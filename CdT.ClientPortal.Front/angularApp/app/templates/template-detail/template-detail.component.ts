@@ -13,9 +13,9 @@ export class TemplateDetailComponent implements OnInit {
 
   public template: RequestTemplate;
 
-  constructor(private _route: ActivatedRoute, private _templateService: TemplateService) { }
-
   @ViewChild('templateForm') currentForm: NgForm;
+
+  constructor(private _route: ActivatedRoute, private _templateService: TemplateService) { }
 
   ngOnInit() {
     this._route.data.subscribe((data: { template: RequestTemplate }) => {
@@ -23,7 +23,5 @@ export class TemplateDetailComponent implements OnInit {
     })
   }
 
-  onSave(){
-    
-  }
+  onSave() { }
 }

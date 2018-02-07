@@ -14,69 +14,65 @@ export class UsersListComponent implements OnInit {
 
   public users: ClientPortalUser[];
 
-  constructor(private userService: UserService, private toasterService: ToasterService) {
+  constructor(private _userService: UserService, private _toasterService: ToasterService) {
     this.users = [];
-    this.userService.getAllUsers().subscribe(
-      res => {
-        for (let r of res) {
-          this.users.push(r);
+    this._userService.getAllUsers().subscribe(
+      users => {
+        for (let user of users) {
+          this.users.push(user);
         }
-        console.log(res);
+        console.log(users);
       },
       err => {
-        this.toasterService.pop('error', 'Get users', err.error);
+        this._toasterService.pop('error', 'Get users', err.error);
         console.log('Error occurred');
       }
     );
   }
 
-  togglerUserApproved(user: ClientPortalUserList) {
-    this.userService.toggleUserApproved(user.UserName).subscribe(
+  toggleUserApproved(user: ClientPortalUserList) {
+    this._userService.toggleUserApproved(user.UserName).subscribe(
       res => {
-        this.toasterService.pop('success', 'Get users', `User ${user.UserName} updated`);
-        this.userService.getAllUsers().subscribe(
-          res => {
+        this._toasterService.pop('success', 'Get users', `User ${user.UserName} updated`);
+        this._userService.getAllUsers().subscribe(
+          users => {
             this.users = [];
-            for (let r of res) {
-              this.users.push(r);
+            for (let user of users) {
+              this.users.push(user);
             }
           },
           err => {
-            this.toasterService.pop('error', 'Get users', err.error);
+            this._toasterService.pop('error', 'Get users', err.error);
           }
         );
       },
       err => {
-        this.toasterService.pop('error', 'Get users', err.error);
+        this._toasterService.pop('error', 'Get users', err.error);
       }
     );
   }
 
   unlockUser(user: ClientPortalUserList) {
-    this.userService.unlockUser(user.UserName).subscribe(
+    this._userService.unlockUser(user.UserName).subscribe(
       res => {
-        this.toasterService.pop('success', 'Get users', `User ${user.UserName} unlocked`);
-        this.userService.getAllUsers().subscribe(
-          res => {
+        this._toasterService.pop('success', 'Get users', `User ${user.UserName} unlocked`);
+        this._userService.getAllUsers().subscribe(
+          users => {
             this.users = [];
-            for (let r of res) {
-              this.users.push(r);
+            for (let user of users) {
+              this.users.push(user);
             }
           },
           err => {
-            this.toasterService.pop('error', 'Get users', err.error);
+            this._toasterService.pop('error', 'Get users', err.error);
           }
         );
       },
       err => {
-        this.toasterService.pop('error', 'Get users', err.error);
+        this._toasterService.pop('error', 'Get users', err.error);
       }
     );
   }
 
-
-  ngOnInit() {
-
-  }
-
+  ngOnInit() { }
 }

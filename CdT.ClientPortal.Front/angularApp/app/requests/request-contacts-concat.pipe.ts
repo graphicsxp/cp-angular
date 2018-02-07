@@ -5,6 +5,9 @@ import { Request, Contact, RequestContact } from '../model/breeze/entity-model';
     name: 'requestcontactsconcat'
 })
 
+/**
+ * Returns a coma-separated concatenation of all contacts of the given Request
+ */
 export class RequestContactsConcat implements PipeTransform {
     transform(value: any, args: any[]): any {
         const requestContacts = value as RequestContact[];
