@@ -23,7 +23,7 @@ export abstract class BaseRepositoryService<T extends Entity> extends BehaviorSu
    */
   protected entityName: String = '';
 
-  constructor(protected _entityManagerService: EntityManagerService, ctor: { new(): T }) {
+  constructor(protected _entityManagerService: EntityManagerService, ctor: new () => T) {
     super(null);
     this.entityName = ctor.name;
   }
