@@ -28,9 +28,9 @@ export abstract class BaseRepositoryService<T extends Entity> extends BehaviorSu
     this.entityName = ctor.name;
   }
 
-  protected createEntity(config?: {}): T {
+  protected createEntity<E extends Entity>(type: new () => E, config?: {}): E {
     config = config || {};
-    return this._entityManagerService.em.createEntity(<string>this.entityName, config) as T;
+    return this._entityManagerService.em.createEntity(type.name, config) as E;
   }
 
   public getById(entityName, resource, id, children, forceRefresh = false): Observable<T> {

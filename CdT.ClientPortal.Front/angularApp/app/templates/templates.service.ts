@@ -13,7 +13,7 @@ export class TemplateService extends BaseRepositoryService<RequestTemplate> {
   }
 
   public create() {
-    return super.createEntity();
+    return super.createEntity<RequestTemplate>(RequestTemplate);
   }
 
   public query(state: any): void {

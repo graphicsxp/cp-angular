@@ -1,3 +1,7 @@
+import { SharedModule } from './../../../shared/shared.module';
+import { GridHelpersModule } from './../../../grid-helpers/grid-helpers.module';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { JobHeaderComponent } from './job-header.component';
@@ -8,9 +12,10 @@ describe('JobHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JobHeaderComponent ]
+      imports: [CommonModule, FormsModule, SharedModule],
+      declarations: [JobHeaderComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

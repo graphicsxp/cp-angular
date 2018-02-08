@@ -1,3 +1,7 @@
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from './../../../../shared/shared.module';
+import { MomentModule } from 'angular2-moment';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { JobTranslationEditComponent } from './job-translation-edit.component';
@@ -8,9 +12,10 @@ describe('JobTranslationEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JobTranslationEditComponent ]
+      imports: [CommonModule, FormsModule, SharedModule, MomentModule],
+      declarations: [JobTranslationEditComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
