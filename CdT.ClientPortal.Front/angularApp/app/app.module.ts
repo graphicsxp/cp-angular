@@ -28,7 +28,7 @@ import localeFr from '@angular/common/locales/en';
 import localeFrExtra from '@angular/common/locales/extra/en';
 import { IntlModule } from '@progress/kendo-angular-intl';
 // Load all required data for the bg locale
-import '@progress/kendo-angular-intl/locales/fr/all';
+import '@progress/kendo-angular-intl/locales/en/all';
 registerLocaleData(localeFr, 'en-GB', localeFrExtra);
 
 @NgModule({
