@@ -402,9 +402,7 @@
     <Compile Include="Model\PriceRequestDTO.cs" />
     <Compile Include="Model\PriceResponseDTO.cs" />
     <Compile Include="Model\SaveUserRoles.cs" />
-    <Compile Include="Model\UserEditDTO.cs" />
-    <Compile Include="Model\UserListDTO.cs" />
-    <Compile Include="Model\UserRolesDTO.cs" />
+    <Compile Include="Model\UserDTOs.cs" />
     <Compile Include="OwinStartup.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

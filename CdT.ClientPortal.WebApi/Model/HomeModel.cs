@@ -2,9 +2,7 @@
 // Copyright (c) 2013 All Rights Reserved
 // </copyright>
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CdT.ClientPortal.WebApi.Model
 {
@@ -15,7 +13,7 @@ namespace CdT.ClientPortal.WebApi.Model
     {
         public HomeModel()
         {
-            this.Roles = new List<string>();
+            Roles = new List<string>();
         }
 
         public string UserName { get; set; }

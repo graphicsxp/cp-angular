@@ -1,14 +1,16 @@
 ﻿using Breeze.ContextProvider;
 using Breeze.ContextProvider.NH;
-//using Cdt.ClientPortal.Core.Helpers;
+using CdT.ClientPortal.WebApi.FileManagement;
+using CdT.EAI.BL.Documents.Embedded;
+using CdT.EAI.BL.Interfaces;
 using CdT.EAI.BL.Workflow;
 using CdT.EAI.Commands.Mailing;
 using CdT.EAI.Model.Business;
 using CdT.EAI.Model.Common;
 using CdT.EAI.Model.Workflow;
 using CdT.EAI.Wcf;
-//using ClientPortalWeb.FileManagement;
-//using ClientPortalWeb.Helpers;
+using CdT.UI.Common.Linq;
+using ClientPortal.Helpers;
 using NHibernate.Linq;
 using NServiceBus;
 using RazorEngine;
@@ -18,18 +20,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Web.Security;
-using Language = CdT.EAI.Model.Business.Language;
 using System.ServiceModel;
-using CdT.EAI.BL.Interfaces;
-using CdT.EAI.BL.Request;
+using System.Threading;
 using System.Web;
 using ISession = NHibernate.ISession;
-using CdT.EAI.BL.Documents.Embedded;
-using CdT.UI.Common.Linq;
-using ClientPortal.Helpers;
-using CdT.ClientPortal.WebApi.FileManagement;
+using Language = CdT.EAI.Model.Business.Language;
 
 namespace CdT.ClientPortal.WebApi
 {
@@ -349,43 +344,44 @@ namespace CdT.ClientPortal.WebApi
 
         private Dictionary<Type, List<EntityInfo>> BeforeSaveEntities(Dictionary<Type, List<EntityInfo>> saveMap)
         {
-            var entityInfos = saveMap.Where(e => e.Key == typeof(JobPricing)).Select(e => e.Value).FirstOrDefault();
-
+            #region JobPricing
+            List<EntityInfo> entityInfos = saveMap.Where(e => e.Key == typeof(JobPricing)).Select(e => e.Value).FirstOrDefault();
             if (entityInfos != null)
             {
-                foreach (var entityInfo in entityInfos)
+                foreach (EntityInfo entityInfo in entityInfos)
                 {
-                    var jobPricing = (JobPricing)(entityInfo.Entity);
+                    JobPricing jobPricing = (JobPricing)(entityInfo.Entity);
 
                     // single query without lazy loading
                     var temp = (from p in Session.Query<JobTranslation>()
                                 where p.Id == jobPricing.JobId
                                 select new { JobTranslation = p, p.SourceMaterial.Request }).FirstOrDefault();
 
-                    if (temp == null)
-                        continue;
-                    var anyJob = CheckForObjectTypeInSaveMap(temp.JobTranslation, saveMap);
-
-                    if (!anyJob)
+                    if (temp != null)
                     {
-                        temp.JobTranslation.UpdateDate = DateTime.UtcNow;
-                        saveMap.AddCustomEntity(temp.JobTranslation, this);
-                    }
+                        if (!CheckForObjectTypeInSaveMap(temp.JobTranslation, saveMap))
+                        {
+                            temp.JobTranslation.UpdateDate = DateTime.UtcNow;
+                            saveMap.AddCustomEntity(temp.JobTranslation, this);
+                        }
 
-                    if (saveMap.Any(e => e.Key == typeof(Request)))
-                        continue;
-                    temp.Request.UpdateDate = DateTime.UtcNow;
-                    saveMap.AddCustomEntity(temp.Request, this);
+                        if (!saveMap.Any(e => e.Key == typeof(Request)))
+                        {
+                            temp.Request.UpdateDate = DateTime.UtcNow;
+                            saveMap.AddCustomEntity(temp.Request, this);
+                        }
+                    }
                 }
             }
+            #endregion
 
+            #region JobMaterial
             entityInfos = saveMap.Where(e => e.Key == typeof(JobMaterial)).Select(e => e.Value).FirstOrDefault();
             if (entityInfos != null)
             {
-                foreach (var entityInfo in entityInfos)
+                foreach (EntityInfo entityInfo in entityInfos)
                 {
-                    var jobMaterial = (JobMaterial)(entityInfo.Entity);
-
+                    JobMaterial jobMaterial = (JobMaterial)(entityInfo.Entity);
 
                     if (!saveMap.Any(e => e.Key.IsSubclassOf(typeof(Job)) && e.Value.Any(f => ((Job)f.Entity).Id == jobMaterial.JobId)))
                     {
@@ -396,7 +392,6 @@ namespace CdT.ClientPortal.WebApi
 
                         if (temp != null)
                         {
-
                             temp.Job.UpdateDate = DateTime.UtcNow;
                             saveMap.AddCustomEntity(temp.Job, this);
 
@@ -409,16 +404,16 @@ namespace CdT.ClientPortal.WebApi
                     }
                 }
             }
+            #endregion
 
+            #region Reference
             entityInfos = saveMap.Where(e => e.Key == typeof(Reference)).Select(e => e.Value).FirstOrDefault();
             if (entityInfos != null)
             {
-                foreach (var entityInfo in entityInfos)
+                foreach (EntityInfo entityInfo in entityInfos)
                 {
-                    var reference = (Reference)(entityInfo.Entity);
-
-
-                    var request = saveMap.Where(e => e.Key == typeof(Request)).SelectMany(e => e.Value).Select(c => (Request)c.Entity).FirstOrDefault();
+                    Reference reference = (Reference)(entityInfo.Entity);
+                    Request request = saveMap.Where(e => e.Key == typeof(Request)).SelectMany(e => e.Value).Select(c => (Request)c.Entity).FirstOrDefault();
 
                     if (request != null)
                     {
@@ -432,21 +427,21 @@ namespace CdT.ClientPortal.WebApi
                                    select p).FirstOrDefault();
                         if (request != null)
                         {
-
                             request.UpdateDate = DateTime.UtcNow;
                             saveMap.AddCustomEntity(request, this);
                         }
                     }
                 }
             }
+            #endregion
 
+            #region JobComment
             entityInfos = saveMap.Where(e => e.Key == typeof(JobComment)).Select(e => e.Value).FirstOrDefault();
-
             if (entityInfos != null)
             {
-                foreach (var entityInfo in entityInfos)
+                foreach (EntityInfo entityInfo in entityInfos)
                 {
-                    var jobComment = (JobComment)(entityInfo.Entity);
+                    JobComment jobComment = (JobComment)(entityInfo.Entity);
 
                     // single query without lazy loading
                     var temp = (from p in Session.Query<Job>()
@@ -463,31 +458,38 @@ namespace CdT.ClientPortal.WebApi
                     }
                 }
             }
+            #endregion
 
+            #region Job
             entityInfos = saveMap.Where(e => e.Key.IsSubclassOf(typeof(Job))).Select(e => e.Value).FirstOrDefault();
-
             if (entityInfos != null)
             {
-                foreach (var entityInfo in entityInfos)
+                foreach (EntityInfo entityInfo in entityInfos)
                 {
                     if (!saveMap.Any(e => e.Key == typeof(Request)))
                     {
-                        var request = GetQuery<SourceMaterial>().Where(e => e.Id == ((Job)entityInfo.Entity).SourceMaterialId).Select(e => e.Request).FirstOrDefault();
+                        Request request = GetQuery<SourceMaterial>().Where(e => e.Id == ((Job)entityInfo.Entity).SourceMaterialId).Select(e => e.Request).FirstOrDefault();
                         if (request == null)
                         {
-                            var id = ((Job)entityInfo.Entity).SourceMaterialId;
-                            id = saveMap.Where(e => e.Key == typeof(SourceMaterial))
-                                .SelectMany(e => e.Value)
-                                .Select(x => (SourceMaterial)x.Entity)
-                                .Where(x => x.Id == id).Select(x => x.RequestId).SingleOrDefault();
+                            Guid? requestId = saveMap.Where(e => e.Key == typeof(SourceMaterial))
+                                                        .SelectMany(e => e.Value)
+                                                        .Select(x => (SourceMaterial)x.Entity)
+                                                        .Where(x => x.Id == ((Job)entityInfo.Entity).SourceMaterialId)
+                                                        .Select(x => x.RequestId)
+                                                        .SingleOrDefault();
 
-                            request = GetQuery<Request>().FirstOrDefault(e => e.Id == id);
+                            if (requestId.HasValue)
+                            {
+                                request = GetQuery<Request>().FirstOrDefault(e => e.Id == requestId);
+                            }
                         }
                         saveMap.AddCustomEntity(request, this);
                     }
                 }
             }
+            #endregion
 
+            #region Material
             entityInfos = saveMap.Where(e => e.Key == typeof(Material) || e.Key.IsSubclassOf(typeof(Material))).Select(e => e.Value).FirstOrDefault();
             if (entityInfos != null)
             {
@@ -505,6 +507,7 @@ namespace CdT.ClientPortal.WebApi
                     }
                 }
             }
+            #endregion
 
             var tmp = saveMap.Where(p => p.Key.IsSubclassOf(typeof(Job)))
                                     .Select(p => p.Value.Where(x => x.EntityState == EntityState.Deleted).ToList())
@@ -553,89 +556,121 @@ namespace CdT.ClientPortal.WebApi
         {
             if (entityInfo.Entity is Request)
             {
-                var r = (Request)entityInfo.Entity;
-
-                //// check if right client
-                //if (r.Client.ClientPortalId != userProfile.Personal.OrganisationId)
-                //{
-                //    throw new Exception("You're trying to save a Request for another Organisation than yours");
-                //}
-
-                // check if request can be saved
-                var originalRequest = Session.Query<Request>().Fetch(p => p.Status).Fetch(t => t.RequestType).FirstOrDefault(p => p.Id == r.Id);
-                var newStatus = Session.Query<Status>().FirstOrDefault(x => x.Id == r.StatusId);
-
-                if (originalRequest != null && originalRequest.RequestType?.Code == "RST003" && newStatus.Code != "ASAC" && originalRequest.Status.Code != "DRAF" && originalRequest.Status.Code != "PEND" && originalRequest.Status.Code != "UNDE" && originalRequest.Status.Code != "CANC")
-                {
-                    throw new Exception("ASA Request has already been submitted");
-                }
-
-                if (originalRequest != null && (originalRequest.RequestType?.Code == "RST001" || originalRequest.RequestType?.Code == "RST002") && originalRequest.Status.Code != "MTS" && originalRequest.Status.Code != "DRAF" && originalRequest.Status.Code != "PEND" && originalRequest.Status.Code != "UNDE" && originalRequest.Status.Code != "CANC")
-                {
-                    throw new Exception("Request has already been submitted");
-                }
-
-                // check if new request and set status
-                if (r.Status == null && r.StatusId == new Guid())
-                {
-                    r.StatusId = GetQuery<Status>().Where(p => p.Code == "DRAF").Select(p => p.Id).First();
-                    r.FromApplication = Application.ClientPortal;
-                }
-
-                // check status changes
-                // TODO : move to business logic layer
-                if (entityInfo.OriginalValuesMap.ContainsKey("StatusId"))
-                {
-                    // retrieve original from db
-                    var originalRequestStatus = originalRequest.Status;
-
-                    if ((originalRequestStatus.Code == "DRAF" || originalRequestStatus.Code == "MTS") && newStatus.Code == "NEW")
-                    {
-                        r.SubmissionDate = DateTime.UtcNow;
-                        var sender = GetQuery<Contact>().FirstOrDefault(p => p.UserName == Thread.CurrentPrincipal.Identity.Name && p.Client.Id == originalRequest.Client.Id);
-                        r.SentBy = sender;
-
-                        if (r.RequestDeliveryContacts == null)
-                            r.RequestDeliveryContacts = new List<RequestDeliveryContact>();
-
-                        foreach (SourceMaterial sourceMaterial in originalRequest.SourceMaterials.Where(sm => sm.IsPrivate))
-                        {
-                            if (!r.RequestDeliveryContacts.Any(c => c.Contact.UserName.ToUpper().Equals(sourceMaterial.UploadedBy.ToUpper())))
-                            {
-                                Contact contact = this.Contacts.First(c => c.UserName.ToUpper().Equals(sourceMaterial.UploadedBy.ToUpper()));
-                                r.RequestDeliveryContacts.Add(new RequestDeliveryContact()
-                                {
-                                    Contact = contact,
-                                    ContactId = contact.Id,
-                                    Request = r,
-                                    RequestId = r.Id,
-                                    CreationDate = DateTime.UtcNow,
-                                    CreatedBy = Thread.CurrentPrincipal.Identity.Name
-                                });
-                            }
-                        }
-                    }
-
-                    //when approving a request for a quotation still valid the tat is not calculated so the receipt date is null
-                    //but we don't need to recalculate it here because the quotations expire at the end of the day so
-                    if (originalRequestStatus.Code == "PEND" && !r.ReceiptDate.HasValue)
-                    {
-                        r.ApprovalDate = r.ReceiptDate = DateTime.UtcNow;
-                    }
-                }
+                beforeSaveRequest(entityInfo);  
             }
             else if (entityInfo.Entity is SourceMaterial)
             {
-                if (entityInfo.EntityState == EntityState.Added)
+                beforeSaveSourceMaterial(entityInfo);
+            }
+            else if (entityInfo.Entity.GetType().IsSubclassOf(typeof(Material)))
+            {
+                beforeSaveMaterial(entityInfo);
+            }
+            else if (entityInfo.Entity.GetType().IsSubclassOf(typeof(Job)))
+            {
+                //overwrite the DMS volume with the client volume 
+                ((Job)entityInfo.Entity).Volume = ((Job)entityInfo.Entity).ClientVolume;
+            }
+
+            // clear session before giving it to breeze
+            // alternative to creating a new session
+            Session.Clear();
+            return true; // true means the entity must be saved
+        }
+
+        private void beforeSaveRequest(EntityInfo entityInfo)
+        {
+            Request request = (Request)entityInfo.Entity;
+
+            //// check if right client
+            //if (r.Client.ClientPortalId != userProfile.Personal.OrganisationId)
+            //{
+            //    throw new Exception("You're trying to save a Request for another Organisation than yours");
+            //}
+
+            // check if request can be saved
+            Request originalRequest = Session.Query<Request>().Fetch(p => p.Status).Fetch(t => t.RequestType).FirstOrDefault(p => p.Id == request.Id);
+            Status newStatus = Session.Query<Status>().Single(x => x.Id == request.StatusId);
+            
+            if (originalRequest != null && originalRequest.RequestType?.Code == "RST003" && newStatus.Code != "ASAC" && originalRequest.Status.Code != "DRAF" && originalRequest.Status.Code != "PEND" && originalRequest.Status.Code != "UNDE" && originalRequest.Status.Code != "CANC")
+            {
+                throw new Exception("ASA Request has already been submitted");
+            }
+
+            if (originalRequest != null && (originalRequest.RequestType?.Code == "RST001" || originalRequest.RequestType?.Code == "RST002") && originalRequest.Status.Code != "MTS" && originalRequest.Status.Code != "DRAF" && originalRequest.Status.Code != "PEND" && originalRequest.Status.Code != "UNDE" && originalRequest.Status.Code != "CANC")
+            {
+                throw new Exception("Request has already been submitted");
+            }
+
+            // check if new request and set status
+            if (request.Status == null && request.StatusId == new Guid())
+            {
+                request.StatusId = GetQuery<Status>().Single(p => p.Code == "DRAF").Id;
+                request.FromApplication = Application.ClientPortal;
+            }
+
+            // check status changes
+            // TODO : move to business logic layer
+            if (entityInfo.OriginalValuesMap.ContainsKey("StatusId"))
+            {
+                // retrieve original from db
+                Status originalRequestStatus = originalRequest.Status;
+
+                if ((originalRequestStatus.Code == "DRAF" || originalRequestStatus.Code == "MTS") && newStatus.Code == "NEW")
                 {
-                    SourceMaterial sourceMaterial = (SourceMaterial)entityInfo.Entity;
-                    if (string.IsNullOrEmpty(sourceMaterial.UploadedBy))
-                        sourceMaterial.UploadedBy = Thread.CurrentPrincipal.Identity.Name;
+                    request.SubmissionDate = DateTime.UtcNow;
+                    Contact sender = GetQuery<Contact>().FirstOrDefault(p => p.UserName == Thread.CurrentPrincipal.Identity.Name && p.Client.Id == originalRequest.Client.Id);
+                    request.SentBy = sender;
+
+                    if (request.RequestDeliveryContacts == null)
+                    {
+                        request.RequestDeliveryContacts = new List<RequestDeliveryContact>();
+                    }
+
+                    foreach (SourceMaterial sourceMaterial in originalRequest.SourceMaterials.Where(sm => sm.IsPrivate))
+                    {
+                        if (!request.RequestDeliveryContacts.Any(c => c.Contact.UserName.Equals(sourceMaterial.UploadedBy, StringComparison.InvariantCultureIgnoreCase)))
+                        {
+                            Contact contact = Contacts.First(c => c.UserName.Equals(sourceMaterial.UploadedBy, StringComparison.InvariantCultureIgnoreCase));
+                            request.RequestDeliveryContacts.Add(new RequestDeliveryContact()
+                            {
+                                Contact = contact,
+                                ContactId = contact.Id,
+                                Request = request,
+                                RequestId = request.Id,
+                                CreationDate = DateTime.UtcNow,
+                                CreatedBy = Thread.CurrentPrincipal.Identity.Name
+                            });
+                        }
+                    }
+                }
+
+                //when approving a request for a quotation still valid the tat is not calculated so the receipt date is null
+                //but we don't need to recalculate it here because the quotations expire at the end of the day so
+                if (originalRequestStatus.Code == "PEND" && !request.ReceiptDate.HasValue)
+                {
+                    request.ApprovalDate = request.ReceiptDate = DateTime.UtcNow;
                 }
             }
-            else if (entityInfo.Entity.GetType().IsSubclassOf(typeof(Material)) && entityInfo.EntityState == EntityState.Added)
+        }
+
+        private void beforeSaveSourceMaterial(EntityInfo entityInfo)
+        {
+            if (entityInfo.EntityState == EntityState.Added)
             {
-                Material material = (Material)entityInfo.Entity;
+                SourceMaterial sourceMaterial = (SourceMaterial)entityInfo.Entity;
+                if (string.IsNullOrEmpty(sourceMaterial.UploadedBy))
+                {
+                    sourceMaterial.UploadedBy = Thread.CurrentPrincipal.Identity.Name;
+                }
+            }
+        }
+
+        private void beforeSaveMaterial(EntityInfo entityInfo)
+        {
+            if (entityInfo.EntityState == EntityState.Added)
+            {
+                Material material = entityInfo.Entity as Material;
                 if (string.IsNullOrEmpty(material.UploadedBy))
                 {
                     material.UploadedBy = Thread.CurrentPrincipal.Identity.Name;
@@ -654,16 +689,6 @@ namespace CdT.ClientPortal.WebApi
                     }
                 }
             }
-            else if (entityInfo.Entity.GetType().IsSubclassOf(typeof(Job)))
-            {
-                //overwrite the DMS volume with the client volume 
-                ((Job)entityInfo.Entity).Volume = ((Job)entityInfo.Entity).ClientVolume;
-            }
-
-            // clear session before giving it to breeze
-            // alternative to creating a new session
-            Session.Clear();
-            return true; // true means the entity must be saved
         }
 
         /*  
@@ -821,8 +846,8 @@ namespace CdT.ClientPortal.WebApi
                 }
             }
 
-            this.AfterSaveSourceMaterial(saveMap);
-            this.AfterSaveJob(saveMap);
+            AfterSaveSourceMaterial(saveMap);
+            AfterSaveJob(saveMap);
 
 
             Session.Flush();
@@ -830,7 +855,7 @@ namespace CdT.ClientPortal.WebApi
 
         private void AfterSaveSourceMaterial(Dictionary<Type, List<EntityInfo>> saveMap)
         {
-            var sourceMaterials = saveMap.Where(e => e.Key == typeof(SourceMaterial)).Select(e => e.Value).FirstOrDefault();
+            List<EntityInfo> sourceMaterials = saveMap.Where(e => e.Key == typeof(SourceMaterial)).Select(e => e.Value).FirstOrDefault();
 
             if (sourceMaterials == null)
             {
@@ -849,13 +874,13 @@ namespace CdT.ClientPortal.WebApi
 
                     List<JobMaterial> jms = GetQuery<JobMaterial>().Where(e => e.JobId == j.Id).ToList();
 
-                    foreach (var jm in jms)
+                    foreach (JobMaterial jm in jms)
                     {
                         jm.IsDeleted = jm.Material.IsDeleted = true;
                         saveMap.AddCustomEntity(jm, this);
                     }
 
-                    foreach (var jc in j.JobComments)
+                    foreach (JobComment jc in j.JobComments)
                     {
                         jc.IsDeleted = jc.Comment.IsDeleted = true;
                         saveMap.AddCustomEntity(jc, this);
@@ -868,7 +893,7 @@ namespace CdT.ClientPortal.WebApi
 
         private void AfterSaveJob(Dictionary<Type, List<EntityInfo>> saveMap)
         {
-            var jobs = saveMap.Where(e => e.Key.IsSubclassOf(typeof(Job))).Select(e => e.Value).FirstOrDefault();
+            List<EntityInfo> jobs = saveMap.Where(e => e.Key.IsSubclassOf(typeof(Job))).Select(e => e.Value).FirstOrDefault();
 
             if (jobs == null)
             {
@@ -910,14 +935,16 @@ namespace CdT.ClientPortal.WebApi
 
         private T CreateOrDuplicateMaterial<T>(Reference _ref, ReferenceSet referenceSet) where T : Material, new()
         {
-            var mat = ((T)_ref.Material).CloneThis();
+            Material mat = ((T)_ref.Material).CloneThis();
             mat.MaterialClassification = Session.Query<MaterialClassification>().SingleOrDefault(x => x.Code == "CREF");
             Session.Save(mat);
-            var newRef = new Reference() { Material = mat, ReferenceSet = referenceSet };
+
+            Reference newRef = new Reference() { Material = mat, ReferenceSet = referenceSet };
             Session.Save(newRef);
-            foreach (var rl in _ref.ReferenceLanguages)
+
+            foreach (ReferenceLanguage rl in _ref.ReferenceLanguages)
             {
-                var newRefLang = new ReferenceLanguage() { Reference = newRef, Language = rl.Language };
+                ReferenceLanguage newRefLang = new ReferenceLanguage() { Reference = newRef, Language = rl.Language };
                 Session.Save(newRefLang);
                 newRef.ReferenceLanguages.Add(newRefLang);
                 Session.Save(newRef);
@@ -930,16 +957,16 @@ namespace CdT.ClientPortal.WebApi
 
         private void CheckAndDeleteDuplicatedMaterial<T>(Func<T, bool> predicate, ReferenceSet referenceSet) where T : Material
         {
-            if (referenceSet.References == null || referenceSet.References.Count == 0)
+            if (referenceSet.References == null || !referenceSet.References.Any())
+            {
                 return;
+            }
 
-            var duplicatedMaterialReference = referenceSet.References
-                .Where(x => x.Material is T).Select(x => (T)x.Material)
-                .SingleOrDefault(predicate);
+            T duplicatedMaterialReference = referenceSet.References.Where(x => x.Material is T).Select(x => (T)x.Material).SingleOrDefault(predicate);
 
             if (duplicatedMaterialReference != null)
             {
-                var _ref = referenceSet.References.SingleOrDefault(x => x.Material.Id == duplicatedMaterialReference.Id);
+                Reference _ref = referenceSet.References.Single(x => x.Material.Id == duplicatedMaterialReference.Id);
                 referenceSet.References.Remove(_ref);
                 Session.Delete(_ref);
                 Session.Save(referenceSet);
