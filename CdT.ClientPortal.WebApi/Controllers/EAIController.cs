@@ -47,7 +47,7 @@ namespace ClientPortal.Controllers
         [HttpGet]
         public string Metadata()
         {
-            return this._context.Metadata();
+            return _context.Metadata();
         }
 
         [HttpPost]
