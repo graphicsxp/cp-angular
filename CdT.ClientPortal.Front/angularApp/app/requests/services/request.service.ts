@@ -12,6 +12,8 @@ import { LookupNames } from '../../model/lookups';
 @Injectable()
 export class RequestService extends BaseRepositoryService<Request> {
 
+  public currentRequest: Request;
+
   constructor(protected _entityManagerService: EntityManagerService) {
     super(_entityManagerService, Request);
   }
@@ -31,5 +33,14 @@ export class RequestService extends BaseRepositoryService<Request> {
     this.fetch('Requests', state, `status, department, client, sourceMaterials.jobs.priority, sourceMaterials.jobs.service.unit, 
        sourceMaterials.jobs.jobStatus, purpose, referenceSet.references, requestContacts.contact`)
       .subscribe(x => super.next(x));
+  }
+
+  /**
+   * Returns true if the request has at least one job
+   * @param request the request to check for jobs
+   */
+  public hasJobs(request: Request): boolean {
+    if (!request.sourceMaterials || request.sourceMaterials.length === 0) { return false; }
+    return _.chain(request.sourceMaterials).map('jobs').flatten().value().length > 0;
   }
 }

@@ -19,15 +19,9 @@ export class UserService {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         phoneNumber: newUser.phoneNumber,
-        isApproved: true
-      })/*.subscribe(
-      res => {
-        console.log(res);
-      },
-      err => {
-        console.log('Error occured');
-      }
-      )*/;
+        isApproved: true,
+        password: newUser.password
+      });
   }
   public getAllUsers(): Observable<any> {
     return this._http.get('http://localhost/cdt.clientportal.webapi/api/UserManagement/GetAllUsers')

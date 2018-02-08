@@ -15,15 +15,21 @@ import { Priority } from './priority';
 import { Service } from './service';
 
 /// <code-import> Place custom imports between <code-import> tags
-
+import { JobPricing } from './../jobPricing';
 /// </code-import>
 
 export class Job extends EntityBase {
 
     /// <code> Place custom code between <code> tags
-    
+    isMarkedForDeletion: boolean;
+    pricings: Array<JobPricing>;
+
+    static postInitializer(job: Job) {
+        job.pricings = [];
+    }
     /// </code>
 
+    // tslint:disable:member-ordering
     // Generated code. Do not place code below this line.
     id: string;
     version: number;

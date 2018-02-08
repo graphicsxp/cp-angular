@@ -1,18 +1,67 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { User } from './model/user.model';
 
 @Injectable()
 export class AuthService {
 
-  public getToken(): string {
-    return localStorage.getItem('token');
+  public userInformation: User;
+  public loggedIn: boolean;
+
+  constructor(private http: HttpClient) {
+    // try to set the current user from localStorage if it exists
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      this.userInformation = JSON.parse(user);
+      this.loggedIn = true;
+    } else {
+      this.userInformation = new User();
+      this.userInformation.userName = 'guest';
+      this.loggedIn = false;
+    }
   }
 
-  public login(userName: string, password: string): boolean {
-    localStorage.setItem('token', `d3EDKwreeVn5GGMok7r2MJ72pSpLu3fWA9PR8CLj5ECG_8GzzX3aGqfgS-Mw1ejdNpXSmi9LuS4KL7u1YlW5
-    aU4k3nYOu3zUcV3Qv25KjDi6bj9uwihY1jpmMTDC2bUzwEpNsuPylKJhf1tBs5Z90Ok95JIJr2sjheZ-sbpPuVT2RcrwM0-a9QK5uuDCCr9Ksq9f612Xv
-    QcBvpglrGCrwunCzfZkMViXdwzEYY-RQg-PHhCDI5wt2IGV917IVcbQFmYT1t9a89MgxyhpnaKeEkdIf3_eY4D5KtwYdrBGggxQ8Da3Fy_RNVVBxGPBu5
-    96RpzIXWFqabBt7hvK3ZxjA6zxT8s4icvqka2BEAnP_p-TbseJ0_491OeIh2obedmOlVZcH_rqb4BcnP8pAFQFg-UgkFxP3X341-Azl48gnJmVhLibgM8
-    aF0j38-wil6ENLi3f4odb9DRjJHvDuPP9S_OJFS5jTlU8WH1pjyMBwkg`)
-    return true;
+  public getToken(): string {
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      const currentUser = JSON.parse(user);
+      return currentUser.access_token;
+    } else {
+      return null;
+    }
+  }
+
+  public login(userName: string, password: string): Observable<any> {
+    // call token provider
+    const url = 'http://localhost/cdt.clientportal.webapi/token';
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+    const params = new HttpParams()
+      .set('username', userName)
+      .set('password', password)
+      .set('grant_type', 'password');
+
+    return this.http.post(url, params, { headers: headers })
+      .map(
+        res => {
+          if (res && res['access_token']) {
+            localStorage.setItem('currentUser', JSON.stringify(res));
+            this.userInformation = res as User;
+            this.loggedIn = true;
+          }
+        },
+        err => {
+          console.log('Error occurred');
+        }
+      );
+  }
+
+  public logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+    this.userInformation.access_token = '';
+    this.userInformation.userName = 'guest';
+    this.loggedIn = false;
   }
 }

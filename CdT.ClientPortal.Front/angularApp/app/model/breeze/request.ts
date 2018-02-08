@@ -29,10 +29,6 @@ export class Request extends EntityBase {
   priority: Priority;
   closestDeadline: Date;
 
-  constructor() {
-    super();
-  }
-
   static requestPostInitializer(request: Request) {
     if (request.id === DataType.Guid.defaultValue) {
       request.quotationOnly = false;
@@ -76,6 +72,10 @@ export class Request extends EntityBase {
       request.priority = priority;
       request.closestDeadline = closestDeadline;
     }
+  }
+
+  constructor() {
+    super();
   }
 
   /// </code>

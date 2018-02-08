@@ -4,6 +4,7 @@ import { RequestDetailComponent } from './request-detail/request-detail.componen
 import { RequestJobsComponent } from './request-jobs/request-jobs.component';
 import { RequestDetailResolver } from './request-detail/request-detail-resolver.service';
 import { CanDeactivateGuard } from '../shared/can-deactivate-guard';
+import { RequestJobsResolver } from './request-jobs/request-jobs-resolver.service';
 
 
 const routes: Routes = [
@@ -13,7 +14,7 @@ const routes: Routes = [
             { path: '', component: RequestsListComponent },
             { path: 'requests', component: RequestsListComponent },
             { path: 'detail/:id', component: RequestDetailComponent, resolve: { request: RequestDetailResolver }, canDeactivate: [CanDeactivateGuard] },
-            { path: 'detail/:id/jobs', component: RequestJobsComponent }
+            { path: 'detail/:id/jobs', component: RequestJobsComponent, resolve: { request: RequestJobsResolver } }
         ]
     }
 ];

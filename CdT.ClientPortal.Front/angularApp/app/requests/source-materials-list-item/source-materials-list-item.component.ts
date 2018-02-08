@@ -18,7 +18,6 @@ import { Material } from '../../model/breeze/material';
 export class SourceMaterialsListItemComponent implements OnInit {
 
   public languages: Language[];
-  public selectedLanguages: Language[];
   public targetFormats: DocumentFormat[];
 
   @Input() public sourceMaterial: SourceMaterial;
@@ -56,7 +55,7 @@ export class SourceMaterialsListItemComponent implements OnInit {
       this.sourceMaterial.material.entityAspect.setDetached();
       this.sourceMaterial.entityAspect.setDetached();
     } else {
-      this.sourceMaterial.isScreenDeleted = !this.sourceMaterial.isScreenDeleted;
+      this.sourceMaterial.isMarkedForDeletion = !this.sourceMaterial.isMarkedForDeletion;
       this.sourceMaterial.entityAspect.setModified();
     }
   }

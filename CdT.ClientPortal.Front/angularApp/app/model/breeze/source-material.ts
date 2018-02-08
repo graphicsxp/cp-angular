@@ -23,17 +23,17 @@ export class SourceMaterial extends EntityBase {
 
     /// <code> Place custom code between <code> tags
     selectedLanguages: Array<Language>;
-    isScreenDeleted: boolean;
-
-    constructor() {
-        super();
-    }
+    isMarkedForDeletion: boolean;
 
     static sourceMaterialPostInitializer(sourceMaterial: SourceMaterial) {
         if (sourceMaterial.id === DataType.Guid.defaultValue) {
             sourceMaterial.selectedLanguages = new Array<Language>();
             sourceMaterial.useSourceAsPreformatted = false;
         }
+    }
+
+    constructor() {
+        super();
     }
 
     public setSelectedSourceLanguages() {

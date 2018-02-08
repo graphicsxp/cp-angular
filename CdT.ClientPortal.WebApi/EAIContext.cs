@@ -44,24 +44,18 @@ namespace CdT.ClientPortal.WebApi
             //_messageSession = messageSession;
             TypeFilter = t =>
             {
-                if (t.Name == "CustomRevisionEntity")
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return !(t.Name == "CustomRevisionEntity");
             };
             BeforeSaveEntityDelegate += BeforeSaveEntity;
             BeforeSaveEntitiesDelegate += BeforeSaveEntities;
             AfterSaveEntitiesDelegate += AfterSaveEntities;
         }
-        public NhQueryableInclude<CdT.EAI.Model.Business.Client> Clients
+
+        public NhQueryableInclude<Client> Clients
         {
             get
             {
-                return GetQuery<CdT.EAI.Model.Business.Client>();
+                return GetQuery<Client>();
             }
         }
 
@@ -554,8 +548,7 @@ namespace CdT.ClientPortal.WebApi
         {
             return saveMap.Any(x => x.Key == typeof(T) && x.Value.Any(y => ((T)y.Entity).Id == value.Id));
         }
-
-
+        
         private bool BeforeSaveEntity(EntityInfo entityInfo)
         {
             if (entityInfo.Entity is Request)

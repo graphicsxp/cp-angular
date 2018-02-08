@@ -312,7 +312,7 @@ export class RegistrationHelper {
         metadataStore.registerEntityTypeCtor('DocumentFormat', DocumentFormat);
         metadataStore.registerEntityTypeCtor('DocumentFormatTarget', DocumentFormatTarget);
         metadataStore.registerEntityTypeCtor('Domain', Domain);
-        metadataStore.registerEntityTypeCtor('Job', Job);
+        metadataStore.registerEntityTypeCtor('Job', Job, Job.postInitializer);
         metadataStore.registerEntityTypeCtor('JobContact', JobContact);
         metadataStore.registerEntityTypeCtor('JobRecipient', JobRecipient);
         metadataStore.registerEntityTypeCtor('JobMaterial', JobMaterial);

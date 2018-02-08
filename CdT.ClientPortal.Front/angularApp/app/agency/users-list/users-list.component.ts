@@ -18,14 +18,12 @@ export class UsersListComponent implements OnInit {
     this.users = [];
     this._userService.getAllUsers().subscribe(
       users => {
-        for (let user of users) {
-          this.users.push(user);
+        for (const u of users) {
+          this.users.push(u);
         }
-        console.log(users);
       },
       err => {
-        this._toasterService.pop('error', 'Get users', err.error);
-        console.log('Error occurred');
+        this._toasterService.pop('error', 'Get users', err.error.Message);
       }
     );
   }
@@ -37,8 +35,8 @@ export class UsersListComponent implements OnInit {
         this._userService.getAllUsers().subscribe(
           users => {
             this.users = [];
-            for (let user of users) {
-              this.users.push(user);
+            for (const u of users) {
+              this.users.push(u);
             }
           },
           err => {
@@ -59,8 +57,8 @@ export class UsersListComponent implements OnInit {
         this._userService.getAllUsers().subscribe(
           users => {
             this.users = [];
-            for (let user of users) {
-              this.users.push(user);
+            for (const u of users) {
+              this.users.push(u);
             }
           },
           err => {

@@ -1,3 +1,34 @@
-<p>
-  request-jobs works!
-</p>
+<cdt-request-header [request]="requestService.currentRequest"></cdt-request-header>
+
+<fieldset [disabled]="isDisabled()" class="page-edition">
+  <cdt-request-jobs-header [request]="requestService.currentRequest" [disabled]="isDisabled()"></cdt-request-jobs-header>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div>
+        <ul>
+          <li id="doc_{{$index}}" *ngFor="let sourceMaterial of requestService.currentRequest.sourceMaterials" class="source-file-tab">
+            <div class="tableTotal">
+              <table style="width:auto;" class="table table-striped pull-right">
+                <tr>
+                  <td colspan="5" style="text-align:right">Subtotal</td>
+                  <td style="width:200px;text-align:right">{{sourceMaterial | sourceMaterialPrice | currency}}</td>
+                  <td style="width:100px"></td>
+                </tr>
+              </table>
+              <hr />
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="widget" style="padding:10px;padding-right:100px;font-weight:bold;">
+        <table style="width:400px;border:0;" class="table table-responsive pull-right">
+          <tr>
+            <td style="width:200px;border:0;text-align:right">TOTAL</td>
+            <td style="width:200px;border:0;text-align:right">{{requestService.currentRequest | requestPrice | currency }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</fieldset>

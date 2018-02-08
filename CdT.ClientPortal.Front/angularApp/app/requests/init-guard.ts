@@ -1,18 +1,17 @@
-// import { RequestService } from './request.service';
-// import { CanActivateChild, CanActivate } from "@angular/router/src/interfaces";
-// import { Injectable } from "@angular/core";
+import { RequestService } from './services/request.service';
+import { CanActivateChild, CanActivate } from '@angular/router';
+import { Injectable } from '@angular/core';
 
-// @Injectable()
-// export class InitGuard implements CanActivate, CanActivateChild {
+@Injectable()
+export class InitGuard implements CanActivate {
 
-// constructor(private _requestService:RequestService) {
-// }
+    constructor(private _requestService: RequestService) {
+    }
 
-//   canActivate(): Promise<boolean>{
-//     return this._requestService.initialize();
-
-//   }
-//   canActivateChild(): Promise<boolean>{
-//     return this.canActivate();
-//   }
-// }
+    /**
+     * The request jobs is only accessible when the request is in DRAFT or MarkToSend status
+     */
+    canActivate(): boolean {
+        return this._requestService.currentRequest.status.code === 'DRAF' || this._requestService.currentRequest.status.code === 'MTS';
+    }
+}
