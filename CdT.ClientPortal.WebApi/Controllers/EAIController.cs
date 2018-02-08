@@ -1,15 +1,20 @@
 ﻿using Breeze.ContextProvider;
 using Breeze.ContextProvider.NH;
+using CdT.ClientPortal.WebApi;
+using CdT.ClientPortal.WebApi.FileManagement;
+using CdT.ClientPortal.WebApi.Model;
 using CdT.EAI.BL.Request;
 using CdT.EAI.Dal.NH.Audit;
 using CdT.EAI.Model.Business;
 using CdT.EAI.Model.Workflow;
+using CdT.EAI.Wcf;
 using CdT.UI.Common;
-using Serilog;
+using CdT.UI.Common.SaveMap;
 using Newtonsoft.Json.Linq;
 using NHibernate.Linq;
 using NHibernate.Util;
 using NServiceBus;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,11 +23,6 @@ using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 using System.Web.Http;
-using CdT.EAI.Wcf;
-using CdT.UI.Common.SaveMap;
-using CdT.ClientPortal.WebApi.FileManagement;
-using CdT.ClientPortal.WebApi.Model;
-using CdT.ClientPortal.WebApi;
 
 namespace ClientPortal.Controllers
 {
@@ -332,23 +332,12 @@ namespace ClientPortal.Controllers
             //for the first group in the user defined order the recipt date is calculated based on rules
             //for the rest we'll use the receipt date the minimum delivery date of the precedent group as a starting date
 
-            var bl = new RequestBL(this._context.Session, _logger);
-
+            RequestBL bl = new RequestBL(this._context.Session, _logger);
             string[] services = { "ED", "MO", "RE", "TR" };
 
             //var receiptDate = bl.GetReceiptDate(values.Priority, hours, holidays);
-
             values.ReceiptDate = bl.GetReceiptDate(values.Priority);
-
-            if (!services.Contains(values.Service))
-            {
-                values.Turnaround = 1;
-            }
-            else
-            {
-                values.Turnaround = bl.GetTurnaroundTimeForParamaters(values.Volume, values.Priority, values.Service);
-            }
-
+            values.Turnaround = services.Contains(values.Service) ? bl.GetTurnaroundTimeForParamaters(values.Volume, values.Priority, values.Service) : 1;
             values.MinimumDeliveryDate = bl.GetMinDeadline(values.ReceiptDate, values.Turnaround, values.Priority);
 
             return values;
@@ -398,43 +387,41 @@ namespace ClientPortal.Controllers
         {
             var transactionSettings = new TransactionSettings() { TransactionType = TransactionType.DbTransaction };
 
-            this._context.BeforeSaveEntitiesDelegate = (saveMap) =>
+            _context.BeforeSaveEntitiesDelegate = (saveMap) =>
             {
                 var entityInfos = saveMap.Where(e => e.Key == typeof(Request)).Select(e => e.Value).FirstOrDefault();
 
                 if (entityInfos != null)
                 {
-                    foreach (var entityInfo in entityInfos)
+                    foreach (EntityInfo entityInfo in entityInfos)
                     {
                         entityInfo.EntityState = EntityState.Modified;
 
                         Request request = (Request)entityInfo.Entity;
-                        request.StatusId = _context.Session.Query<Status>().Where(p => p.Code == (string)this._context.SaveOptions.Tag).Select(p => p.Id).First();
+                        request.StatusId = _context.Session.Query<Status>().Where(p => p.Code == (string)_context.SaveOptions.Tag).Select(p => p.Id).First();
                         request.IsFirstAssessmentDone = null;
                         request.IsSecondAssessmentDone = null;
 
-                        RequestBL requestBL = new RequestBL(this._context.Session, _logger);
+                        RequestBL requestBL = new RequestBL(_context.Session, _logger);
                         requestBL.CancelRunningWorkflows(request);
                         requestBL.ResetAllVolumes(request);
 
                         //add modified jobs to savemap
-                        _context.Session.Query<SourceMaterial>().Where(sm => sm.Request == request).ForEach(sm =>
+                        IQueryable<Job> sourceMaterialJobs = _context.Session.Query<SourceMaterial>().Where(sm => sm.Request == request).SelectMany(sm => sm.Jobs);
+                        foreach(Job job in sourceMaterialJobs)
                         {
-                            foreach (var job in sm.Jobs)
-                            {
-                                job.LTSVolume = 0;
-                                saveMap.AddCustomEntity(job, _context);
-                            }
-                        });
+                            job.LTSVolume = 0;
+                            saveMap.AddCustomEntity(job, _context);
+                        }
                     }
                 }
 
                 return saveMap;
             };
 
-            this._context.AfterSaveEntitiesDelegate = (saveMap, result) => { };
+            _context.AfterSaveEntitiesDelegate = (saveMap, result) => { };
 
-            return this._context.SaveChanges(saveBundle, transactionSettings);
+            return _context.SaveChanges(saveBundle, transactionSettings);
         }
     }
 }
