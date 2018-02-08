@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JobTranslationComponent extends JobBaseComponent implements OnInit {
 
+  public applyPricingPolicy: boolean;
+
   constructor() { super(); }
 
   ngOnInit() {

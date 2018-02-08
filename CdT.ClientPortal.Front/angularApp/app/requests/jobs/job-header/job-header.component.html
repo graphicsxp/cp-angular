@@ -1,19 +1,19 @@
 <div class="row">
   <div class="col-md-8">
     <h2 style="display: inline-block">
-      <span class="icon-overflow complete" *ngIf="!findValidationErrorsOnMaterial(sourceMaterial)">
+      <span class="icon-overflow complete" *ngIf="!findValidationErrorsOnMaterial()">
         <i class="fa fa-check-circle"></i>
       </span>
-      <span class="icon-overflow not-complete" ng-show="findValidationErrorsOnMaterial(sourceMaterial)">
+      <span class="icon-overflow not-complete" ng-show="findValidationErrorsOnMaterial()">
         <i class="fa fa-warning"></i>
       </span>
       <span [outerHTML]="asPhysicalFile(sourceMaterial.material).documentFormat.code | extensionIcon"></span>
       <i class="fa fa-arrow-right"></i>
       <span [outerHTML]="sourceMaterial.deliverableDocumentFormat.code | extensionIcon"></span>
-      <span *ngIf="canSetPrivacy(sourceMaterial)">
+      <span *ngIf="canSetPrivacy()">
         <!-- <download material="sourceMaterial.material" /> -->
       </span>
-      <span *ngIf="!canSetPrivacy(sourceMaterial)">
+      <span *ngIf="!canSetPrivacy()">
         <a (click)="denyDownload()">{{sourceMaterial.material.fileName}}</a>
       </span>
       <!-- (from {{sourceMaterial | sourceLanguagesAggregateByMaterial}} to {{sourceMaterial | targetLanguagesAggregateByMaterial

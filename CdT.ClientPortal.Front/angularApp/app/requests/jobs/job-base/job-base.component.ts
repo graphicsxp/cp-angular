@@ -6,7 +6,6 @@ import { Component, OnInit, Input } from '@angular/core';
 /**
  *  Base component for displaying and managing the jobs of a given SourceMaterial
 */
-@Component({})
 export abstract class JobBaseComponent implements OnInit {
 
   @Input() sourceMaterial: SourceMaterial;
