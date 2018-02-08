@@ -20,7 +20,7 @@
         </ul>
     </div>
     <div>
-        <span>{{authService.userInformation.userName}}</span>
+        <a routerLink="/security/profile">{{authService.userInformation.userName}}</a>
         <a *ngIf="authService.loggedIn" (click)="$event.preventDefault();authService.logout()" href>(logout)</a>
     </div>
 </nav>
