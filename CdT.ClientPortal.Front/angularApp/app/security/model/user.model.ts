@@ -4,5 +4,4 @@ export class User {
   public lastName: string;
   public email: string;
   public phoneNumber: string;
-  public password: string;
 }
