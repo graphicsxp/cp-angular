@@ -24,12 +24,12 @@ import { SecurityModule } from './security/security.module';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/en';
-import localeFrExtra from '@angular/common/locales/extra/en';
+import localeEn from '@angular/common/locales/en';
+import localeEnExtra from '@angular/common/locales/extra/en';
 import { IntlModule } from '@progress/kendo-angular-intl';
 // Load all required data for the bg locale
-import '@progress/kendo-angular-intl/locales/en/all';
-registerLocaleData(localeFr, 'en-GB', localeFrExtra);
+import '@progress/kendo-angular-intl/locales/en-GB/all';
+registerLocaleData(localeEn, 'en-GB', localeEnExtra);
 
 @NgModule({
     imports: [
