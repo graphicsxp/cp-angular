@@ -6,7 +6,7 @@ import { Language } from '../../../model/breeze/language';
 import { EntityManagerService } from '../../../entity-manager.service';
 
 @Component({
-    selector: 'language-picker',
+    selector: 'cdt-language-picker',
     templateUrl: 'language-picker.component.html'
 })
 

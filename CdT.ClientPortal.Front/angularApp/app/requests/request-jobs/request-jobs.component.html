@@ -1,13 +1,21 @@
 <cdt-request-header [request]="requestService.currentRequest"></cdt-request-header>
 
 <fieldset [disabled]="isDisabled()" class="page-edition">
-  <cdt-request-jobs-header [request]="requestService.currentRequest" [disabled]="isDisabled()"></cdt-request-jobs-header>
+  <cdt-request-jobs-header #requestJobsHeader [request]="requestService.currentRequest" [disabled]="isDisabled()"></cdt-request-jobs-header>
 
   <div class="row">
     <div class="col-md-12">
       <div>
         <ul>
           <li id="doc_{{$index}}" *ngFor="let sourceMaterial of requestService.currentRequest.sourceMaterials" class="source-file-tab">
+
+            <cdt-job-header [sourceMaterial]="sourceMaterial" [service]="requestJobsHeader.selectedService" [priority]="requestJobsHeader.selectedPriority">
+            </cdt-job-header>
+            <div [ngSwitch]="requestJobsHeader.selectedService.code">
+              <cdt-job-translation *ngSwitchCase="'TR'" [sourceMaterial]="sourceMaterial" [service]="requestJobsHeader.selectedService"
+                [priority]="requestJobsHeader.selectedPriority"></cdt-job-translation>
+            </div>
+
             <div class="tableTotal">
               <table style="width:auto;" class="table table-striped pull-right">
                 <tr>

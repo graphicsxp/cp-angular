@@ -25,10 +25,7 @@
       <i class="fa fa-asterisk"></i>
     </span>
   </span>
-  <!-- <a class="language-picker-call singleline-ellipsis" bs-tooltip data-title="{{sourceMaterial.selectedLanguages | splitArrayToString:'defaultLabel'}}">{{sourceMaterial.selectedSourceLanguages | splitArrayToString:'abbreviation'}}</a> -->
-  <!-- <language-picker model="sourceMaterial.selectedLanguages" icon="'icon'" id="LanguagePicker{{$index}}" ng-show="!(vm.request.status.code==='MTS' && !hasRightToSend() && vm.improvementsAvalaible)" -->
-  <!-- <cdt-multiselect [data]="languages" [textField]="'code'" [valueField]="'id'" [model]="sourceMaterial.selectedLanguages" (modelChange)="onSelectedLanguagesChanged($event)"></cdt-multiselect> -->
-  <language-picker [model]="sourceMaterial.selectedLanguages" (changedCallback)="onSelectedLanguagesChanged($event)"></language-picker>
+  <cdt-language-picker [model]="sourceMaterial.selectedLanguages" (changedCallback)="onSelectedLanguagesChanged($event)"></cdt-language-picker>
 </td>
 <td>
   <cdt-source-material-confidentiality [sourceMaterial]="sourceMaterial"></cdt-source-material-confidentiality>
@@ -38,7 +35,7 @@
     (click)="toggleDelete()">
     <i class="fa fa-trash-o fa-inverse"></i>
   </a>
-    <a class="btn grid-button grid-edit-row btn-primary" *ngIf="sourceMaterial.isMarkedForDeletion" (click)="toggleDelete()">
+  <a class="btn grid-button grid-edit-row btn-primary" *ngIf="sourceMaterial.isMarkedForDeletion" (click)="toggleDelete()">
     <i class="fa fa-refresh fa-inverse"></i>
   </a>
   <a class="btn grid-button grid-edit-row btn-primary" id="SrcCopyDown" *ngIf="showCopyDown" (click)="onBatchUpdate()">

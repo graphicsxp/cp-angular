@@ -1,0 +1,98 @@
+<table class="table table-striped" *ngIf="sourceMaterial.jobs.length > 0">
+  <thead>
+    <tr>
+      <th style="width: 50px">ID</th>
+      <th style="width: 50px">SL</th>
+      <th style="width: 50px">TL</th>
+      <th style="width:100px">Total volume (pages)</th>
+      <th style="text-align:right">Base price</th>
+      <th style="text-align:right">Confidentiality</th>
+      <th style="text-align:right">Complex File Format</th>
+      <th style="text-align:right">Non-EU Languages</th>
+      <th style="text-align:right">Web Upload</th>
+      <th style="text-align:right">Price per language</th>
+      <th style="width: 100px;text-align:right"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let job of sourceMaterial.jobs | orderBy:['sourceLanguage.code','targetLanguage.code']" [class]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[job.isMarkedForDeletion || job.isJobStatusDeleted()]">
+      <!--ID-->
+      <td>
+        <label class="label-responsive">
+          <strong>ID:</strong>
+        </label>
+        {{$index + 1}}
+      </td>
+      <!--SL-->
+      <td>
+        <label class="label-responsive">
+          <strong>SL:</strong>
+        </label>
+        {{job.sourceLanguage.abbreviation}}
+      </td>
+      <!--TL-->
+      <td>
+        <label class="label-responsive">
+          <strong>TL:</strong>
+        </label>
+        {{job.targetLanguage.abbreviation}}
+      </td>
+      <!--Volumes-->
+      <td class="text-nowrap">
+        <label class="label-responsive">
+          <strong>Total volume (pages):</strong>
+        </label>
+        <input [(ngModel)]="job.volumeUnit" ng-model-options="{ updateOn: 'blur' }" (change)="convertVolume(job)" type="number" min="0"
+          max="9999999" [disabled]="job.isMarkedForDeletion || job.isJobStatusDeleted()" name="volumeFieldTR_{{$index}}" />
+        <cdt-validator [entity]="job" [propName]="'clientVolume'"></cdt-validator>
+      </td>
+      <!--base price-->
+      <td style="text-align:right">
+        <label class="label-responsive">
+          <strong>Base price:</strong>
+        </label>{{job.jobPricings[0].basePrice | currency}}</td>
+      <!--confidentiality-->
+      <td style="text-align:right">
+        <label class="label-responsive">
+          <strong>SL:</strong>
+        </label>{{job.jobPricings[0].surchargeConfidentiality | currency}}</td>
+      <!--Complex file format-->
+      <td style="text-align:right">
+        <label class="label-responsive">
+          <strong>SL:</strong>
+        </label>{{job.jobPricings[0].surchargeComplexity | currency}}</td>
+      <!--Non EU languages-->
+      <td style="text-align:right">
+        <label class="label-responsive">
+          <strong>SL:</strong>
+        </label>{{job.jobPricings[0].surchargeNonEuLanguage | currency}}</td>
+      <!--web upload-->
+      <td style="text-align:right">
+        <label class="label-responsive">
+          <strong>SL:</strong>
+        </label>{{job.jobPricings[0].surchargeWebUpload | currency}}</td>
+      <!--Price per language-->
+      <td style="text-align:right">
+        <label class="label-responsive">
+          <strong>Indicative price:</strong>
+        </label>
+        {{job.jobPricings[0].totalPrice | currency }}
+        <i *ngIf="job.jobPricings[0].surchargeNonEuLanguage>0" class="fa fa-info-circle fa-lg" bs-tooltip data-title="This price includes the surcharge for non-EU languages, which is of EUR 10 per page and per target language."></i>
+      </td>
+      <td>
+        <a class="btn grid-button grid-edit-row btn-danger" *ngIf="!job.isMarkedForDeletion && !job.isJobStatusDeleted()" (click)="toggleDelete(job)">
+          <i class="fa fa-trash-o"></i>
+        </a>
+        <a class="btn grid-button grid-edit-row btn-primary" *ngIf="job.isMarkedForDeletion" (click)="toggleDelete(job)">
+          <i class="fa fa-refresh"></i>
+        </a>
+        <a class="btn grid-button grid-edit-row btn-primary" id="TRCopyDown" *ngIf="canCopyDown(job)" (click)="batchUpdate($index)">
+          <i class="fa fa-arrow-down"></i>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="padding:20px;clear:both;" ng-if="!sourceMaterial.jobs.length">
+  <span>Please add target language(s)</span>
+</div>

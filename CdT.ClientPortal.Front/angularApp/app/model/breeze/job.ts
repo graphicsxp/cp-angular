@@ -27,6 +27,13 @@ export class Job extends EntityBase {
     static postInitializer(job: Job) {
         job.pricings = [];
     }
+
+    /**
+     * returns undefined when the condition is not met in order to avoid CSS issues
+    */
+    isJobStatusDeleted() {
+        return (this.jobStatus.code === 'TCN' || this.jobStatus.code === 'CNC') ? true : undefined;
+    }
     /// </code>
 
     // tslint:disable:member-ordering

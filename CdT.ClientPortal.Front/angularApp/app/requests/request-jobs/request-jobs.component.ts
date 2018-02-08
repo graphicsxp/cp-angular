@@ -1,8 +1,9 @@
 import { RequestService } from './../services/request.service';
 import { ActivatedRoute } from '@angular/router';
 import { Request } from './../../model/breeze/request';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as _ from 'lodash';
+import { RequestJobsHeaderComponent } from './request-jobs-header/request-jobs-header.component';
 
 @Component({
   selector: 'cdt-request-jobs',
@@ -10,6 +11,9 @@ import * as _ from 'lodash';
   styleUrls: ['./request-jobs.component.scss']
 })
 export class RequestJobsComponent implements OnInit {
+
+  @ViewChild('requestJobsHeader') RequestJobsHeaderComponent;
+
   constructor(public requestService: RequestService, private _route: ActivatedRoute) { }
 
   ngOnInit() {

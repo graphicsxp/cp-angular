@@ -22,6 +22,9 @@ import { SourceMaterialService } from './services/source-material.service';
 import { SourceMaterialConfidentialityComponent } from './source-material-confidentiality/source-material-confidentiality.component';
 import { RequestHeaderComponent } from './request-header/request-header.component';
 import { RequestJobsHeaderComponent } from './request-jobs/request-jobs-header/request-jobs-header.component';
+import { JobHeaderComponent } from './jobs/job-header/job-header.component';
+import { JobTranslationComponent } from './jobs/job-translation/job-translation.component';
+import { JobTranslationEditComponent } from './jobs/job-translation/job-translation-edit/job-translation-edit.component';
 
 @NgModule({
   imports: [
@@ -44,7 +47,10 @@ import { RequestJobsHeaderComponent } from './request-jobs/request-jobs-header/r
     SourceMaterialsListItemComponent,
     SourceMaterialConfidentialityComponent,
     RequestHeaderComponent,
-    RequestJobsHeaderComponent
+    RequestJobsHeaderComponent,
+    JobHeaderComponent,
+    JobTranslationComponent,
+    JobTranslationEditComponent
   ],
   providers: [RequestService, SourceMaterialService, /*InitGuard,*/ RequestDetailResolver, RequestJobsResolver],
 })

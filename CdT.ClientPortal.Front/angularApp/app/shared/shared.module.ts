@@ -18,12 +18,17 @@ import { UploaderComponent } from './components/uploader/uploader.component';
 import { UploadModule } from '@progress/kendo-angular-upload';
 import { PhysicalFileService } from './services/physicalFile.service';
 import { ExtensionIconPipe } from './pipes/extension-icon.pipe';
+<<<<<<< Updated upstream
 import { LanguagePickerComponent } from './components/language-picker/language-picker.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { LanguageByRegion } from './pipes/languageByRegion';
 import { SplitArrayToStringPipe } from './pipes/splitArrayToString';
+import { LanguageByRegionPipe } from './pipes/language-by-region.pipe';
+=======
+import { ConvertCharToPagePipe } from './pipes/convert-char-to-page.pipe';
+>>>>>>> Stashed changes
 
 @NgModule({
     imports: [
@@ -46,10 +51,16 @@ import { SplitArrayToStringPipe } from './pipes/splitArrayToString';
         ValidatorComponent,
         MultiSelectComponent,
         UploaderComponent,
+<<<<<<< Updated upstream
         LanguagePickerComponent,
         ExtensionIconPipe,
         LanguageByRegion,
-        SplitArrayToStringPipe
+        SplitArrayToStringPipe,
+        LanguageByRegionPipe
+=======
+        ExtensionIconPipe,
+        ConvertCharToPagePipe
+>>>>>>> Stashed changes
     ],
 
     providers: [
