@@ -58,6 +58,7 @@ export class SourceMaterial extends EntityBase {
     /// </code>
 
     // Generated code. Do not place code below this line.
+    // tslint:disable:member-ordering
     id: string;
     version: number;
     createdBy: string;
