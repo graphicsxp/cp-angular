@@ -107,7 +107,8 @@ export class RequestDetailComponent implements OnInit {
       this._save().then(() => {
         if (this._route.snapshot.params['id'] === 'new') {
           const ne: NavigationExtras = { skipLocationChange: true };
-          this._router.navigateByUrl(`requests/detail/${this.requestService.currentRequest.id}`, ne);
+          // TODO : fix skipLocationChange not working
+          this._router.navigateByUrl(`requests/detail/${this.requestService.currentRequest.id}`/*, ne*/);
         }
       })
     });
@@ -145,7 +146,7 @@ export class RequestDetailComponent implements OnInit {
 
   private _beforeSave(): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (this.sourceMaterialList.hasSourceLanguagesChanged) {
+      if (this.sourceMaterialList.hasSourceLanguagesChanged && this.requestService.hasJobs(this.requestService.currentRequest)) {
         this._confirmationService.confirm({
           rejectVisible: false,
           // acceptLabel: 'OK',

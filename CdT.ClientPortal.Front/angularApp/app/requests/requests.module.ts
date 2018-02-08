@@ -1,9 +1,10 @@
+import { RequestPrice } from './pipes/request-price.pipe';
 import { MomentModule } from 'angular2-moment';
 import { RequestJobsResolver } from './request-jobs/request-jobs-resolver.service';
 import { TemplatesModule } from './../templates/templates.module';
 import { SharedModule } from './../shared/shared.module';
 import { RequestDetailResolver } from './request-detail/request-detail-resolver.service';
-import { RequestContactsConcat } from './request-contacts-concat.pipe';
+import { RequestContactsConcat } from './pipes/request-contacts-concat.pipe';
 import { RequestsListComponent } from './requests-list/requests-list.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -34,6 +35,7 @@ import { RequestJobsHeaderComponent } from './request-jobs/request-jobs-header/r
   declarations: [
     RequestsListComponent,
     RequestContactsConcat,
+    RequestPrice,
     RequestDetailComponent,
     RequestJobsComponent,
     SourceMaterialsListComponent,
