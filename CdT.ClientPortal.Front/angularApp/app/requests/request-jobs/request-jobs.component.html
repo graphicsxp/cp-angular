@@ -6,27 +6,20 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        <!-- <ul>
-                <li id="doc_{{$index}}" ng-repeat="sourceMaterial in vm.request.sourceMaterials" class="source-file-tab">
-                    <job-definition-tab model="sourceMaterial" priority="vm.selectedPriority" service="vm.selectedService"></job-definition-tab>
-                    <div ng-show="!sourceMaterial.isCollapsed">
-                        <div class="widget grid-wrapper table-responsive" style="border-bottom-right-radius: 0;">
-                            <service-jobs model="sourceMaterial" service="vm.selectedService" priority="vm.selectedPriority" supported-formats="vm.supportedFormats" apply-pricing-policy="canShowWSVolumes()"></service-jobs>
-                        </div>
-                        <div class="tableTotal">
-                            <table style="width:auto;" class="table table-striped pull-right">
-                                <tr>
-                                    <td colspan="5" style="text-align:right">Subtotal</td>
-                                    <td style="width:200px;text-align:right">{{sourceMaterial | sourceMaterialPrice | currency}}</td>
-                                    <td style="width:100px" />
-                                </tr>
-                            </table>
-                            <hr />
-                        </div>
-                    </div>
-                    <hr />
-                </li>
-            </ul> -->
+        <ul>
+          <li id="doc_{{$index}}" *ngFor="let sourceMaterial of requestService.currentRequest.sourceMaterials" class="source-file-tab">
+            <div class="tableTotal">
+              <table style="width:auto;" class="table table-striped pull-right">
+                <tr>
+                  <td colspan="5" style="text-align:right">Subtotal</td>
+                  <td style="width:200px;text-align:right">{{sourceMaterial | sourceMaterialPrice | currency}}</td>
+                  <td style="width:100px"></td>
+                </tr>
+              </table>
+              <hr />
+            </div>
+          </li>
+        </ul>
       </div>
       <div class="widget" style="padding:10px;padding-right:100px;font-weight:bold;">
         <table style="width:400px;border:0;" class="table table-responsive pull-right">

@@ -1,4 +1,5 @@
-import { RequestPrice } from './pipes/request-price.pipe';
+import { SourceMaterialPricePipe } from './pipes/source-material-price.pipe';
+import { RequestPricePipe } from './pipes/request-price.pipe';
 import { MomentModule } from 'angular2-moment';
 import { RequestJobsResolver } from './request-jobs/request-jobs-resolver.service';
 import { TemplatesModule } from './../templates/templates.module';
@@ -35,7 +36,8 @@ import { RequestJobsHeaderComponent } from './request-jobs/request-jobs-header/r
   declarations: [
     RequestsListComponent,
     RequestContactsConcat,
-    RequestPrice,
+    RequestPricePipe,
+    SourceMaterialPricePipe,
     RequestDetailComponent,
     RequestJobsComponent,
     SourceMaterialsListComponent,

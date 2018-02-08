@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 @Pipe({
     name: 'requestPrice'
 })
-export class RequestPrice implements PipeTransform {
+export class RequestPricePipe implements PipeTransform {
 
     transform(request: Request): number {
         if (!request || !request.sourceMaterials || request.sourceMaterials.length === 0) { return 0; }

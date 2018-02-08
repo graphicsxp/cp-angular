@@ -63,15 +63,15 @@ export abstract class BaseRepositoryService<T extends Entity> extends BehaviorSu
   protected fetch(tableName: string, state: any, expand: string): Observable<GridDataResult> {
     const promise = new Promise<any>((resolve, reject) => {
       let query = EntityQuery.from(tableName);
-      let orderBy = '';
-      //query = query.orderBy('lastName desc, firstName');
+      const orderBy = '';
+      // query = query.orderBy('lastName desc, firstName');
 
       if (state.filter) {
-        let predicate: Predicate[] = new Array();
+        const predicate: Predicate[] = new Array();
 
         state.filter.filters.forEach((filter) => {
           if (filter.value instanceof Array) {
-            let multiselectPredicates: any[] = [];
+            const multiselectPredicates: any[] = [];
 
             filter.value.forEach((value) => {
               multiselectPredicates.push(new Predicate(filter.field, filter.operator, value));
