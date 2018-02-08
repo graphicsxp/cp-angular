@@ -27,4 +27,5 @@ export class JobHeaderComponent implements OnInit {
   canSetPrivacy(): boolean { return true; }
   denyDownload(): void { }
   hideShow(): void { }
+  canSelectLanguages(): boolean { return true; }
 }

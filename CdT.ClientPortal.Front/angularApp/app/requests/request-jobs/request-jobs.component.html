@@ -12,8 +12,8 @@
             <cdt-job-header [sourceMaterial]="sourceMaterial" [service]="requestJobsHeader.selectedService" [priority]="requestJobsHeader.selectedPriority">
             </cdt-job-header>
             <div [ngSwitch]="requestJobsHeader.selectedService.code">
-              <cdt-job-translation *ngSwitchCase="'TR'" [sourceMaterial]="sourceMaterial" [service]="requestJobsHeader.selectedService"
-                [priority]="requestJobsHeader.selectedPriority"></cdt-job-translation>
+              <cdt-job-translation-edit *ngSwitchCase="'TR'" [sourceMaterial]="sourceMaterial" [service]="requestJobsHeader.selectedService"
+                [priority]="requestJobsHeader.selectedPriority"></cdt-job-translation-edit>
             </div>
 
             <div class="tableTotal">

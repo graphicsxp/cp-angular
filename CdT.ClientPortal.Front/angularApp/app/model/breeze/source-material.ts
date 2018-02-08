@@ -23,12 +23,21 @@ export class SourceMaterial extends EntityBase {
 
     /// <code> Place custom code between <code> tags
     selectedLanguages: Array<Language>;
+    selectedTargetLanguages: Array<Language>;
     isMarkedForDeletion: boolean;
 
     static sourceMaterialPostInitializer(sourceMaterial: SourceMaterial) {
+
+        sourceMaterial.selectedTargetLanguages = new Array<Language>();
+
         if (sourceMaterial.id === DataType.Guid.defaultValue) {
             sourceMaterial.selectedLanguages = new Array<Language>();
             sourceMaterial.useSourceAsPreformatted = false;
+        } else {
+            // populate target languages for each source material
+            sourceMaterial.jobs.forEach(function (job) {
+                sourceMaterial.selectedTargetLanguages.push(job.targetLanguage);
+            });
         }
     }
 

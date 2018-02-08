@@ -5,7 +5,7 @@ import { RequestJobsResolver } from './request-jobs/request-jobs-resolver.servic
 import { TemplatesModule } from './../templates/templates.module';
 import { SharedModule } from './../shared/shared.module';
 import { RequestDetailResolver } from './request-detail/request-detail-resolver.service';
-import { RequestContactsConcat } from './pipes/request-contacts-concat.pipe';
+import { RequestContactsConcatPipe } from './pipes/request-contacts-concat.pipe';
 import { RequestsListComponent } from './requests-list/requests-list.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -38,7 +38,6 @@ import { JobTranslationEditComponent } from './jobs/job-translation/job-translat
   ],
   declarations: [
     RequestsListComponent,
-    RequestContactsConcat,
     RequestPricePipe,
     SourceMaterialPricePipe,
     RequestDetailComponent,
@@ -50,7 +49,8 @@ import { JobTranslationEditComponent } from './jobs/job-translation/job-translat
     RequestJobsHeaderComponent,
     JobHeaderComponent,
     JobTranslationComponent,
-    JobTranslationEditComponent
+    JobTranslationEditComponent,
+    RequestContactsConcatPipe
   ],
   providers: [RequestService, SourceMaterialService, /*InitGuard,*/ RequestDetailResolver, RequestJobsResolver],
 })

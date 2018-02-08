@@ -5,7 +5,8 @@ import * as _ from 'lodash';
  * Splits an array of elements and concatenate them using the given separator.
 */
 @Pipe({
-  name: 'splitArrayToString'
+  name: 'splitArrayToString',
+  pure: false
 })
 export class SplitArrayToStringPipe implements PipeTransform {
 

@@ -1,11 +1,11 @@
 <a class="language-picker-call singleline-ellipsis" tooltipPosition="top" pTooltip="{{model | splitArrayToString:'defaultLabel':', ':true}}">{{model |splitArrayToString:'abbreviation':', ':true }}</a>
 &nbsp;
-<span (click)="showLanguagePicker($event, op)" class="popover-caller-button">
+<span (click)="showLanguagePicker($event)" class="popover-caller-button">
     <i *ngIf="icon === 'icon'" class="fa fa-pencil" style="font-size:24px"></i>
     <button *ngIf="icon === 'button'" type="button" id="btnAddLanguage" class="btn btn-default" type="button">Add language(s)</button>
 </span>
 
-<p-overlayPanel #op appendTo="body">
+<p-overlayPanel #overlayPanel appendTo="body">
     <div class="languages-picker">
         <div class="row">
             <div class="col-md-12">
@@ -44,7 +44,7 @@
                     <i class="fa fa-check-square-o"></i> Check All</button>
                 <button *ngIf="!singleLanguage" id="btnUncheckAll" type="button" (click)="changeAll(false)" class="btn " name="btnuncheckall">
                     <i class="fa fa-square-o"></i> Uncheck All</button>
-                <button id="btnSelect" type="button" (click)="applySelection(op)" class="btn btn-primary " name="btnSelect">Select</button>
+                <button id="btnSelect" type="button" (click)="applySelection()" class="btn btn-primary " name="btnSelect">Select</button>
             </div>
         </div>
     </div>

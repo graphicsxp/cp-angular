@@ -8,7 +8,7 @@ import { Request, Contact, RequestContact } from '../../model/breeze/entity-mode
 /**
  * Returns a coma-separated concatenation of all contacts of the given Request
  */
-export class RequestContactsConcat implements PipeTransform {
+export class RequestContactsConcatPipe implements PipeTransform {
     transform(value: any, args: any[]): any {
         const requestContacts = value as RequestContact[];
         let result = '';

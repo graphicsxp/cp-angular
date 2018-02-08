@@ -36,8 +36,9 @@
             method="addJob" icon="'button'" /> -->
         </span>
         <span *ngIf="service.code !== 'ST' && service.code !== 'TE'">
-          <!-- <language-picker id="LanguagePicker_{{$index}}" ng-show="canSelectLanguages() && !readOnly" model="sourceMaterial.selectedTargetLanguages"
-            source="sourceMaterial.sourceLanguages" method="addJob" icon="'button'" /> -->
+          <cdt-language-picker id="LanguagePicker_{{$index}}" *ngIf="canSelectLanguages() " (callback)="addJob" [icon]="'button'" [model]="sourceMaterial.selectedTargetLanguages"
+            [source]="sourceMaterial.sourceLanguages" (change)="onSelectedLanguagesChanged($event)"></cdt-language-picker>
+
         </span>
       </h2>
     </div>

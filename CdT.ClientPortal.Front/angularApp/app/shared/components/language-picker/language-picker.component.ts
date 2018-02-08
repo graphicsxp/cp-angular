@@ -1,5 +1,6 @@
+import { LookupNames } from './../../../model/lookups';
 import * as _ from 'underscore';
-import { Component, Output, EventEmitter, IterableDiffers, DoCheck, IterableDiffer, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, IterableDiffers, DoCheck, IterableDiffer, OnInit, ViewChild } from '@angular/core';
 import { OverlayPanel } from 'primeng/components/overlaypanel/overlaypanel';
 import { Input } from '@angular/core';
 import { Language } from '../../../model/breeze/language';
@@ -11,21 +12,24 @@ import { EntityManagerService } from '../../../entity-manager.service';
 })
 
 export class LanguagePickerComponent implements OnInit, DoCheck {
-    private regionFilter = { 'region': 'eu' };
-    private lookupLanguages: Language[];
     private _differ: IterableDiffer<any>;
     private _differModel: IterableDiffer<any>;
     private _initialized: Boolean = false;
+    private _lookupLanguages: Language[];
+
+    public languages: Language[] = [];
+    public regionFilter = { 'region': 'eu' };
+
+    @ViewChild('overlayPanel') overlayPanel: OverlayPanel;
 
     @Input() public model: Language[] = [];
     @Input() public icon: String = 'icon';
     @Input() public selectedLanguages: Language[] = [];
     @Input() public index: number;
-    @Input() public languages: Language[] = [];
     @Input() public source: Language[] = [];
     @Input() public singleLanguage: Boolean;
-    @Output() public method: EventEmitter<any> = new EventEmitter();
-    @Output() public changedCallback: EventEmitter<any> = new EventEmitter();
+    @Output() public callback: EventEmitter<any> = new EventEmitter();
+    @Output() public change: EventEmitter<any> = new EventEmitter();
 
     constructor(public entityManagerService: EntityManagerService, public _iterableDiffers: IterableDiffers) { }
 
@@ -42,32 +46,25 @@ export class LanguagePickerComponent implements OnInit, DoCheck {
     }
 
     ngOnInit() {
-        this.lookupLanguages = this.entityManagerService.getLookup('languages') as Language[];
+        this._lookupLanguages = this.entityManagerService.getLookup(LookupNames.languages) as Language[];
         this._differ = this._iterableDiffers.find([]).create(null);
         this._differModel = this._iterableDiffers.find([]).create(null);
 
-        for (const language of this.lookupLanguages) {
-            const newLanguage: Language = new Language();
-
-            newLanguage.id = language.id;
-            newLanguage.code = language.code;
-            newLanguage.defaultLabel = language.defaultLabel;
-            newLanguage.isChecked = false;
-            newLanguage.isEULanguage = language.isEULanguage;
+        for (const language of this._lookupLanguages) {
+            const newLanguage: Language = Object.assign(new Language(), language);
             newLanguage.isDisabled = this.isLanguageDisabled(language.code);
-            newLanguage.abbreviation = language.abbreviation;
 
             this.languages.push(newLanguage);
         }
         this.syncLanguagesWithModel();
     }
 
-    showLanguagePicker(event, overlaypanel: OverlayPanel) {
-        overlaypanel.show(event);
+    showLanguagePicker(event) {
+        this.overlayPanel.show(event);
     }
 
-    closeLanguagePicker(overlaypanel: OverlayPanel) {
-        overlaypanel.hide();
+    closeLanguagePicker() {
+        this.overlayPanel.hide();
     }
 
     isLanguageDisabled(code: string): Boolean {
@@ -98,25 +95,27 @@ export class LanguagePickerComponent implements OnInit, DoCheck {
         });
     }
 
-    applySelection(overlaypanel: OverlayPanel) {
+    applySelection() {
         this.model.length = 0;
         this.languages.forEach(lang => {
             if (lang.isChecked) {
-                const language = this.lookupLanguages.filter(function (el) {
+                const language = this._lookupLanguages.filter(el => {
                     return el.code === lang.code;
                 });
                 this.model.push(language[0]);
                 lang.isDisabled = this.isLanguageDisabled(language[0].code);
-                // if a method is specified, call it
-                if (this.method) {
-                    this.method.emit(language);
+                // if a callback method is specified, call it
+                if (this.callback) {
+                    this.callback.emit(language);
                 }
             }
         });
-        if (this.changedCallback) {
-            this.changedCallback.emit(this.model);
+
+        if (this.change) {
+            this.change.emit(this.model);
         }
-        overlaypanel.hide();
+
+        this.overlayPanel.hide();
     }
 
     changeAll(checked: Boolean) {
