@@ -7,7 +7,8 @@ import { EntityBase } from './entity-base';
 export class Language extends EntityBase {
 
     /// <code> Place custom code between <code> tags
-    
+    isChecked: Boolean;
+    isDisabled: Boolean;
     /// </code>
 
     // Generated code. Do not place code below this line.
@@ -30,6 +31,5 @@ export class Language extends EntityBase {
     eUExitDate: Date;
     isEULanguage: boolean;
     sDLLanguageCode: string;
-    isChecked: Boolean;
 }
 

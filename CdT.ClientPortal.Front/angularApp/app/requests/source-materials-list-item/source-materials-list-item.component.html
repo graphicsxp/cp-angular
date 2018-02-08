@@ -27,12 +27,12 @@
   </span>
   <!-- <a class="language-picker-call singleline-ellipsis" bs-tooltip data-title="{{sourceMaterial.selectedLanguages | splitArrayToString:'defaultLabel'}}">{{sourceMaterial.selectedSourceLanguages | splitArrayToString:'abbreviation'}}</a> -->
   <!-- <language-picker model="sourceMaterial.selectedLanguages" icon="'icon'" id="LanguagePicker{{$index}}" ng-show="!(vm.request.status.code==='MTS' && !hasRightToSend() && vm.improvementsAvalaible)" -->
-  <cdt-multiselect [data]="languages" [textField]="'code'" [valueField]="'id'" [model]="sourceMaterial.selectedLanguages" (modelChange)="onSelectedLanguagesChanged($event)"></cdt-multiselect>
+  <!-- <cdt-multiselect [data]="languages" [textField]="'code'" [valueField]="'id'" [model]="sourceMaterial.selectedLanguages" (modelChange)="onSelectedLanguagesChanged($event)"></cdt-multiselect> -->
+  <language-picker [model]="sourceMaterial.selectedLanguages" (changedCallback)="onSelectedLanguagesChanged($event)"></language-picker>
 </td>
 <td>
   <cdt-source-material-confidentiality [sourceMaterial]="sourceMaterial"></cdt-source-material-confidentiality>
 </td>
-<td><language-picker [model]="sourceMaterial.selectedSourceLanguages"></language-picker></td>
 <td>
   <a id="{{ 'btnDelete-' + $index }}" class="btn grid-button grid-edit-row btn-danger" *ngIf="!sourceMaterial.isScreenDeleted"
     (click)="toggleDelete()">

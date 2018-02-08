@@ -10,11 +10,7 @@ import { IStructuralType } from 'breeze-client';
 import { EntityType } from 'breeze-client';
 import { Validator } from 'breeze-client';
 import { CustomValidatorService } from './shared/services/custom-validator.service';
-<<<<<<< HEAD
 import { Entity } from 'breeze-client';
-=======
-
->>>>>>> dea55d64ec414ba9d0b39169b261d8aa5b1d9c23
 /**
  * Provides a breeze EntityManager at application level.
  * Configures the metadataStore. This is meant to be done once at application startup (see APP_INITIALIZER)

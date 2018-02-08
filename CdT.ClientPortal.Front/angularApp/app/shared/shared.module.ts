@@ -21,6 +21,9 @@ import { ExtensionIconPipe } from './pipes/extension-icon.pipe';
 import { LanguagePickerComponent } from './components/language-picker/language-picker.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { LanguageByRegion } from './pipes/languageByRegion';
+import { SplitArrayToStringPipe } from './pipes/splitArrayToString';
 
 @NgModule({
     imports: [
@@ -31,7 +34,8 @@ import { ButtonModule } from 'primeng/button';
         MultiSelectModule,
         UploadModule,
         OverlayPanelModule,
-        ButtonModule
+        ButtonModule,
+        TooltipModule,
     ],
 
     declarations: [
@@ -43,7 +47,9 @@ import { ButtonModule } from 'primeng/button';
         MultiSelectComponent,
         UploaderComponent,
         LanguagePickerComponent,
-        ExtensionIconPipe
+        ExtensionIconPipe,
+        LanguageByRegion,
+        SplitArrayToStringPipe
     ],
 
     providers: [
@@ -61,7 +67,9 @@ import { ButtonModule } from 'primeng/button';
         DropdownModule,
         UploaderComponent,
         LanguagePickerComponent,
-        ExtensionIconPipe
+        ExtensionIconPipe,
+        LanguageByRegion,
+        SplitArrayToStringPipe
     ]
 })
 
