@@ -23,11 +23,13 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SecurityModule } from './security/security.module';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
+import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import localeFrExtra from '@angular/common/locales/extra/fr';
 import { IntlModule } from '@progress/kendo-angular-intl';
 // Load all required data for the bg locale
 import '@progress/kendo-angular-intl/locales/fr/all';
+registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 
 @NgModule({
     imports: [
@@ -65,5 +67,5 @@ import '@progress/kendo-angular-intl/locales/fr/all';
 })
 
 export class AppModule {
-
+    
 }
