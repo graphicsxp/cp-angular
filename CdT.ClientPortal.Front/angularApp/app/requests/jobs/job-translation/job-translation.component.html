@@ -21,7 +21,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let job of sourceMaterial.jobs | orderBy:['sourceLanguage.code','targetLanguage.code']" [class]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[job.isMarkedForDeletion || job.isJobStatusDeleted()]">
+    <!-- <tr *ngFor="let job of sourceMaterial.jobs | orderBy:['sourceLanguage.code','targetLanguage.code']" [class]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[job.isMarkedForDeletion || job.isJobStatusDeleted()]"> -->
+    <tr *ngFor="let job of sourceMaterial.jobs " [class]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[job.isMarkedForDeletion || job.isJobStatusDeleted()]">
       <!--ID-->
       <td>
         <label class="label-responsive">
@@ -58,7 +59,7 @@
       </td>
       <!--priority-->
       <td style="text-align:right">
-        <span [class]="label label-default status-{{job.priority.defaultLabel.toLowerCase().replace(' ', '-')}}">{{job.priority.defaultLabel}}</span>
+        <span class="'label label-default status-' + job.priority.defaultLabel.toLowerCase().replace(' ', '-')}}">{{job.priority.defaultLabel}}</span>
       </td>
       <!--base price-->
       <td style="text-align:right">
