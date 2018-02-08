@@ -23,6 +23,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SecurityModule } from './security/security.module';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
+import localeFr from '@angular/common/locales/fr';
+import localeFrExtra from '@angular/common/locales/extra/fr';
+import { IntlModule } from '@progress/kendo-angular-intl';
+// Load all required data for the bg locale
+import '@progress/kendo-angular-intl/locales/fr/all';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -40,7 +46,8 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
         ToasterModule,
         MultiSelectModule,
         DropdownModule,
-        SecurityModule
+        SecurityModule,
+        IntlModule
     ],
 
     declarations: [
@@ -52,7 +59,7 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
         CanDeactivateGuard,
         ConfirmationService,
         { provide: APP_INITIALIZER, useFactory: onAppInit, multi: true, deps: [EntityManagerService] },
-        { provide: LOCALE_ID, useValue: 'FR-BE' },
+        { provide: LOCALE_ID, useValue: 'fr' },
     ],
     bootstrap: [AppComponent],
 })
