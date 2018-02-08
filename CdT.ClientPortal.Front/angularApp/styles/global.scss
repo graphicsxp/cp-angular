@@ -2863,3 +2863,32 @@ input[type=checkbox] {
 .telerikPanel {
     width: 300px;
 }
+
+.initialization {
+    color: rgba(0, 0, 0, .3);
+    font-size: 2em;
+    position: absolute ! important;
+    top: 42%;
+    left: 50%;
+    white-space: nowrap;
+    -moz-transform: translateX(-43%) translateY(-50%);
+    -ms-transform: translateX(-43%) translateY(-50%);
+    -o-transform: translateX(-43%) translateY(-50%);
+    -webkit-transform: translateX(-43%) translateY(-50%);
+    transform: translateX(-43%) translateY(-50%);
+    font-weight: bold;
+}
+
+.initialization:before {
+    content: attr(data-text);
+    position: absolute ! important;
+    overflow: hidden;
+    max-width: 15em;
+    color: grey;
+    white-space: nowrap;
+    font-weight: bold;
+    -moz-animation: XXXXX 2s linear infinite;
+    -o-animation: XXXXX 2s linear infinite;
+    -webkit-animation: XXXXX 2s linear infinite;
+    animation: initialization 2s linear infinite;
+}
