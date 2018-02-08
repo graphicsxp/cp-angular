@@ -7,6 +7,7 @@ import { SecurityRoutes } from './security.routes';
 import { FormsModule } from '@angular/forms';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
-  declarations: [LoginComponent]
+  declarations: [LoginComponent, ProfileComponent]
 })
 export class SecurityModule { }
