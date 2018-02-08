@@ -24,12 +24,12 @@ import { SecurityModule } from './security/security.module';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
-import localeFrExtra from '@angular/common/locales/extra/fr';
+import localeFr from '@angular/common/locales/en';
+import localeFrExtra from '@angular/common/locales/extra/en';
 import { IntlModule } from '@progress/kendo-angular-intl';
 // Load all required data for the bg locale
 import '@progress/kendo-angular-intl/locales/fr/all';
-registerLocaleData(localeFr, 'fr', localeFrExtra);
+registerLocaleData(localeFr, 'en-GB', localeFrExtra);
 
 @NgModule({
     imports: [
@@ -61,11 +61,10 @@ registerLocaleData(localeFr, 'fr', localeFrExtra);
         CanDeactivateGuard,
         ConfirmationService,
         { provide: APP_INITIALIZER, useFactory: onAppInit, multi: true, deps: [EntityManagerService] },
-        { provide: LOCALE_ID, useValue: 'fr' },
+        { provide: LOCALE_ID, useValue: 'en-GB' },
     ],
     bootstrap: [AppComponent],
 })
 
 export class AppModule {
-
 }
