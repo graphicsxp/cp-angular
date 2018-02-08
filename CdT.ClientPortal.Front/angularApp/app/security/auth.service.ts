@@ -46,7 +46,7 @@ export class AuthService {
       .map(
         res => {
           if (res && res.access_token) {
-            localStorage.setItem('currentUser', JSON.stringify(res);
+            localStorage.setItem('currentUser', JSON.stringify(res));
             this.userInformation = res;
             this.loggedIn = true;
           }

@@ -32,7 +32,6 @@ namespace ClientPortal.Controllers
     {
         private readonly IMessageSession _messageSession;
         private ILogger _logger;
-
         private EAIContext _context;
 
         //private UserProfile userProfile;
