@@ -1,15 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { User } from './model/user.model';
 
 @Injectable()
 export class AuthService {
 
+  public userInformation: User;
+  public loggedIn: boolean;
+
   constructor(private http: HttpClient) {
+    // try to set the current user from localStorage if it exists
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      this.userInformation = JSON.parse(user);
+      this.loggedIn = true;
+    } else {
+      this.userInformation = new User();
+      this.userInformation.userName = 'guest';
+      this.loggedIn = false;
+    }
   }
 
   public getToken(): string {
-    return localStorage.getItem('token');
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      const currentUser = JSON.parse(user);
+      return currentUser.access_token;
+    } else {
+      return null;
+    }
   }
 
   public login(userName: string, password: string): Observable<any> {
@@ -24,12 +44,24 @@ export class AuthService {
 
     return this.http.post(url, params, { headers: headers })
       .map(
-      res => {
-        localStorage.setItem('token', res['access_token']);
-      },
-      err => {
-        console.log('Error occured');
-      }
+        res => {
+          if (res && res.access_token) {
+            localStorage.setItem('currentUser', JSON.stringify(res);
+            this.userInformation = res;
+            this.loggedIn = true;
+          }
+        },
+        err => {
+          console.log('Error occurred');
+        }
       );
+  }
+
+  public logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+    this.userInformation.access_token = '';
+    this.userInformation.userName = 'guest';
+    this.loggedIn = false;
   }
 }
