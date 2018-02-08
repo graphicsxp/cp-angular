@@ -45,9 +45,9 @@ export class AuthService {
     return this.http.post(url, params, { headers: headers })
       .map(
         res => {
-          if (res && res.access_token) {
+          if (res && res['access_token']) {
             localStorage.setItem('currentUser', JSON.stringify(res));
-            this.userInformation = res;
+            this.userInformation = res as User;
             this.loggedIn = true;
           }
         },
