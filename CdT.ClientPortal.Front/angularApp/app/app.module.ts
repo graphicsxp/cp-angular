@@ -29,7 +29,7 @@ import localeFrExtra from '@angular/common/locales/extra/fr';
 import { IntlModule } from '@progress/kendo-angular-intl';
 // Load all required data for the bg locale
 import '@progress/kendo-angular-intl/locales/fr/all';
-registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
+registerLocaleData(localeFr, 'fr', localeFrExtra);
 
 @NgModule({
     imports: [
@@ -67,5 +67,5 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 })
 
 export class AppModule {
-    
+
 }
