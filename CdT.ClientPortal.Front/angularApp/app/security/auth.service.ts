@@ -52,7 +52,7 @@ export class AuthService {
           }
         },
         err => {
-          console.log('Error occurred');
+          //console.log('Error occurred');
         }
       );
   }
