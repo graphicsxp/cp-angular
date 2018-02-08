@@ -1,6 +1,6 @@
 import { ToasterModule } from 'angular2-toaster';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from '@progress/kendo-angular-dialog';
@@ -51,7 +51,8 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
         CustomValidatorService,
         CanDeactivateGuard,
         ConfirmationService,
-        { provide: APP_INITIALIZER, useFactory: onAppInit, multi: true, deps: [EntityManagerService] }
+        { provide: APP_INITIALIZER, useFactory: onAppInit, multi: true, deps: [EntityManagerService] },
+        { provide: LOCALE_ID, useValue: 'FR-BE' },
     ],
     bootstrap: [AppComponent],
 })
