@@ -50,9 +50,9 @@ export class Request extends EntityBase {
       let service = '';
       let closestDeadline: Date = null;
 
-      request.sourceMaterials.forEach(function (sourceMaterial) {
+      request.sourceMaterials.forEach(sourceMaterial => {
         if (sourceMaterial.jobs) {
-          sourceMaterial.jobs.forEach(function (job) {
+          sourceMaterial.jobs.forEach(job => {
             if (job.priority && job.priority.displayOrder > (priority && priority.displayOrder || 0)) {
               priority = job.priority;
               service = job.service.code;

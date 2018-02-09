@@ -9,7 +9,7 @@
 <div *ngIf="!globalService.pricingPolicy2018Avalaible" class="row">
   <div class="col-xs-6">
     <input name="isConfidential" type="checkbox" class="ios-switch" [(ngModel)]="sourceMaterial.isConfidential" [disabled]="sourceMaterial.isScreenDeleted"
-      (click)="toggleConfidential(sourceMaterial)" />
+      (click)="toggleConfidential()" />
     <span class="switch"></span>
   </div>
   <div class="col-xs-6">

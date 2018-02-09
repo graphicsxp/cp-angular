@@ -30,14 +30,14 @@ export class SourceMaterialsListComponent implements OnInit {
     private _confirmationService: ConfirmationService) { }
 
   ngOnInit() {
-    this.allowedExtensions = this._entityManagerService.getLookup(LookupNames.sourceMaterialDocumentFormatExtensions).map(ext => { return ext.code });
+    this.allowedExtensions = this._entityManagerService.getLookup(LookupNames.sourceMaterialDocumentFormatExtensions).map(ext => ext.code);
   }
 
   /**
    * Returns the first not deleted material so that we know where to put the copy down button
    */
   public getFirstNotDeletedMaterial() {
-    return _.find(this.request.sourceMaterials, (m) => { return !m.isScreenDeleted; });
+    return _.find(this.request.sourceMaterials, m => !m.isScreenDeleted);
   }
 
   public onBatchUpdate(sourceMaterial) {
@@ -66,7 +66,7 @@ export class SourceMaterialsListComponent implements OnInit {
     });
   }
 
-  public onSourceLanguagesChanged(event:boolean){
+  public onSourceLanguagesChanged(event: boolean) {
     this.hasSourceLanguagesChanged = event;
   }
 
@@ -76,7 +76,7 @@ export class SourceMaterialsListComponent implements OnInit {
    */
   onUploadedFilesChange(uploadedFiles: UploadedFile[]) {
     uploadedFiles.forEach(file => {
-      let sourceMaterial: SourceMaterial = this._sourceMaterialService.create(
+      const sourceMaterial: SourceMaterial = this._sourceMaterialService.create(
         this._physicalFileService.create(
           file, _.find(this._entityManagerService.getLookup(LookupNames.materialClassifications), { code: 'SOUR' })), this.request.requestTemplate);
       this.request.sourceMaterials.push(sourceMaterial);
@@ -84,10 +84,10 @@ export class SourceMaterialsListComponent implements OnInit {
       // In case of subtitling or other cases
       //_setCorrrectDocumentFormats(sourceMaterial);
 
-      //if source languages were set by the template we need to set the screen dirty
+      // if source languages were set by the template we need to set the screen dirty
       if (sourceMaterial.selectedLanguages.length > 0) {
-        //$scope.vm.many2manyHasChanged = true;
-        //sourceMaterial.entityAspect.removeValidationError('notEmptyCollectionValidator:sourceLanguages');
+        // $scope.vm.many2manyHasChanged = true;
+        // sourceMaterial.entityAspect.removeValidationError('notEmptyCollectionValidator:sourceLanguages');
       }
     });
   }
@@ -95,26 +95,27 @@ export class SourceMaterialsListComponent implements OnInit {
   /**
    * Returns an array of material's filename for each material in the sourceMaterials collection
    */
-  getUploadedFiles = function () {
-    return _.chain(this.request.sourceMaterials).map(sm => { return sm.material.fileName; }).value();
+  getUploadedFiles() {
+    return _.chain(this.request.sourceMaterials).map(sm => sm.material.fileName).value();
   };
 
   /**
    * Returns the number of documents that are not in the deleted state
    */
-  getNumberOfDocuments = function () {
-    return this.request ? _.filter(this.request.sourceMaterials, (material) => { return material.isScreenDeleted !== true; }).length : 0;
+  getNumberOfDocuments() {
+    return this.request ? _.filter(this.request.sourceMaterials, material => material.isScreenDeleted !== true).length : 0;
   };
 
   /**
    * called from parent component when saving
    */
-  onSave = function () {
+  onSave() {
     this.request.sourceMaterials.forEach((material) => {
-      this._entityManagerService.checkMany2ManyModifications('SourceMaterialLanguage', material, material.selectedLanguages, material.sourceLanguages, 'material', 'language');
+      this._entityManagerService.checkMany2ManyModifications('SourceMaterialLanguage', material, material.selectedLanguages,
+        material.sourceLanguages, 'material', 'language', false);
     });
 
-    const sourceMaterialsToDelete = _.filter(this.request.sourceMaterials, (mat) => { return mat.isScreenDeleted; });
+    const sourceMaterialsToDelete = _.filter(this.request.sourceMaterials, mat => mat.isScreenDeleted);
 
     // deletes entities and detaches related bags, cascade delete done server side
     this._entityManagerService.deleteEntities(sourceMaterialsToDelete, ['sourceLanguages', 'jobs']);

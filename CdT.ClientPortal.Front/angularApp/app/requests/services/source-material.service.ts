@@ -63,8 +63,7 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
             }
 
             // add the selectedSourceLanguages to the sourceMaterial
-            _.map(template.sourceLanguages, 'language').forEach(function (lg) { sourceMaterial.selectedLanguages.push(lg); });
-
+            template.sourceLanguages.map(sl => sl.language).forEach(lg => { sourceMaterial.selectedLanguages.push(lg); });
         }
 
         return sourceMaterial;

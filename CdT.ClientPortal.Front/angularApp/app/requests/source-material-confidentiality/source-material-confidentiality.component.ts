@@ -29,7 +29,7 @@ export class SourceMaterialConfidentialityComponent implements OnInit {
     this.sourceMaterial.isConfidential = this.sourceMaterial.confidentiality.isConfidential;
   }
 
-  public toggleConfidential = function () {
+  public toggleConfidential() {
     if (!this.sourceMaterial.isConfidential) {
       this.sourceMaterial.isExternalized = true;
     } else {

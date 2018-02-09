@@ -62,7 +62,7 @@ export class UploaderComponent implements OnInit {
         return;
       }
 
-      if (_.chain(this.uploadedFiles).map((uf) => {
+      if (_.chain(this.uploadedFiles).map(uf => {
         return this.getFileName(uf).toLowerCase();
       }).includes(this.getFileName(f.name).toLowerCase()).value()) {
         // abort upload for the current file(does not block multiple uploads)
