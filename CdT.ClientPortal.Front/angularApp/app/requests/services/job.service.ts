@@ -9,8 +9,8 @@ import { BaseRepositoryService } from '../../shared/services/base-repository.ser
 @Injectable()
 export class JobBaseService extends BaseRepositoryService<Job> {
 
-    constructor(protected _entityManagerService: EntityManagerService, ctor: { new(): Job }) {
-        super(_entityManagerService, ctor);
+    constructor(protected _entityManagerService: EntityManagerService) {
+        super(_entityManagerService, Job);
     }
 
     protected _create(priorityCode, sourceMaterial, sourceLanguage, targetLanguage): Job {
