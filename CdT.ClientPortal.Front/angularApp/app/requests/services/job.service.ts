@@ -7,13 +7,14 @@ import { BaseRepositoryService } from '../../shared/services/base-repository.ser
 
 
 @Injectable()
-export class JobBaseService<T extends Job> extends BaseRepositoryService<T> {
+export class JobBaseService extends BaseRepositoryService<Job> {
 
-    constructor(protected _entityManagerService: EntityManagerService, ctor: { new(): T }) {
+    constructor(protected _entityManagerService: EntityManagerService, ctor: { new(): Job }) {
         super(_entityManagerService, ctor);
     }
 
     protected _create(priorityCode, sourceMaterial, sourceLanguage, targetLanguage): Job {
+
 
         return super.createEntity({
             sourceMaterial: sourceMaterial,

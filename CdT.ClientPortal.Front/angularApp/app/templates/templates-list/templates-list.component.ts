@@ -5,7 +5,10 @@ import { RequestTemplate } from './../../model/breeze/request-template';
 import { Component, OnInit } from '@angular/core';
 import { TemplateService } from '../templates.service';
 import { DialogService, DialogRef, DialogCloseResult } from '@progress/kendo-angular-dialog';
+<<<<<<< Updated upstream:CdT.ClientPortal.Front/angularApp/app/templates/templates-list/templates-list.component.ts
 import { DialogAction } from '@progress/kendo-angular-dialog';
+=======
+>>>>>>> Stashed changes:angularApp/app/templates/templates-list/templates-list.component.ts
 
 @Component({
   selector: 'cdt-templates-list',
@@ -49,22 +52,31 @@ export class TemplatesListComponent implements OnInit {
 
   delete(template: RequestTemplate) {
     const dialog: DialogRef = this.dialogService.open({
-      title: 'Please confirm',
-      content: 'Are you sure you want to delete this template ?',
+      title: "Please confirm",
+      content: "Are you sure?",
       actions: [
-        { text: 'Yes', primary: true },
-        { text: 'No' }
-      ]
+        { text: "No" },
+        { text: "Yes", primary: true }
+      ],
+      width: 450,
+      height: 200,
+      minWidth: 250
     });
 
     dialog.result.subscribe((result) => {
-      const dialogAction: DialogAction = result as DialogAction
-      if (dialogAction.primary) {
+      if (result instanceof DialogCloseResult) {
+        console.log("close");
+      } else {
+        console.log("action", result);
         template.isDeleted = true;
         this._templateService.save().then(() => {
           this._templateService.query(this.state);
         });
       }
+<<<<<<< Updated upstream:CdT.ClientPortal.Front/angularApp/app/templates/templates-list/templates-list.component.ts
+=======
+
+>>>>>>> Stashed changes:angularApp/app/templates/templates-list/templates-list.component.ts
     });
   }
 

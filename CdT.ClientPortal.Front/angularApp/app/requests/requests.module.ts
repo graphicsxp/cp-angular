@@ -26,6 +26,7 @@ import { RequestJobsHeaderComponent } from './request-jobs/request-jobs-header/r
 import { JobHeaderComponent } from './jobs/job-header/job-header.component';
 import { JobTranslationComponent } from './jobs/job-translation/job-translation.component';
 import { JobTranslationEditComponent } from './jobs/job-translation/job-translation-edit/job-translation-edit.component';
+import { JobBaseService } from './services/job.service';
 
 @NgModule({
   imports: [
