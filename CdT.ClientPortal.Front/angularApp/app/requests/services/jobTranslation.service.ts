@@ -3,10 +3,8 @@ import { JobBaseService } from './job.service';
 import { EntityManagerService } from '../../entity-manager.service';
 
 
-export class JobTranslationService extends JobBaseService<JobTranslation> {
+export class JobTranslationService {
     constructor(protected _entityManagerService: EntityManagerService) {
-        super(_entityManagerService, JobTranslation);
+        //    super(_entityManagerService, JobTranslation);
     }
-
-    
 }

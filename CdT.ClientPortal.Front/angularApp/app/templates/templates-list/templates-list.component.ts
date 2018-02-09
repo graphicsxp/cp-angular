@@ -52,11 +52,11 @@ export class TemplatesListComponent implements OnInit {
 
   delete(template: RequestTemplate) {
     const dialog: DialogRef = this.dialogService.open({
-      title: "Please confirm",
-      content: "Are you sure?",
+      title: 'Please confirm',
+      content: 'Are you sure?',
       actions: [
-        { text: "No" },
-        { text: "Yes", primary: true }
+        { text: 'No' },
+        { text: 'Yes', primary: true }
       ],
       width: 450,
       height: 200,
@@ -65,18 +65,14 @@ export class TemplatesListComponent implements OnInit {
 
     dialog.result.subscribe((result) => {
       if (result instanceof DialogCloseResult) {
-        console.log("close");
+        console.log('close');
       } else {
-        console.log("action", result);
+        console.log('action', result);
         template.isDeleted = true;
         this._templateService.save().then(() => {
           this._templateService.query(this.state);
         });
       }
-<<<<<<< Updated upstream:CdT.ClientPortal.Front/angularApp/app/templates/templates-list/templates-list.component.ts
-=======
-
->>>>>>> Stashed changes:angularApp/app/templates/templates-list/templates-list.component.ts
     });
   }
 
