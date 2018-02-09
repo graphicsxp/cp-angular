@@ -17,7 +17,7 @@ export class PhysicalFileService extends BaseRepositoryService<PhysicalFile> {
 
     public create(file: UploadedFile, classification: MaterialClassification): PhysicalFile {
         if (file) {
-            return super.createEntity<PhysicalFile>(PhysicalFile, {
+            return super.createEntity({
                 physicalPath: file.path,
                 fileName: file.name,
                 fileSize: file.size,
@@ -25,7 +25,7 @@ export class PhysicalFileService extends BaseRepositoryService<PhysicalFile> {
                 documentFormat : this.getSourceFormat(file.name)
             });
         } else {
-            return super.createEntity<PhysicalFile>(PhysicalFile);
+            return super.createEntity();
         }
     }
 

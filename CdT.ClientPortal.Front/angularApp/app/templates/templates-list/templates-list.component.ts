@@ -5,10 +5,6 @@ import { RequestTemplate } from './../../model/breeze/request-template';
 import { Component, OnInit } from '@angular/core';
 import { TemplateService } from '../templates.service';
 import { DialogService, DialogRef, DialogCloseResult } from '@progress/kendo-angular-dialog';
-<<<<<<< Updated upstream:CdT.ClientPortal.Front/angularApp/app/templates/templates-list/templates-list.component.ts
-import { DialogAction } from '@progress/kendo-angular-dialog';
-=======
->>>>>>> Stashed changes:angularApp/app/templates/templates-list/templates-list.component.ts
 
 @Component({
   selector: 'cdt-templates-list',

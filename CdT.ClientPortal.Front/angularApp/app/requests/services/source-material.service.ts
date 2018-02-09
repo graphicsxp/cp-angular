@@ -18,12 +18,12 @@ import { Job } from '../../model/breeze/job';
 @Injectable()
 export class SourceMaterialService extends BaseRepositoryService<SourceMaterial> {
 
-    constructor(protected _entityManagerService: EntityManagerService, private _jobBaseService: JobBaseService<, public globalService: GlobalService) {
+    constructor(protected _entityManagerService: EntityManagerService, private _jobBaseService: JobBaseService, public globalService: GlobalService) {
         super(_entityManagerService, SourceMaterial);
     }
 
     public create(material: Material, template: RequestTemplate): SourceMaterial {
-        const sourceMaterial = super.createEntity<SourceMaterial>(SourceMaterial, { material: material });
+        const sourceMaterial = super.createEntity({ material: material });
 
         sourceMaterial.confidentiality = _.find(this._entityManagerService.getLookup(LookupNames.confidentialities), { code: 'NO' });
         sourceMaterial.isConfidential = sourceMaterial.confidentiality.isConfidential;
@@ -118,7 +118,7 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
             }
 
             if (isUniqueJob) {
-                job =  dataService.job._create(serviceCode, priorityCode, sourceMaterial, sourceMaterial.sourceLanguages[0].language, targetLanguage);
+                // job = dataService.job._create(serviceCode, priorityCode, sourceMaterial, sourceMaterial.sourceLanguages[0].language, targetLanguage);
                 jobs.push(job);
                 //  if (serviceCode === 'MO') { _addOldOriginalToJob(sourceMaterial, job); }
             }
@@ -136,7 +136,7 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
                 }
 
                 if (isUniqueJob) {
-                    //job = dataService.job._create(serviceCode, priorityCode, sourceMaterial, sourceMaterial.sourceLanguages[i].language, targetLanguage);
+                    // job = dataService.job._create(serviceCode, priorityCode, sourceMaterial, sourceMaterial.sourceLanguages[i].language, targetLanguage);
                     jobs.push(job);
                     //    if (serviceCode === 'MO') { _addOldOriginalToJob(sourceMaterial, job); }
                 }

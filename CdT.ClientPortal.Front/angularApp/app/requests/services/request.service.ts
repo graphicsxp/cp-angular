@@ -19,7 +19,7 @@ export class RequestService extends BaseRepositoryService<Request> {
   }
 
   public create(): Request {
-    const request: Request = super.createEntity<Request>(Request);
+    const request: Request = super.createEntity();
     request.requestType = _.find(this.getLookup(LookupNames.requestTypes), { code: 'RST001' });
     request.client = _.find(this.getLookup(LookupNames.clients), { clientPortalId: 250001 });
     request.deliveryMode = _.find(this.getLookup(LookupNames.deliveryModes), { code: 'No' });
