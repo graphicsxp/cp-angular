@@ -1,4 +1,4 @@
-import { JobBaseService } from './job.service';
+import { JobService } from './job.service';
 import { JobTranslation } from './../../model/breeze/job-translation';
 import { Language } from './../../model/breeze/language';
 import { Priority } from './../../model/breeze/priority';
@@ -14,11 +14,12 @@ import { LookupNames } from '../../model/lookups';
 import * as _ from 'lodash';
 import { DocumentFormat } from '../../model/breeze/document-format';
 import { Job } from '../../model/breeze/job';
+import { Service } from '../../model/breeze/service';
 
 @Injectable()
 export class SourceMaterialService extends BaseRepositoryService<SourceMaterial> {
 
-    constructor(protected _entityManagerService: EntityManagerService, private _jobBaseService: JobBaseService, public globalService: GlobalService) {
+    constructor(protected _entityManagerService: EntityManagerService, private _jobBaseService: JobService, public globalService: GlobalService) {
         super(_entityManagerService, SourceMaterial);
     }
 
@@ -96,13 +97,13 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
     /**
       *  add a new job to the sourceMaterial
       *  @param sourceMaterial the source material to which the job should be added
-      *  @param priorityCode of the priority
+      *  @param priority of the priority
       *  @param targetLanguage the target language to set on the job
-      *  @param serviceCode for which type of service are we adding the job ? In case of Modification there is some bespoke logic to apply.
+      *  @param service for which type of service are we adding the job ? In case of Modification there is some bespoke logic to apply.
       *  @param ignoreExistingTargetLanguage if a job with the same target language already exists and this flag is set to true, then we create
       *  a new job nevertheless. We just set its targetLanguage to null. If the flag is false, the job won't be created.
       */
-    public addJob<T>(sourceMaterial: SourceMaterial, priorityCode: string, targetLanguage: Language, serviceCode: string, ignoreExistingTargetLanguage: boolean): Array<Job> {
+    public addJob(sourceMaterial: SourceMaterial, priority: Priority, targetLanguage: Language, service: Service, ignoreExistingTargetLanguage: boolean): Array<Job> {
         // if the sourceMaterial has multiple sourceLanguages, there could be more than 1 job to add
         let jobs = new Array<Job>();
         let isUniqueJob;
@@ -110,7 +111,7 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
 
         if (sourceMaterial.sourceLanguages.length === 1) {
             // if there is already a job with this target language then null it. This will force the user to set another one.
-            // isUniqueJob = _isUniqueJob(sourceMaterial, sourceMaterial.sourceLanguages[0].language, targetLanguage, serviceCode);
+            isUniqueJob = this._isUniqueJob(sourceMaterial, sourceMaterial.sourceLanguages[0].language, targetLanguage, service.code);
 
             if (!isUniqueJob && ignoreExistingTargetLanguage) {
                 targetLanguage = null;
@@ -119,6 +120,7 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
 
             if (isUniqueJob) {
                 // job = dataService.job._create(serviceCode, priorityCode, sourceMaterial, sourceMaterial.sourceLanguages[0].language, targetLanguage);
+                job = this._jobBaseService.create(service, priority, sourceMaterial, sourceMaterial.sourceLanguages[0].language, targetLanguage);
                 jobs.push(job);
                 //  if (serviceCode === 'MO') { _addOldOriginalToJob(sourceMaterial, job); }
             }
@@ -128,7 +130,7 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
         if (sourceMaterial.sourceLanguages.length > 1) {
             for (let i = 0; i < sourceMaterial.sourceLanguages.length; i++) {
                 // if there is already a job with this target language then null it. This will force the user to set another one.
-                // isUniqueJob = _isUniqueJob(sourceMaterial, sourceMaterial.sourceLanguages[i].language, targetLanguage, serviceCode);
+                isUniqueJob = this._isUniqueJob(sourceMaterial, sourceMaterial.sourceLanguages[i].language, targetLanguage, service.code);
 
                 if (!isUniqueJob && ignoreExistingTargetLanguage) {
                     targetLanguage = null;
@@ -136,7 +138,7 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
                 }
 
                 if (isUniqueJob) {
-                    // job = dataService.job._create(serviceCode, priorityCode, sourceMaterial, sourceMaterial.sourceLanguages[i].language, targetLanguage);
+                    job = this._jobBaseService.create(service, priority, sourceMaterial, sourceMaterial.sourceLanguages[i].language, targetLanguage);
                     jobs.push(job);
                     //    if (serviceCode === 'MO') { _addOldOriginalToJob(sourceMaterial, job); }
                 }
@@ -144,5 +146,15 @@ export class SourceMaterialService extends BaseRepositoryService<SourceMaterial>
         }
 
         return jobs;
+    }
+
+    _isUniqueJob(sourceMaterial, sourceLanguage, targetLanguage, serviceCode) {
+        if (!targetLanguage) { return true; }
+        // target language of the job must be different from the source language of the source material - Exception: for subtitling service it is allowed.
+        if (sourceLanguage.code === targetLanguage.code && serviceCode !== 'ST' && serviceCode !== 'TE') {
+            return false;
+        }
+
+        return !_.some(sourceMaterial.jobs, { 'sourceLanguage': { 'code': sourceLanguage.code }, 'targetLanguage': { 'code': targetLanguage.code } });
     }
 }

@@ -25,6 +25,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { LanguageByRegionPipe } from './pipes/language-by-region.pipe';
 import { SplitArrayToStringPipe } from './pipes/split-array-to-string.pipe';
 import { ConvertCharToPagePipe } from './pipes/convert-char-to-page.pipe';
+import { JoinArrayPipe } from './pipes/join-array.pipe';
 
 @NgModule({
     imports: [
@@ -52,7 +53,8 @@ import { ConvertCharToPagePipe } from './pipes/convert-char-to-page.pipe';
         LanguageByRegionPipe,
         SplitArrayToStringPipe,
         ExtensionIconPipe,
-        ConvertCharToPagePipe
+        ConvertCharToPagePipe,
+        JoinArrayPipe
     ],
 
     providers: [
@@ -73,7 +75,8 @@ import { ConvertCharToPagePipe } from './pipes/convert-char-to-page.pipe';
         ExtensionIconPipe,
         LanguageByRegionPipe,
         SplitArrayToStringPipe,
-        ConvertCharToPagePipe
+        ConvertCharToPagePipe,
+        JoinArrayPipe
     ]
 })
 

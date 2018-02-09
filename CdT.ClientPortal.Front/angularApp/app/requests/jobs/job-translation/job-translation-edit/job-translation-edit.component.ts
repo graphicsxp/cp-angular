@@ -13,4 +13,6 @@ export class JobTranslationEditComponent extends JobBaseComponent implements OnI
   ngOnInit() {
   }
 
+  canCopyDown(job) { return false; }
+
 }

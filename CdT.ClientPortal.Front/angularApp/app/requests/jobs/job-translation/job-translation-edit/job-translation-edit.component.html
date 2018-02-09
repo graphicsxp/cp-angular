@@ -16,13 +16,13 @@
   </thead>
   <tbody>
     <!-- <tr *ngFor="let job of sourceMaterial.jobs | orderBy:['sourceLanguage.code','targetLanguage.code']" [class]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[job.isMarkedForDeletion || job.isJobStatusDeleted()]"> -->
-      <tr *ngFor="let job of sourceMaterial.jobs" [class]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[job.isMarkedForDeletion || job.isJobStatusDeleted()]">
+      <tr *ngFor="let job of sourceMaterial.jobs; let i = index" [class]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[job.isMarkedForDeletion || job.isJobStatusDeleted()]">
       <!--ID-->
       <td>
         <label class="label-responsive">
           <strong>ID:</strong>
         </label>
-        {{$index + 1}}
+        {{i + 1}}
       </td>
       <!--SL-->
       <td>
@@ -51,34 +51,34 @@
       <td style="text-align:right">
         <label class="label-responsive">
           <strong>Base price:</strong>
-        </label>{{job.jobPricings[0].basePrice | currency}}</td>
+        </label>{{job.pricings[0]?.basePrice | currency}}</td>
       <!--confidentiality-->
       <td style="text-align:right">
         <label class="label-responsive">
           <strong>SL:</strong>
-        </label>{{job.jobPricings[0].surchargeConfidentiality | currency}}</td>
+        </label>{{job.pricings[0]?.surchargeConfidentiality | currency}}</td>
       <!--Complex file format-->
       <td style="text-align:right">
         <label class="label-responsive">
           <strong>SL:</strong>
-        </label>{{job.jobPricings[0].surchargeComplexity | currency}}</td>
+        </label>{{job.pricings[0]?.surchargeComplexity | currency}}</td>
       <!--Non EU languages-->
       <td style="text-align:right">
         <label class="label-responsive">
           <strong>SL:</strong>
-        </label>{{job.jobPricings[0].surchargeNonEuLanguage | currency}}</td>
+        </label>{{job.pricings[0]?.surchargeNonEuLanguage | currency}}</td>
       <!--web upload-->
       <td style="text-align:right">
         <label class="label-responsive">
           <strong>SL:</strong>
-        </label>{{job.jobPricings[0].surchargeWebUpload | currency}}</td>
+        </label>{{job.pricings[0]?.surchargeWebUpload | currency}}</td>
       <!--Price per language-->
       <td style="text-align:right">
         <label class="label-responsive">
           <strong>Indicative price:</strong>
         </label>
-        {{job.jobPricings[0].totalPrice | currency }}
-        <i *ngIf="job.jobPricings[0].surchargeNonEuLanguage>0" class="fa fa-info-circle fa-lg" bs-tooltip data-title="This price includes the surcharge for non-EU languages, which is of EUR 10 per page and per target language."></i>
+        {{job.pricings[0]?.totalPrice | currency }}
+        <i *ngIf="job.pricings[0]?.surchargeNonEuLanguage > 0" class="fa fa-info-circle fa-lg" bs-tooltip data-title="This price includes the surcharge for non-EU languages, which is of EUR 10 per page and per target language."></i>
       </td>
       <td>
         <a class="btn grid-button grid-edit-row btn-danger" *ngIf="!job.isMarkedForDeletion && !job.isJobStatusDeleted()" (click)="toggleDelete(job)">

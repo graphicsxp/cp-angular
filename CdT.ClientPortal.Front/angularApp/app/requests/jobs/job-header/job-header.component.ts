@@ -1,3 +1,4 @@
+import { Language } from './../../../model/breeze/language';
 import { JobTranslation } from './../../../model/breeze/job-translation';
 import { SourceMaterialService } from './../../services/source-material.service';
 import { Material } from './../../../model/breeze/material';
@@ -31,13 +32,15 @@ export class JobHeaderComponent implements OnInit {
   hideShow(): void { }
   canSelectLanguages(): boolean { return true; }
 
-  addJob(targetLanguage: Language) {
+  getTargetLanguages(): Language[] {
+    return this.sourceMaterial.jobs.map(j => j.targetLanguage);
+  }
 
-
-    //  this._sourceMaterialService.addJob<JobTranslation>(scope.model,
-    //   scope.priority.code,
-    //   targetLanguage,
-    //   scope.service.code,
-    //   false);
+  addJob(targetLanguage) {
+    this._sourceMaterialService.addJob(this.sourceMaterial,
+      this.priority,
+      targetLanguage,
+      this.service,
+      false);
   }
 }

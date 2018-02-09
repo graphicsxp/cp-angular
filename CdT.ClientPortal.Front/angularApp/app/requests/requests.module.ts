@@ -1,4 +1,4 @@
-import { JobBaseService } from './services/job.service';
+import { JobService } from './services/job.service';
 import { SourceMaterialPricePipe } from './pipes/source-material-price.pipe';
 import { RequestPricePipe } from './pipes/request-price.pipe';
 import { MomentModule } from 'angular2-moment';
@@ -53,6 +53,6 @@ import { JobTranslationEditComponent } from './jobs/job-translation/job-translat
     JobTranslationEditComponent,
     RequestContactsConcatPipe
   ],
-  providers: [RequestService, SourceMaterialService, JobBaseService, /*InitGuard,*/ RequestDetailResolver, RequestJobsResolver],
+  providers: [RequestService, SourceMaterialService, JobService, /*InitGuard,*/ RequestDetailResolver, RequestJobsResolver],
 })
 export class RequestsModule { }

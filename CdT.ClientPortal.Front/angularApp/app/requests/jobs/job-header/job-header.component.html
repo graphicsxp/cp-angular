@@ -16,8 +16,8 @@
       <span *ngIf="!canSetPrivacy()">
         <a (click)="denyDownload()">{{sourceMaterial.material.fileName}}</a>
       </span>
-      <!-- (from {{sourceMaterial | sourceLanguagesAggregateByMaterial}} to {{sourceMaterial | targetLanguagesAggregateByMaterial
-      }} language(s) ) -->
+      (from {{sourceMaterial.sourceLanguages | joinArray : 'language.code'}} to {{(getTargetLanguages() | languageByRegion :'eu'
+      ).length }} EU / {{(getTargetLanguages() | languageByRegion :'noneu').length }} Non EU language(s))
     </h2>
     <span class="glyphicon glyphicon-user" bs-tooltip data-title="Uploaded by {{sourceMaterial.uploadedBy}}"></span>
     <a style="text-decoration:underline" (click)="hideShow()">Show / hide details</a>
@@ -36,8 +36,8 @@
             method="addJob" icon="'button'" /> -->
         </span>
         <span *ngIf="service.code !== 'ST' && service.code !== 'TE'">
-          <cdt-language-picker id="LanguagePicker_{{$index}}" *ngIf="canSelectLanguages() " (callback)="addJob" [icon]="'button'" [model]="sourceMaterial.selectedTargetLanguages"
-            [source]="sourceMaterial.sourceLanguages" (change)="onSelectedLanguagesChanged($event)"></cdt-language-picker>
+          <cdt-language-picker id="LanguagePicker_{{$index}}" *ngIf="canSelectLanguages() " (callback)="addJob($event)" [icon]="'button'"
+            [model]="sourceMaterial.selectedTargetLanguages" [source]="sourceMaterial.sourceLanguages"></cdt-language-picker>
 
         </span>
       </h2>

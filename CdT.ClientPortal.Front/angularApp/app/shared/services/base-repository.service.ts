@@ -28,10 +28,10 @@ export abstract class BaseRepositoryService<T extends Entity> extends BehaviorSu
     this.entityName = ctor.name;
   }
 
-  // protected createEntity<E extends Entity>(type: new () => E, config?: {}): E {
-  //   config = config || {};
-  //   return this._entityManagerService.em.createEntity(type.name, config) as E;
-  // }
+  protected createEntityByType<E extends Entity>(type: string, config?: {}): E {
+    config = config || {};
+    return this._entityManagerService.em.createEntity(type, config) as E;
+  }
 
   protected createEntity(config?: {}): T {
     config = config || {};

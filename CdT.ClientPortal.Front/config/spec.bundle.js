@@ -18,8 +18,9 @@ testing.TestBed.initTestEnvironment(
     browser.platformBrowserDynamicTesting()
 );
 
-var testContext = require.context('../angularApp', true, /\.spec\.ts/);
+//var testContext = require.context('../angularApp', true, /\.spec\.ts/);
 //var testContext = require.context('../angularApp/app/requests/request-header', true, /\.spec\.ts/);
+var testContext = require.context('../angularApp/app/shared/pipes', true, /\.spec\.ts/);
 
 function requireAll(requireContext) {
     return requireContext.keys().map(requireContext);

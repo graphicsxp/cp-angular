@@ -106,7 +106,7 @@ export class LanguagePickerComponent implements OnInit, DoCheck {
                 lang.isDisabled = this.isLanguageDisabled(language[0].code);
                 // if a callback method is specified, call it
                 if (this.callback) {
-                    this.callback.emit(language);
+                    this.callback.emit(language[0]);
                 }
             }
         });
