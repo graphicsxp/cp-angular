@@ -1,48 +1,46 @@
-<div class="row">
-  <div class="col-md-8">
-    <h2 style="display: inline-block">
-      <span class="icon-overflow complete" *ngIf="!findValidationErrorsOnMaterial()">
+<div class="row jobHeader">
+    <div class="col-md-8">
+        <h2 style="display: inline-block">
+            <span class="icon-overflow complete" *ngIf="!findValidationErrorsOnMaterial()">
         <i class="fa fa-check-circle"></i>
       </span>
-      <span class="icon-overflow not-complete" ng-show="findValidationErrorsOnMaterial()">
+            <span class="icon-overflow not-complete" ng-show="findValidationErrorsOnMaterial()">
         <i class="fa fa-warning"></i>
       </span>
-      <span [outerHTML]="asPhysicalFile(sourceMaterial.material).documentFormat.code | extensionIcon"></span>
-      <i class="fa fa-arrow-right"></i>
-      <span [outerHTML]="sourceMaterial.deliverableDocumentFormat.code | extensionIcon"></span>
-      <span *ngIf="canSetPrivacy()">
+            <span [outerHTML]="asPhysicalFile(sourceMaterial.material).documentFormat.code | extensionIcon"></span>
+            <i class="fa fa-arrow-right"></i>
+            <span [outerHTML]="sourceMaterial.deliverableDocumentFormat.code | extensionIcon"></span>
+            <span *ngIf="canSetPrivacy()">
         <!-- <download material="sourceMaterial.material" /> -->
       </span>
-      <span *ngIf="!canSetPrivacy()">
+            <span *ngIf="!canSetPrivacy()">
         <a (click)="denyDownload()">{{sourceMaterial.material.fileName}}</a>
-      </span>
-      (from {{sourceMaterial.sourceLanguages | joinArray : 'language.code'}} to {{(getTargetLanguages() | languageByRegion :'eu'
-      ).length }} EU / {{(getTargetLanguages() | languageByRegion :'noneu').length }} Non EU language(s))
-    </h2>
-    <span class="glyphicon glyphicon-user" bs-tooltip data-title="Uploaded by {{sourceMaterial.uploadedBy}}"></span>
-    <a style="text-decoration:underline" (click)="hideShow()">Show / hide details</a>
-    <span *ngIf="sourceMaterial.confidentiality.code === 'SN' || sourceMaterial.confidentiality.code==='SC'" class="label label-warning">{{sourceMaterial.confidentiality.defaultLabel}}</span>
-    <span *ngIf="!sourceMaterial.confidentiality && sourceMaterial.isConfidential" class="label label-danger">Confidential</span>
-    <span *ngIf="!sourceMaterial.confidentiality && !sourceMaterial.isExternalized" class="label label-info">In-house</span>
-    <span *ngIf="sourceMaterial.isPrivate" class="label label-info">Private</span>
-    <span *ngIf="sourceMaterial.isPrivate">{{sourceMaterial.uploadedBy}}</span>
-  </div>
-  <div class="col-md-4">
-    <div class="pull-right">
-      <h2>
-        <!-- <copy-jobs ng-if="!readOnly && sourceMaterial.request.sourceMaterials.length > 1"></copy-jobs> -->
-        <span *ngIf="service.code === 'ST' || service.code === 'TE'">
+      </span> (from {{sourceMaterial.sourceLanguages | joinArray : 'language.code'}} to {{(getTargetLanguages() | languageByRegion :'eu' ).length }} EU / {{(getTargetLanguages() | languageByRegion :'noneu').length }} Non EU language(s))
+        </h2>
+        <span class="glyphicon glyphicon-user" bs-tooltip data-title="Uploaded by {{sourceMaterial.uploadedBy}}"></span>
+        <a style="text-decoration:underline" (click)="hideShow()">Show / hide details</a>
+        <span *ngIf="sourceMaterial.confidentiality.code === 'SN' || sourceMaterial.confidentiality.code==='SC'" class="label label-warning">{{sourceMaterial.confidentiality.defaultLabel}}</span>
+        <span *ngIf="!sourceMaterial.confidentiality && sourceMaterial.isConfidential" class="label label-danger">Confidential</span>
+        <span *ngIf="!sourceMaterial.confidentiality && !sourceMaterial.isExternalized" class="label label-info">In-house</span>
+        <span *ngIf="sourceMaterial.isPrivate" class="label label-info">Private</span>
+        <span *ngIf="sourceMaterial.isPrivate">{{sourceMaterial.uploadedBy}}</span>
+    </div>
+    <div class="col-md-4">
+        <div class="pull-right">
+            <h2>
+                <!-- <copy-jobs ng-if="!readOnly && sourceMaterial.request.sourceMaterials.length > 1"></copy-jobs> -->
+                <span *ngIf="service.code === 'ST' || service.code === 'TE'">
           <!-- <language-picker id="LanguagePicker_{{$index}}" ng-show="canSelectLanguages() && !readOnly" model="sourceMaterial.selectedTargetLanguages"
             method="addJob" icon="'button'" /> -->
         </span>
-        <span *ngIf="service.code !== 'ST' && service.code !== 'TE'">
+                <span *ngIf="service.code !== 'ST' && service.code !== 'TE'">
           <cdt-language-picker id="LanguagePicker_{{$index}}" *ngIf="canSelectLanguages() " (callback)="addJob($event)" [icon]="'button'"
             [model]="sourceMaterial.selectedTargetLanguages" [source]="sourceMaterial.sourceLanguages"></cdt-language-picker>
 
         </span>
-      </h2>
+            </h2>
+        </div>
     </div>
-  </div>
-  <hr class="clear" />
-  <!--<service-jobs></service-jobs>-->
+    <hr class="clear" />
+    <!--<service-jobs></service-jobs>-->
 </div>

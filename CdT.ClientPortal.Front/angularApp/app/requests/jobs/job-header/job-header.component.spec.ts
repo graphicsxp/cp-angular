@@ -38,7 +38,7 @@ describe('JobHeaderComponent', () => {
     fixture = TestBed.createComponent(JobHeaderComponent);
     component = fixture.componentInstance;
 
-    jobHeaderEL = fixture.debugElement.query(By.css('.headerComponent')); // find hero element
+    jobHeaderEL = fixture.debugElement.query(By.css('.jobHeader')); // find hero element
 
     // read request data from json file(entities exported from current clientportal)
     em = new EntityManager();
@@ -60,6 +60,7 @@ describe('JobHeaderComponent', () => {
   });
 
   it('should create', () => {
+    console.log(jobHeaderEL.nativeElement.textContent);
     expect(component).toBeTruthy();
   });
 });
