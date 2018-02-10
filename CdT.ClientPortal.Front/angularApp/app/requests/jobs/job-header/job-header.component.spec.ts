@@ -60,7 +60,6 @@ describe('JobHeaderComponent', () => {
   });
 
   it('should create', () => {
-    console.log(jobHeaderEL.nativeElement.textContent);
-    expect(component).toBeTruthy();
+    expect(jobHeaderEL.nativeElement.textContent).toContain('(from EN to 2 EU / 0 Non EU language(s))');
   });
 });
