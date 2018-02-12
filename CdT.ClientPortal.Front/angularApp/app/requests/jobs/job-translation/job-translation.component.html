@@ -1,100 +1,96 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th style="width: 50px">ID</th>
-      <th style="width: 50px">SL</th>
-      <th style="width: 50px">TL</th>
-      <th style="width:100px">Total volume (chars)</th>
-      <th style="width:100px">Total volume (pages)</th>
-      <th style="width:100px">
-        <span [style]="{'visibility':applyPricingPolicy?'visible':'hidden'}">Vol. after TM analysis (pages)</span>
-      </th>
-      <th style="width: 150px;text-align:right">Deadline</th>
-      <th style="width: 150px;text-align:right">Priority</th>
-      <th style="text-align:right">Base price</th>
-      <th style="text-align:right">Confidentiality</th>
-      <th style="text-align:right">Complex File Format</th>
-      <th style="text-align:right">Non-EU Languages</th>
-      <th style="text-align:right">Web Upload</th>
-      <th style="text-align:right">Price per language</th>
-      <th style="width: 100px;text-align:right"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- <tr *ngFor="let job of sourceMaterial.jobs | orderBy:['sourceLanguage.code','targetLanguage.code']" [class]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[job.isMarkedForDeletion || job.isJobStatusDeleted()]"> -->
-    <tr *ngFor="let job of sourceMaterial.jobs " [class]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[job.isMarkedForDeletion || job.isJobStatusDeleted()]">
-      <!--ID-->
-      <td>
-        <label class="label-responsive">
+<table class="table table-striped job">
+    <thead>
+        <tr>
+            <th style="width: 50px">ID</th>
+            <th style="width: 50px">SL</th>
+            <th style="width: 50px">TL</th>
+            <th style="width:100px">Total volume (chars)</th>
+            <th style="width:100px">Total volume (pages)</th>
+            <th style="width:100px">
+                <span [style]="{'visibility':applyPricingPolicy?'visible':'hidden'}">Vol. after TM analysis (pages)</span>
+            </th>
+            <th style="width: 150px;text-align:right">Deadline</th>
+            <th style="width: 150px;text-align:right">Priority</th>
+            <th style="text-align:right">Base price</th>
+            <th style="text-align:right">Confidentiality</th>
+            <th style="text-align:right">Complex File Format</th>
+            <th style="text-align:right">Non-EU Languages</th>
+            <th style="text-align:right">Web Upload</th>
+            <th style="text-align:right">Price per language</th>
+            <th style="width: 100px;text-align:right"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- <tr *ngFor="let job of sourceMaterial.jobs | orderBy:['sourceLanguage.code','targetLanguage.code']" [class]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[job.isMarkedForDeletion || job.isJobStatusDeleted()]"> -->
+        <tr *ngFor="let job of sourceMaterial.jobs " [class]="{true: 'row-temp-deleted', false: 'row-temp-undeleted'}[job.isMarkedForDeletion || job.isJobStatusDeleted()]">
+            <!--ID-->
+            <td>
+                <label class="label-responsive">
           <strong>ID:</strong>
-        </label>
-        {{$index + 1}}
-      </td>
-      <!--SL-->
-      <td>
-        <label class="label-responsive">
+        </label> {{$index + 1}}
+            </td>
+            <!--SL-->
+            <td>
+                <label class="label-responsive">
           <strong>SL:</strong>
-        </label>
-        {{job.sourceLanguage.abbreviation}}
-      </td>
-      <!--TL-->
-      <td>
-        <label class="label-responsive">
+        </label> {{job.sourceLanguage.abbreviation}}
+            </td>
+            <!--TL-->
+            <td>
+                <label class="label-responsive">
           <strong>TL:</strong>
-        </label>
-        {{job.targetLanguage.abbreviation}}
-      </td>
-      <!--Volumes-->
-      <td>{{job.clientVolume}} </td>
-      <td>{{job.clientVolume | convertCharToPage}} </td>
+        </label> {{job.targetLanguage.abbreviation}}
+            </td>
+            <!--Volumes-->
+            <td>{{job.clientVolume}} </td>
+            <td>{{job.clientVolume | convertCharToPage}} </td>
 
-      <!--Client billed volumes-->
-      <td *ngIf="job.scopingInfo.totalClientVolumeBilled && applyPricingPolicy && job.applyPricingPolicy">{{job.scopingInfo.totalClientVolumeBilled | convertCharToPage}} </td>
-      <td *ngIf="!(job.scopingInfo.totalClientVolumeBilled && applyPricingPolicy && job.applyPricingPolicy)"> </td>
+            <!--Client billed volumes-->
+            <td *ngIf="job.scopingInfo.totalClientVolumeBilled && applyPricingPolicy && job.applyPricingPolicy">{{job.scopingInfo.totalClientVolumeBilled | convertCharToPage}} </td>
+            <td *ngIf="!(job.scopingInfo.totalClientVolumeBilled && applyPricingPolicy && job.applyPricingPolicy)"> </td>
 
-      <!--deadline-->
-      <td style="text-align:right">
-        <span *ngIf="!sourceMaterial.request.quotationOnly || (sourceMaterial.request.quotationOnly && sourceMaterial.request.status.code!=='UNDE')">
+            <!--deadline-->
+            <td style="text-align:right">
+                <span *ngIf="!sourceMaterial.request.quotationOnly || (sourceMaterial.request.quotationOnly && sourceMaterial.request.status.code!=='UNDE')">
           {{job.deadline | amDateFormat:'DD/MM/YYYY HH:mm'}}</span>
-      </td>
-      <!--priority-->
-      <td style="text-align:right">
-        <span class="'label label-default status-' + job.priority.defaultLabel.toLowerCase().replace(' ', '-')}}">{{job.priority.defaultLabel}}</span>
-      </td>
-      <!--base price-->
-      <td style="text-align:right">
-        <label class="label-responsive">
+            </td>
+            <!--priority-->
+            <td style="text-align:right">
+                <span class="'label label-default status-' + job.priority.defaultLabel.toLowerCase().replace(' ', '-')}}">{{job.priority.defaultLabel}}</span>
+            </td>
+            <!--base price-->
+            <td style="text-align:right">
+                <label class="label-responsive">
           <strong>Base price:</strong>
         </label>{{job.pricings[0].basePrice | currency}}</td>
-      <!--confidentiality-->
-      <td style="text-align:right">
-        <label class="label-responsive">
+            <!--confidentiality-->
+            <td style="text-align:right">
+                <label class="label-responsive">
           <strong>SL:</strong>
         </label>{{job.pricings[0].surchargeConfidentiality | currency}}</td>
-      <!--Complex file format-->
-      <td style="text-align:right">
-        <label class="label-responsive">
+            <!--Complex file format-->
+            <td style="text-align:right">
+                <label class="label-responsive">
           <strong>SL:</strong>
         </label>{{job.pricings[0].surchargeComplexity | currency}}</td>
-      <!--Non EU languages-->
-      <td style="text-align:right">
-        <label class="label-responsive">
+            <!--Non EU languages-->
+            <td style="text-align:right">
+                <label class="label-responsive">
           <strong>SL:</strong>
         </label>{{job.pricings[0].surchargeNonEuLanguage | currency}}</td>
-      <!--web upload-->
-      <td style="text-align:right">
-        <label class="label-responsive">
+            <!--web upload-->
+            <td style="text-align:right">
+                <label class="label-responsive">
           <strong>SL:</strong>
         </label>{{job.pricings[0].surchargeWebUpload | currency}}</td>
-      <!--Price per language-->
-      <td style="text-align:right">
-        <label class="label-responsive">
+            <!--Price per language-->
+            <td style="text-align:right">
+                <label class="label-responsive">
           <strong>Indicative price:</strong>
-        </label>
-        {{job.pricings[0].totalPrice | currency }}
-        <i *ngIf="job.pricings[0].surchargeNonEuLanguage>0" class="fa fa-info-circle fa-lg" bs-tooltip data-title="This price includes the surcharge for non-EU languages, which is of EUR 10 per page and per target language."></i>
-      </td>
-      <!-- <td>
+        </label> {{job.pricings[0].totalPrice | currency }}
+                <i *ngIf="job.pricings[0].surchargeNonEuLanguage>0" class="fa fa-info-circle fa-lg" bs-tooltip data-title="This price includes the surcharge for non-EU languages, which is of EUR 10 per page and per target language."></i>
+            </td>
+            <!-- <td>
         <a *ngIf="job.jobStatus.code === 'CMP' && (sourceMaterial.isPrivate === false || (sourceMaterial.isPrivate === true && sourceMaterial.uploadedBy === $root.userInfo.currentUser))"
           class="btn grid-button grid-edit-row btn-primary" href="{{job.deliveryUrl}}">
           <i class="fa fa-download"></i>
@@ -112,6 +108,6 @@
           <i class="fa fa-check-square-o"></i>
         </a>
       </td> -->
-    </tr>
-  </tbody>
+        </tr>
+    </tbody>
 </table>

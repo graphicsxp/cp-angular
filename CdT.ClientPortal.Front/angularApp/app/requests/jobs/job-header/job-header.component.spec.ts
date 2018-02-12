@@ -1,8 +1,8 @@
 import { SharedModule } from './../../../shared/shared.module';
-import { GridHelpersModule } from './../../../grid-helpers/grid-helpers.module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { EntityManager, EntityQuery, config, NamingConvention, NavigationProperty, EntityState } from 'breeze-client';
@@ -28,8 +28,7 @@ describe('JobHeaderComponent', () => {
     TestBed.configureTestingModule({
       imports: [CommonModule, FormsModule, SharedModule],
       declarations: [JobHeaderComponent],
-      providers: [SourceMaterialService, EntityManagerService, CustomValidatorService,
-        GlobalService, JobService]
+      providers: [SourceMaterialService, EntityManagerService, CustomValidatorService, GlobalService, JobService]
     })
       .compileComponents();
   }));
