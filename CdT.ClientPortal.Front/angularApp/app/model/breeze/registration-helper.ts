@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+import { EntityManagerService } from './../../entity-manager.service';
 import { MetadataStore } from 'breeze-client';
 
 import { AssessmentEvalComment } from './assessment-eval-comment';
@@ -212,9 +214,12 @@ import { MidProcessingTaskPropertySet } from './mid-processing-task-property-set
 import { PreProcessingTaskPropertySet } from './pre-processing-task-property-set';
 import { TranslationTaskPropertySet } from './translation-task-property-set';
 
+@Injectable()
 export class RegistrationHelper {
 
-    static register(metadataStore: MetadataStore) {
+    constructor(public entityManagerService: EntityManagerService) { }
+
+    register(metadataStore: MetadataStore) {
         metadataStore.registerEntityTypeCtor('AssessmentEvalComment', AssessmentEvalComment);
         metadataStore.registerEntityTypeCtor('PostProPriorityDetails', PostProPriorityDetails);
         metadataStore.registerEntityTypeCtor('VPOSTPROCESSINGDASHBOARD', VPOSTPROCESSINGDASHBOARD);
@@ -320,13 +325,13 @@ export class RegistrationHelper {
         metadataStore.registerEntityTypeCtor('RequestContact', RequestContact);
         metadataStore.registerEntityTypeCtor('Material', Material);
         metadataStore.registerEntityTypeCtor('MaterialClassification', MaterialClassification);
-        metadataStore.registerEntityTypeCtor('SourceMaterial', SourceMaterial, SourceMaterial.sourceMaterialPostInitializer);
+        metadataStore.registerEntityTypeCtor('SourceMaterial', SourceMaterial, (entity: SourceMaterial) => SourceMaterial.sourceMaterialPostInitializer(entity, this.entityManagerService));
         metadataStore.registerEntityTypeCtor('SourceMaterialLanguage', SourceMaterialLanguage);
         metadataStore.registerEntityTypeCtor('PriorityMultiplier', PriorityMultiplier);
         metadataStore.registerEntityTypeCtor('Priority', Priority);
         metadataStore.registerEntityTypeCtor('Purpose', Purpose);
         metadataStore.registerEntityTypeCtor('Recipient', Recipient);
-        metadataStore.registerEntityTypeCtor('Request', Request, Request.requestPostInitializer);
+        metadataStore.registerEntityTypeCtor('Request', Request, (entity: Request) => Request.requestPostInitializer(entity, this.entityManagerService));
         metadataStore.registerEntityTypeCtor('Section', Section);
         metadataStore.registerEntityTypeCtor('PriceList', PriceList);
         metadataStore.registerEntityTypeCtor('Service', Service);

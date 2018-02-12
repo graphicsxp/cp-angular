@@ -28,7 +28,7 @@ export class EntityManagerService {
 
     // this.em.metadataStore.importMetadata('../../mocks/metadata.json');
 
-    RegistrationHelper.register(this.em.metadataStore);
+   // RegistrationHelper.register(this.em.metadataStore);
     this.em.hasChangesChanged.subscribe((args) => {
       this._hasChanges = args.hasChanges;
     });

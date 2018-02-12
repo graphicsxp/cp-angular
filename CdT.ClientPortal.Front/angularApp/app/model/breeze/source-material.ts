@@ -26,7 +26,7 @@ export class SourceMaterial extends EntityBase {
     selectedTargetLanguages: Array<Language>;
     isMarkedForDeletion: boolean;
 
-    static sourceMaterialPostInitializer(sourceMaterial: SourceMaterial) {
+    static sourceMaterialPostInitializer(sourceMaterial: SourceMaterial, entityManagerService: EntityManagerService) {
 
         sourceMaterial.selectedTargetLanguages = new Array<Language>();
 

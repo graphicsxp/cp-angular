@@ -1,3 +1,5 @@
+import { EntityManagerService } from './../../entity-manager.service';
+import { RequestService } from './../../requests/services/request.service';
 import { EntityBase } from './entity-base';
 import { Forecast } from './forecast';
 import { RequestType } from './request-type';
@@ -29,7 +31,7 @@ export class Request extends EntityBase {
   priority: Priority;
   closestDeadline: Date;
 
-  static requestPostInitializer(request: Request) {
+  static requestPostInitializer(request: Request, entityManagerService: EntityManagerService) {
     if (request.id === DataType.Guid.defaultValue) {
       request.quotationOnly = false;
       request.isScreenDeleted = false;

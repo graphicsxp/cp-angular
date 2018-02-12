@@ -1,3 +1,4 @@
+import { RegistrationHelper } from './model/breeze/registration-helper';
 import { ToasterModule } from 'angular2-toaster';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
@@ -60,7 +61,8 @@ registerLocaleData(localeEn, 'en-GB', localeEnExtra);
         CustomValidatorService,
         CanDeactivateGuard,
         ConfirmationService,
-        { provide: APP_INITIALIZER, useFactory: onAppInit, multi: true, deps: [EntityManagerService] },
+        RegistrationHelper,
+        { provide: APP_INITIALIZER, useFactory: onAppInit, multi: true, deps: [RegistrationHelper, EntityManagerService] },
         { provide: LOCALE_ID, useValue: 'en-GB' },
     ],
     bootstrap: [AppComponent],
