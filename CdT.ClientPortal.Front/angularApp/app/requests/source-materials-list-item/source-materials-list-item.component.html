@@ -25,7 +25,7 @@
       <i class="fa fa-asterisk"></i>
     </span>
   </span>
-  <cdt-language-picker [model]="sourceMaterial.selectedLanguages" (changedCallback)="onSelectedLanguagesChanged($event)"></cdt-language-picker>
+  <cdt-language-picker [model]="sourceMaterial.selectedLanguages" (change)="onSelectedLanguagesChanged($event)"></cdt-language-picker>
 </td>
 <td>
   <cdt-source-material-confidentiality [sourceMaterial]="sourceMaterial"></cdt-source-material-confidentiality>

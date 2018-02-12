@@ -127,7 +127,6 @@ export class RequestDetailComponent implements OnInit {
   }
 
   canSave(): boolean {
-    /*!vm.sourceLanguagesChanged && !vm.many2manyHasChanged && !hasChanges()) || hasErrors() */
     return this._entityManagerService.hasChanges() && !this._hasErrors();
   }
 
@@ -193,7 +192,7 @@ export class RequestDetailComponent implements OnInit {
     }));
   }
 
-  private _hasErrors(): boolean {
+  private _hasErrors(): Boolean {
     let many2ManyHasErrors = this.selectedContacts.length === 0 || this.selectedRecipients.length === 0;
     // selected source languages check
     many2ManyHasErrors = many2ManyHasErrors || _.chain(this.requestService.currentRequest.sourceMaterials).map('selectedLanguages').some(function (elem) {

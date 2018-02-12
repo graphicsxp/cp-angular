@@ -50,6 +50,7 @@ export class EntityManagerService {
           const allTypes: IStructuralType[] = this.em.metadataStore.getEntityTypes();
           for (let i = 0; i < allTypes.length; i++) {
             const myType: EntityType = allTypes[i] as EntityType;
+
             // check navigation properties
             if (myType.foreignKeyProperties) {
               for (let j = 0; j < myType.foreignKeyProperties.length; j++) {

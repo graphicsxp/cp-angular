@@ -11,6 +11,7 @@ import { BaseRepositoryService } from '../../shared/services/base-repository.ser
 import { Service } from '../../model/breeze/service';
 import { SourceMaterial } from '../../model/breeze/entity-model';
 import * as _ from 'lodash';
+import { MomentModule } from 'angular2-moment';
 
 @Injectable()
 export class JobService extends BaseRepositoryService<Job> {
@@ -26,8 +27,11 @@ export class JobService extends BaseRepositoryService<Job> {
             sourceLanguage: sourceLanguage,
             targetLanguage: targetLanguage,
             service: service,
-            prority: priority
+            priority: priority
         });
+
+        //job.clientVolume = 0;
+        //job.deadline = moment().add(1, 'days').toDate();
 
         job.jobStatus = _.find(this.getLookup(LookupNames.jobStatuses), js => { return js.code === 'NEW'; });
 

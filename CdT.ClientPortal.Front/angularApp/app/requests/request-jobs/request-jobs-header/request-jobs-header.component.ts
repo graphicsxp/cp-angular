@@ -52,7 +52,21 @@ export class RequestJobsHeaderComponent implements OnInit {
     }
   }
 
-  isPriorityInvalid(): Boolean { return false; }
+  /**
+  * The priority cannot be VeryUrgent  if at least one job has more than 5 pages or for service Modification, Editing, Revision.
+ */
+  public isPriorityInvalid(): Boolean {
+    if (this.selectedPriority.code === 'VU') {
+      if (this.selectedService.unit.code === 'PG') {
+        return _.chain(this.requestService.currentRequest.sourceMaterials).map('jobs').flatten().some(job => { return job.clientVolume > 7500; })
+      } else {
+        return (this.selectedService.code === 'MO' || this.selectedService.code === 'ED' || this.selectedService.code === 'RE');
+      }
+    }
+
+    return false;
+  };
+
   checkInvalidServices(): Boolean { return true; }
   onServiceChanged() { }
   addReferences() { }

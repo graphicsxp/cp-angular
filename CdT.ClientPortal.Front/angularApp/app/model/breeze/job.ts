@@ -1,3 +1,5 @@
+import { EntityAspect } from 'breeze-client';
+import { DataType } from 'breeze-client';
 import { EntityBase } from './entity-base';
 import { Assessment } from './assessment';
 import { CustomerSatisfactionForm } from './customer-satisfaction-form';
@@ -23,9 +25,29 @@ export class Job extends EntityBase {
     /// <code> Place custom code between <code> tags
     isMarkedForDeletion: boolean;
     pricings: Array<JobPricing>;
+    convertedVolume: number;
+    days: number;
+    hours: number;
 
     static postInitializer(job: Job) {
+
         job.pricings = [];
+
+        if (job.id === DataType.Guid.defaultValue) {
+        } else {
+            if (job.service.unit.code === 'PG') {
+                // job.convertedVolume = $filter('convertCharToPage')(job.volume);
+                // if (job.scopingInfo && job.scopingInfo.totalClientVolumeBilled) {
+                //     job.totalClientVolumeBilled = $filter('convertCharToPage')(job.scopingInfo.totalClientVolumeBilled);
+                // }
+            } else if (job.service && job.service.code === 'TE') {
+                job.convertedVolume = job.volume;
+                job.days = Math.floor(job.convertedVolume);
+                job.hours = job.convertedVolume * 8 - job.days * 8;
+            } else {
+                job.convertedVolume = job.volume;
+            }
+        }
     }
 
     /**

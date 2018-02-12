@@ -1,14 +1,15 @@
+import { EntityManagerService } from './../../../../entity-manager.service';
 import { Component, OnInit } from '@angular/core';
-import { JobBaseComponent } from '../../job-base/job-base.component';
+import { JobBaseEditComponent } from '../../job-base/job-base-edit.component';
 
 @Component({
   selector: 'cdt-job-translation-edit',
   templateUrl: './job-translation-edit.component.html',
   styleUrls: ['./job-translation-edit.component.scss']
 })
-export class JobTranslationEditComponent extends JobBaseComponent implements OnInit {
+export class JobTranslationEditComponent extends JobBaseEditComponent implements OnInit {
 
-  constructor() { super(); }
+  constructor(protected _entityManagerService: EntityManagerService) { super(_entityManagerService); }
 
   ngOnInit() {
   }

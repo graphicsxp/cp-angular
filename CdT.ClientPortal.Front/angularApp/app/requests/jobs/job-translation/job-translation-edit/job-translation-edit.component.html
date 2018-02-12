@@ -43,7 +43,7 @@
         <label class="label-responsive">
           <strong>Total volume (pages):</strong>
         </label>
-        <input [(ngModel)]="job.volumeUnit" ng-model-options="{ updateOn: 'blur' }" (change)="convertVolume(job)" type="number" min="0"
+        <input [(ngModel)]="job.convertedVolume" ng-model-options="{ updateOn: 'blur' }" (change)="onVolumeChanged(job)" type="number" min="0"
           max="9999999" [disabled]="job.isMarkedForDeletion || job.isJobStatusDeleted()" name="volumeFieldTR_{{$index}}" />
         <cdt-validator [entity]="job" [propName]="'clientVolume'"></cdt-validator>
       </td>

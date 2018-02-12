@@ -41,5 +41,5 @@ export class JobHeaderComponent implements OnInit {
       targetLanguage,
       this.service,
       false);
-  }
+  }   
 }

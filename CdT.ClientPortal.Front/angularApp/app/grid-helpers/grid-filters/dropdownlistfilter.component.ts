@@ -41,7 +41,7 @@ export class DropDownListFilterComponent extends BaseFilterCellComponent {
     constructor(filterService: FilterService) {
         super(filterService);
     }
-
+    
     public onChange(value: any): void {
         this.applyFilter(
             value === null ? // value of the default item

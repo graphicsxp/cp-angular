@@ -1,3 +1,4 @@
+import { SourceMaterialLanguage } from './../../../model/breeze/source-material-language';
 import { LookupNames } from './../../../model/lookups';
 import * as _ from 'underscore';
 import { Component, Output, EventEmitter, IterableDiffers, DoCheck, IterableDiffer, OnInit, ViewChild } from '@angular/core';
@@ -26,7 +27,7 @@ export class LanguagePickerComponent implements OnInit, DoCheck {
     @Input() public icon: String = 'icon';
     @Input() public selectedLanguages: Language[] = [];
     @Input() public index: number;
-    @Input() public source: Language[] = [];
+    @Input() public source: SourceMaterialLanguage[] = [];
     @Input() public singleLanguage: Boolean;
     @Output() public callback: EventEmitter<any> = new EventEmitter();
     @Output() public change: EventEmitter<any> = new EventEmitter();
@@ -72,7 +73,7 @@ export class LanguagePickerComponent implements OnInit, DoCheck {
             return this.selectedLanguages.length > 1 && this.selectedLanguages[0].code === code;
         }
 
-        return this.source && this.source.length === 1 && this.source[0].code === code;
+        return this.source && this.source.length === 1 && this.source[0].language.code === code;
     }
 
     singleSelection(language: Language) {

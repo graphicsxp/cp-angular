@@ -1,4 +1,4 @@
-import { Entity } from 'breeze-client';
+import { Entity, SaveOptions } from 'breeze-client';
 import { LookupNames } from './../../model/lookups';
 import { Purpose, Client, Status, Request, DeliveryMode, RequestTemplate } from './../../model/breeze/entity-model';
 
@@ -120,9 +120,9 @@ export abstract class BaseRepositoryService<T extends Entity> extends BehaviorSu
     }));
   }
 
-  public save() {
+  public save(entities?: Entity[], saveOptions?: SaveOptions) {
     const promise = new Promise((resolve, reject) => {
-      this._entityManagerService.em.saveChanges().then(() => resolve(),
+      this._entityManagerService.em.saveChanges(entities, saveOptions).then(() => resolve(),
         error => reject(error));
     });
     return promise;

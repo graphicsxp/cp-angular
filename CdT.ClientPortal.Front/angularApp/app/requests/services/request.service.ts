@@ -43,4 +43,17 @@ export class RequestService extends BaseRepositoryService<Request> {
     if (!request.sourceMaterials || request.sourceMaterials.length === 0) { return false; }
     return _.chain(request.sourceMaterials).map('jobs').flatten().value().length > 0;
   }
+
+  /**
+   * Cancel the request by changing the appropriate statuses to right values
+   * @param request the request to cancel
+   */
+  public cancel(request: Request) {
+    if (request.status.code === 'DRAF') {
+      request.requestSubStatus = _.find(this.getLookup(LookupNames.requestSubStatuses), { code: 'RSBST001' });
+    } else {
+      request.requestSubStatus = _.find(this.getLookup(LookupNames.requestSubStatuses), { code: 'RSBST002' });
+    }
+    request.status = _.find(this.getLookup(LookupNames.statuses), { code: 'CANC' });
+  }
 }
