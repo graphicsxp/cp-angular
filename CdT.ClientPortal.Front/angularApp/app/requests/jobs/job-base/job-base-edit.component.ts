@@ -12,10 +12,6 @@ import { JobBaseComponent } from './job-base.component';
 */
 export abstract class JobBaseEditComponent extends JobBaseComponent implements OnInit {
 
-    @Input() sourceMaterial: SourceMaterial;
-    @Input() priority: Priority;
-    @Input() service: Service;
-
     constructor(protected _entityManagerService: EntityManagerService) { super(_entityManagerService); }
 
     ngOnInit() {
