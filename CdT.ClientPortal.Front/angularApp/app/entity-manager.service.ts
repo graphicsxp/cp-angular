@@ -1,5 +1,5 @@
 import { environment } from './../environments/environment';
-import { NamingConvention, NavigationProperty, EntityState } from 'breeze-client';
+import { NamingConvention, NavigationProperty, EntityState, EntityType } from 'breeze-client';
 import { EntityManager, EntityQuery, config } from 'breeze-client';
 import 'breeze-client-labs/breeze.getEntityGraph';
 import { Injectable } from '@angular/core';
@@ -7,7 +7,6 @@ import { RegistrationHelper } from './model/breeze/registration-helper';
 import * as _ from 'lodash';
 import { EntityAction } from 'breeze-client';
 import { IStructuralType } from 'breeze-client';
-import { EntityType } from 'breeze-client';
 import { Validator } from 'breeze-client';
 import { CustomValidatorService } from './shared/services/custom-validator.service';
 import { Entity } from 'breeze-client';
@@ -28,7 +27,7 @@ export class EntityManagerService {
 
     // this.em.metadataStore.importMetadata('../../mocks/metadata.json');
 
-   // RegistrationHelper.register(this.em.metadataStore);
+    RegistrationHelper.register(this.em.metadataStore);
     this.em.hasChangesChanged.subscribe((args) => {
       this._hasChanges = args.hasChanges;
     });
@@ -46,6 +45,8 @@ export class EntityManagerService {
           localStorage.removeItem('changeCache');
         }
         this.em.fetchMetadata().then(() => {
+
+          this._initValidation();
 
           const allTypes: IStructuralType[] = this.em.metadataStore.getEntityTypes();
           for (let i = 0; i < allTypes.length; i++) {
@@ -80,6 +81,18 @@ export class EntityManagerService {
       }
     });
     return promise;
+  }
+
+  /**
+   * Custom validators should be added here to entity types
+   */
+  private _initValidation() {
+    // const sourceMaterialType: EntityType = <EntityType>this.em.metadataStore.getEntityType('SourceMaterial');
+    // sourceMaterialType.getProperty('sourceLanguages').validators.push(config.functionRegistry['Validator.notEmptyCollectionValidator']());
+
+    const jobType: EntityType = <EntityType>this.em.metadataStore.getEntityType('Job');
+    jobType.getProperty('clientVolume').validators.push(config.functionRegistry['Validator.greaterThanValidator'](0));
+
   }
 
   public hasChanges() {

@@ -17,6 +17,8 @@ import { RequestJobsHeaderComponent } from './request-jobs-header/request-jobs-h
 })
 export class RequestJobsComponent implements OnInit {
 
+  public saving: Boolean = false;
+
   @ViewChild('requestJobsHeader') requestJobHeaderComponent: RequestJobsHeaderComponent;
 
   constructor(private _entityManagerService: EntityManagerService,

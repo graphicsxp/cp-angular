@@ -6,7 +6,8 @@ export class CustomValidatorService {
 
     constructor() {
         Validator.registerFactory(this.nonDefaultGuidValidator, 'nonDefaultGuidValidator');
-        // Validator.register(this.greaterThanValidator, 'greaterThanValidator');
+         Validator.registerFactory((options) => this.greaterThanValidator(options), 'greaterThanValidator');
+//         Validator.register(new Validator('greaterThanValidator', (options) => this.greaterThanValidator(options)));
     }
 
     // Validators for validating the guid with default value
@@ -26,14 +27,16 @@ export class CustomValidatorService {
     }
 
     /**
-     * Validating a property value is greater than the minium required
+     * Validating a property value is greater than the minium required.
+     * The message template shows the required template (*) because for now this is what users want to see in the job screen
+     * If the template was to changed, you should create another validator.
      * @param entity the entity to validate
      */
-    public greaterThanValidator(options): Validator {
+    public greaterThanValidator(currentValue): Validator {
         const name = 'greaterThanValidator';
         const ctx = {
-            val: options.value,
-            messageTemplate: '"%displayName%" must be a greater than of %val%'
+            value: currentValue,
+            messageTemplate: '<span class="control-mandatory help-inline invalid"><i class="fa fa-asterisk"></i></span>'
         };
 
         const validator = new Validator(name, _valFunction, ctx);
@@ -45,7 +48,7 @@ export class CustomValidatorService {
             if (typeof (value) !== 'number') {
                 return false;
             }
-            if (context.min !== null && value <= context.val) {
+            if (context.min !== null && value <= context.value) {
                 return false;
             }
 
